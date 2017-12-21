@@ -19,9 +19,12 @@ $(document).ready(function(){
 		$("#adminName").text($.cookie("adminName"))
 	});
 	
-	$('#fileModalHtml').load('/fileModal.html');
-	
+	/*$('#fileModalHtml').load('/fileModal.html');*/
 });
+
+$(".modal-backdrop, .close, .hiddenFade").click(function() {
+	$(".modal, .modal-backdrop").css("display", "none");
+})
 
 /*  打印
  * <!--startprint-->
@@ -36,6 +39,13 @@ function preview() {
 	window.document.body.innerHTML=prnhtml; 
 	window.print(); 
 } 
+
+
+
+
+
+
+
 
 //上传文件
 function myAjaxFileUpload() {
