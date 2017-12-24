@@ -30,7 +30,8 @@ span.icon {
 
 .right {
 	float: left;
-	min-width: 1150px;
+	min-width: 1039px;
+	width: 80%;
 	min-height: 775px;
 }
 
@@ -207,7 +208,7 @@ span.icon {
 }	
 
 .searchLi {
-	padding: 20px;
+	padding: 10px;
 }
 
 .searchLi font {
@@ -236,6 +237,11 @@ span.icon {
     box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
     -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
     -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
+
+select.formInput {
+	height: 30px;
+	width: 210px;
 }
 
 .btnRight {
@@ -289,7 +295,7 @@ span.icon {
 	border-bottom: 1px solid #CCCCCC;
 	border-right: 1px solid #CCCCCC;
 	padding: 10px;
-    margin: 0 10px;
+    margin: 10px 10px;
 }
 
 table {

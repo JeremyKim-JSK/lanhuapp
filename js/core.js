@@ -1,6 +1,6 @@
 //加载左部，顶部 遮罩层
 $(document).ready(function(){
-	$('#left').load('left.html', function() {
+	$('#left').load('/left.html', function() {
 		
 		$(".menu > li.level1 > a").click(function() {
 			$(this).addClass('active').next().show()// 下一个元素显示
@@ -15,7 +15,7 @@ $(document).ready(function(){
 		
 	});
 	
-	$("#top").load("top.html", function() {
+	$("#top").load("/top.html", function() {
 		$("#adminName").text($.cookie("adminName"))
 	});
 	
