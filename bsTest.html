@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<title>newHtml</title>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link href="css/bootstrap.min.css" rel="stylesheet">
+		<script src="js/jquery-1.11.2.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+	</head>
+
+	<body>
+		<hr />
+		<div class="container">
+			<div class="panel-group">
+				<div class="panel panel-default">
+					<div class="panel-body">
+						<h4 class="panel-title">
+							<a data-toggle="collapse" href="#firstColl">firstColl</a>
+						</h4>
+					</div>
+					<div id="firstColl" class="panel-collapse collapse in">
+						<div class="panel-body">
+							<a class="active">asdfasdf</a>
+						</div>
+						<div class="panel-body">
+							<a>asdfasdf</a>
+						</div>
+						<div class="panel-body">
+							<a>asdfasdf</a>
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+			<ul class="nav nav-tabs">
+				<li class="active">
+					<a href="#first" data-toggle="tab">first</a>
+				</li>
+				<li>
+					<a href="#second" data-toggle="tab">second</a>
+				</li>
+				<li>
+					<a href="#third" data-toggle="tab">third</a>
+				</li>
+			</ul>
+			<div class="tab-content">
+				<div id="first" class="tab-pane fade in active">first</div>
+				<div id="second" class="tab-pane fade">second</div>
+			</div>
+			<h2>创建模态框（Modal）</h2>
+			<!-- 按钮触发模态框 -->
+			<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">开始演示模态框</button>
+			<!-- 模态框（Modal） -->
+			<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+							<h4 class="modal-title" id="myModalLabel">模态框（Modal）标题</h4>
+						</div>
+						<div class="modal-body">在这里添加一些文本</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+							<button type="button" class="btn btn-primary">提交更改</button>
+						</div>
+					</div>
+					<!-- /.modal-content -->
+				</div>
+				<!-- /.modal -->
+			</div>
+
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					1212312312
+				</div>
+				<div class="panel-body">
+					congqianhehoulai
+				</div>
+				<div class="panel-footer">
+					123123
+				</div>
+			</div>
+
+			<ul class="list-group">
+				<li class="list-group-item">first</li>
+				<li class="list-group-item">second</li>
+				<li class="list-group-item">third</li>
+				<li class="list-group-item">fourth
+					<div class="badge">新</div>
+				</li>
+			</ul>
+
+			<div class="media">
+				<div class="media-left">
+					<img src="img/corpLogo.png" />
+				</div>
+				<div class="media-body">
+					<h4>123123123</h4> 123123123 123123123 123123123 123123123
+				</div>
+			</div>
+
+			<div class="progress progress-striped active">
+				<div class="progress-bar progress-bar-danger" style="width: 40%;"></div>
+				<div class="progress-bar progress-bar-info" style="width: 20%;"></div>
+				<div class="progress-bar progress-bar-warning" style="width: 10%;"></div>
+			</div>
+
+			<div class="progress progress-striped active">
+				<div class="progress-bar" style="width: 60%;"></div>
+			</div>
+
+			<div class="progress">
+				<div class="progress-bar" style="width: 40%;"></div>
+			</div>
+			<div class="progress progress-striped">
+				<div class="progress-bar progress-bar-danger" style="width: 40%;"></div>
+			</div>
+
+			<div class="alert alert-danger">
+				<button class="close" data-dismiss="alert">&times;</button> It's Dangerous!!!</div>
+
+			<div class="row">
+				<div class="col-sm-6 col-md-3">
+					<div class="thumbnail">
+						<img src="img/corpLogo.png" />
+						<div class="caption">
+							<h3>缩略图标签</h3>
+							<p>实例文本</p>
+							<p>
+								<a class="btn btn-primary">123</a>
+							</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-6 col-md-3">
+					<div class="thumbnail">
+						<img src="img/corpLogo.png" alt="通用的占位符缩略图">
+						<div class="caption">
+							<h3>缩略图标签</h3>
+							<p>一些示例文本。一些示例文本。</p>
+							<p>
+								<a href="#" class="btn btn-primary" role="button">
+									按钮
+								</a>
+								<a href="#" class="btn btn-default" role="button">
+									按钮
+								</a>
+							</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-6 col-md-3">
+					<a href="#" class="thumbnail">
+						<img src="img/corpLogo.png" />
+					</a>
+				</div>
+				<div class="col-sm-6 col-md-3">
+					<a href="#" class="thumbnail">
+						<img src="img/corpLogo.png" />
+					</a>
+				</div>
+			</div>
+			<div class="page-header">
+				<h1>This's the title
+					<small>second title</small>
+				</h1>
+			</div>
+
+			<div class="jumbotron">
+				<h1>welcome To Here!</h1>
+				<p>This's a big window!</p>
+				<p><button class="btn btn-primary">Learn More</button></p>
+				<p>
+					<a class="btn btn-default">Learn More</a>
+				</p>
+			</div>
+
+			<ul class="nav nav-pills">
+				<li class="active">
+					<a>abcde <span class="badge">10</span></a>
+				</li>
+				<li>
+					<a>abcde</a>
+				</li>
+				<li>
+					<a>abcde <span class="badge">10</span></a>
+				</li>
+			</ul>
+
+			<a>chrome <span class="badge">good</span></a>
+
+			<span class="label label-default">bacdee</span>
+
+			<!--<div class="row">
+			<div class="col-xs-4">
+				<span>1231</span>
+			</div>
+			<div class="col-xs-4">
+				<span>1231</span>
+			</div>
+			<div class="col-xs-4">
+				<span>1231</span>
+			</div>
+		</div>-->
+			<!--<table class="table table-bordered">
+				<caption>基本的表格布局</caption>
+				<thead>
+					<tr>
+						<th>名称</th>
+						<th>城市</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="danger">
+						<td>Tanmay</td>
+						<td>Bangalore</td>
+					</tr>
+					<tr>
+						<td>Sachin</td>
+						<td>Mumbai</td>
+					</tr>
+					<tr>
+						<td>Sachin</td>
+						<td>Mumbai</td>
+					</tr>
+					<tr>
+						<td>Sachin</td>
+						<td>Mumbai</td>
+					</tr>
+				</tbody>
+			</table>-->
+
+			<form role="form">
+				<div class="form-group">
+					<label for="name">名称</label>
+					<input type="text" class="form-control input-sm" id="name" placeholder="请输入名称" />
+				</div>
+				<div class="checkbox">
+					<label>
+						<input type="checkbox"/> 请打勾
+					</label>
+				</div>
+				<button class="btn btn-default btn-danger active ">按钮请输入名称</button>
+				<button class="btn btn-default btn-danger " disabled="disabled">按钮请输入名称</button>
+
+				<img src="img/1212yuan.png" class="img-responsive img-circle" />
+
+			</form>
+
+			<div class="pull-right">abcdefghijklmnopqrstuvwxyz</div>
+
+			<button class="close clearfix">X</button>
+
+			<div class="btn-group">
+				<button class="btn btn-default">确定1</button>
+				<button class="btn btn-default">确定2</button>
+				<div class="btn-group">
+					<button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+						确定
+						<span class="caret"></span>
+				    </button>
+					<ul class="dropdown-menu">
+						<li class="dropdown-header"> 1212</li>
+						<li class="divider"></li>
+						<li>1212</li>
+						<li>1212</li>
+					</ul>
+				</div>
+			</div>
+
+			<div class="input-group">
+				<span class="input-group-addon">abc</span>
+				<input type="text" class="form-control" />
+			</div>
+
+			<div class="row">
+				<div class="input-group">
+					<input type="text" class="form-control" />
+					<span class="input-group-btn">
+						<button class="btn btn-default">abcde</button>
+					</span>
+				</div>
+
+			</div>
+
+			<ul class="nav nav-tabs">
+				<li class="active">
+					<a>123</a>
+				</li>
+				<li>
+					<a>123</a>
+				</li>
+				<li class="disabled">
+					<a>123</a>
+				</li>
+				<li>
+					<a class="dropdown-toggle" data-toggle="dropdown">
+						123<span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu">
+						<li>
+							<a>asdf</a>
+						</li>
+						<li>
+							<a>asdf</a>
+						</li>
+						<li>
+							<a>asdf</a>
+						</li>
+					</ul>
+				</li>
+				<li>abc</li>
+				<li>abc</li>
+				<li>abc</li>
+				<li>abc</li>
+			</ul>
+
+			<nav class="navbar navbar-default">
+
+				<div class="navbar-header">
+					<a class="navbar-brand">abcde</a>
+				</div>
+				<div>
+					<ul class="nav navbar-nav">
+						<li class="active">
+							<a>123</a>
+						</li>
+						<li>
+							<a>123</a>
+						</li>
+						<li>
+							<a>123</a>
+						</li>
+						<li>
+							<a>123</a>
+						</li>
+					</ul>
+				</div>
+			</nav>
+
+			<nav class="navbar navbar-inverse">
+				<div class="container-fluid">
+					<div class="navbar-header">
+						<a class="navbar-brand">qweqwe</a>
+					</div>
+					<div>
+						<ul class="nav navbar-nav navbar-right">
+							<li>
+								<a><span class="glyphicon glyphicon-user"></span> asdfaf</a>
+							</li>
+							<li>
+								<a><span class="glyphicon glyphicon-user"></span> asdfaf</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</nav>
+
+			<ol class="breadcrumb">
+				<li>12312</li>
+				<li>12312</li>
+				<li>12312</li>
+			</ol>
+
+			<ul class="pagination">
+				<li>
+					<a>&laquo;</a>
+				</li>
+				<li class="active">
+					<a>123</a>
+				</li>
+				<li>
+					<a>123</a>
+				</li>
+				<li>
+					<a>123</a>
+				</li>
+				<li>
+					<a>123</a>
+				</li>
+				<li>
+					<a>&raquo;</a>
+				</li>
+			</ul>
+
+			<ul class="pager">
+				<li class="previous">
+					<a>&larr; Older</a>
+				</li>
+				<li>12312</li>
+				<li class="next">
+					<a>Newer &rarr;</a>
+				</li>
+			</ul>
+
+		</div>
+
+	</body>
+
+</html>

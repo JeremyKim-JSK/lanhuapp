@@ -5,6 +5,7 @@
 		<title>新百报销系统</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link href="/css/style.css" rel="stylesheet"/>
+		<link rel="stylesheet" href="/css/fade.css" />
 		<script src="/js/jquery-1.11.2.js"></script>
 		<script src="/js/jquery.cookie.js"></script>
 		<script src="/js/core.js"></script>
@@ -28,7 +29,7 @@
 										<img src="/img/sousuo.png" style="width: 15px;height: 15px;" />
 									</span>
 								</button>
-								<button class="btn btn-yellow flRight">
+								<button class="btn btn-yellow flRight" onclick="showFaceModel();">
 									<span class="icon"><img src="/img/zengjia.png"/></span>
 									<font>新增报销单据</font>
 								</button>
@@ -64,32 +65,72 @@
 								</tr>
 								<tr>
 									<th>报销单据信息录入</th>
-									<td>医疗费金额：<input type="text" class="formInput" style="width: 100px;"/> 元 </td>
-									<td>附件张数：<input type="text" class="formInput" style="width: 100px;"/>张 </td>
-									<td>发生日期：<input type="date"/></td>
+									<td colspan="3">
+										报销月份：<input type="text" class="formInput" style="width: 100px;"/> 月 &nbsp;&nbsp;&nbsp;&nbsp;
+										&nbsp;&nbsp;&nbsp;&nbsp; 附件张数：<input type="text" class="formInput" style="width: 100px;"/> 张 
+									</td>
 								</tr>
 								<tr>
-									<td>本年度累计医药费用：300元</td>
-									<td>该员工本年度所有：1000元 </td>
-									<td>本年度累计医药费用：1000元</td>
-									<td>该年度本员工所有：1000元 </td>
+									<td colspan="2">本年度该子女已报销总额：20000.00元</td>
+									<td colspan="2">本年度该员工已报销总额：20000.00元</td>
+								</tr>
+							</table>
+						</div>
+						<div class="tabContent">
+							<table class="tabTable matrixTab">
+								<tr>
+									<th>员工姓名</th>
+									<th>部门</td>
+									<th>报销年月</td>
+									<th>报销类型</td>
 								</tr>
 								<tr>
-									<td>本年度累计医药费用：300元</td>
-									<td>该子女本年度所有：1000元 </td>
-									<td>本年度累报销金额：1000元</td>
-									<td>该子女年度所有：1000元 </td>
+									<td>0001</td>
+									<td>张三</td>
+									<td>新百</td>
+									<td>详情</td>
+								</tr>
+								<tr>
+									<td>0002</td>
+									<td>李四</td>
+									<td>新百</td>
+									<td>详情</td>
 								</tr>
 							</table>
 							<div class="tabFooter">
 								<button class="btn btn-primary flRight">重置</button>
-								<button class="btn btn-primary flRight">生成单据</button>
+								<button class="btn btn-primary flRight" onclick="makeBill()">生成单据</button>
+								<button class="btn btn-primary flRight">继续填写单据</button>
 							</div>
 						</div>
 					</div>	
 				</div>
 			</div>
 		</div>
+		<div class="modal">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close">×</button>
+						<h4 class="modal-title">新增报销单据</h4>
+					</div>
+					<div class="modal-body">该员工的性别，不符合本年份报销条件！</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default hiddenFade">关闭</button>
+					</div>
+				</div>	
+			</div>
+		</div>
+		<div class="modal-backdrop"></div>
 		<script>
+			
+			function showFaceModel() {
+				$(".modal, .modal-backdrop").css("display", "block");
+			}
+			
+			function makeBill() {
+				location.href = "/onlyChild/createBill.html"
+			}
+		</script>
 	</body>
 </html>

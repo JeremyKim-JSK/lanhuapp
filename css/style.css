@@ -240,12 +240,16 @@ span.icon {
 }
 
 select.formInput {
-	height: 30px;
+	height: 33px;
 	width: 210px;
 }
 
 .btnRight {
 	float: right;
+}
+
+.in {
+	display: block;	
 }
 
 .btn {
@@ -296,6 +300,10 @@ select.formInput {
 	border-right: 1px solid #CCCCCC;
 	padding: 10px;
     margin: 10px 10px;
+}
+
+.matrixTab tr:hover {
+	background-color: #41c7db;
 }
 
 table {

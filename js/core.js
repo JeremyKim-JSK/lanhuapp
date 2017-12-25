@@ -8,10 +8,19 @@ $(document).ready(function(){
 			.next().hide();//他的下一个元素隐藏
 		})
 		
+		$("ul.level2 a").each(function(index, aObj) {
+			var curIndexHref = $(aObj).attr("href");
+			if( curIndexHref== location.pathname) {
+				$("ul.level2 a").removeClass("active");
+				$(this).addClass("active");
+				$(this).parent().parent().parent().addClass("in");
+			}
+		})
+	/*	
 		$("ul.level2 a").click(function() {
 			$("ul.level2 a").removeClass("active");
 			$(this).addClass("active");
-		})
+		})*/
 		
 	});
 	
@@ -19,12 +28,12 @@ $(document).ready(function(){
 		$("#adminName").text($.cookie("adminName"))
 	});
 	
+	$(".modal-backdrop, .close, .hiddenFade").click(function() {
+		$(".modal, .modal-backdrop").css("display", "none");
+	})
 	/*$('#fileModalHtml').load('/fileModal.html');*/
 });
 
-$(".modal-backdrop, .close, .hiddenFade").click(function() {
-	$(".modal, .modal-backdrop").css("display", "none");
-})
 
 /*  打印
  * <!--startprint-->
