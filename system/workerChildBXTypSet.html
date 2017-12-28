@@ -1,9 +1,54 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta charset="UTF-8">
-		<title></title>
+		<meta charset="utf-8" />
+		<title>新百报销系统</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link href="/css/style.css" rel="stylesheet"/>
+		<script src="/js/jquery-1.11.2.js"></script>
+		<script src="/js/jquery.cookie.js"></script>
+		<script src="/js/core.js"></script>
 	</head>
 	<body>
+		<div id="top"></div>
+		<div class="container">
+			<div class="row">
+				<div id="left"></div>
+				<div class="right">
+					<div class="header">
+						<ul>
+							<li>首页</li>	
+							<li>/</li>	
+							<li>系统参数维护</li>	
+							<li>/</li>	
+							<li>子女医保费用报销类型定义</li>	
+						</ul>
+					</div>	
+					<div class="body">
+						<div class="tabContent">
+							<table class="tabTable matrixTab">
+								<tr>
+									<th>序号</td>
+									<th>子女性质</td>
+								</tr>
+								<tr>
+									<td>0001</td>
+									<td>独生</td>
+								</tr>
+								<tr>
+									<td>0002</td>
+									<td>多胞胎子女</td>
+								</tr>
+							</table>
+							<div class="tabFooter">
+								<button class="btn btn-primary flRight">保存</button>
+								<button class="btn btn-primary flRight">修改</button>
+								<button class="btn btn-primary flRight">新增</button>
+							</div>
+						</div>
+					</div>	
+				</div>
+			</div>
+		</div>
 	</body>
 </html>

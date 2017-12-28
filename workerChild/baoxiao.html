@@ -64,43 +64,43 @@
 									</td>
 								</tr>
 								<tr>
-									<th>报销单据信息录入</th>
-									<td colspan="3">
-										报销月份：<input type="text" class="formInput" style="width: 100px;"/> 月 &nbsp;&nbsp;&nbsp;&nbsp;
-										&nbsp;&nbsp;&nbsp;&nbsp; 附件张数：<input type="text" class="formInput" style="width: 100px;"/> 张 
+									<th>报销单据信息录入:</th>
+									<td>
+										医保金额：<input type="text" class="formInput" style="width: 100px;"/> 元 
 									</td>
-								</tr>
-								<tr>
-									<td colspan="2">本年度该子女已报销总额：20000.00元</td>
-									<td colspan="2">本年度该员工已报销总额：20000.00元</td>
+									<td>
+										附件张数：<input type="text" class="formInput" style="width: 100px;"/> 张 
+									</td>
+									<td>
+										医保发票年：<input type="text" class="formInput" style="width: 100px;"/> 年 
+									</td>
 								</tr>
 							</table>
 						</div>
 						<div class="tabContent">
 							<table class="tabTable matrixTab">
 								<tr>
-									<th>员工姓名</th>
-									<th>部门</td>
-									<th>报销年月</td>
-									<th>报销类型</td>
+									<th>子女姓名</th>
+									<th>报销日期</td>
+									<th>医保年</td>
+									<th>报销费用</td>
 								</tr>
 								<tr>
-									<td>0001</td>
 									<td>张三</td>
-									<td>新百</td>
-									<td>详情</td>
+									<td>2017-3</td>
+									<td>2017</td>
+									<td>1000</td>
 								</tr>
 								<tr>
-									<td>0002</td>
 									<td>李四</td>
-									<td>新百</td>
-									<td>详情</td>
+									<td>2015-3</td>
+									<td>2015</td>
+									<td>2000</td>
 								</tr>
 							</table>
 							<div class="tabFooter">
 								<button class="btn btn-primary flRight">重置</button>
 								<button class="btn btn-primary flRight" onclick="makeBill()">生成单据</button>
-								<button class="btn btn-primary flRight">继续填写单据</button>
 							</div>
 						</div>
 					</div>	
@@ -129,7 +129,7 @@
 			}
 			
 			function makeBill() {
-				location.href = "/onlyChild/createBill.html"
+				location.href = "/workerChild/createBill.html"
 			}
 		</script>
 	</body>

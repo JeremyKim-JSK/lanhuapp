@@ -11,17 +11,31 @@ $(document).ready(function(){
 		$("ul.level2 a").each(function(index, aObj) {
 			var curIndexHref = $(aObj).attr("href");
 			if( curIndexHref== location.pathname) {
+				$(".menu > li.level1 > a").removeClass("active");
+				$(this).parent().parent().prev().addClass("active");
+				
 				$("ul.level2 a").removeClass("active");
 				$(this).addClass("active");
-				$(this).parent().parent().parent().addClass("in");
-			}
+				$(this).parent().parent().addClass("in");
+				return false;
+			};
 		})
-	/*	
-		$("ul.level2 a").click(function() {
-			$("ul.level2 a").removeClass("active");
-			$(this).addClass("active");
-		})*/
 		
+		$("ul.level2 a").click(function() {
+			$.cookie("pathname", this.href.replace("http://" + location.host, ""), {'path': '/'});
+		})
+		
+		if($.cookie("pathname")) {
+			if(navigator.userAgent.indexOf("MSIE 6.0") > 0)
+				var curMenu = $(".menu").find("a[href='http://'" + location.host + $.cookie("pathname") + "']");
+			else 
+				var curMenu = $(".menu").find("a[href='" + $.cookie("pathname") + "']");
+		}
+		
+		if(curMenu.length > 0) {
+			$(curMenu).parent().parent().css("display", "block");
+			$(curMenu).addClass("active");
+		}
 	});
 	
 	$("#top").load("/top.html", function() {

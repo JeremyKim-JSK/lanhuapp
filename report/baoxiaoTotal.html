@@ -1,9 +1,80 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta charset="UTF-8">
-		<title></title>
+		<meta charset="utf-8" />
+		<title>新百报销系统</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link href="/css/style.css" rel="stylesheet"/>
+		<link rel="stylesheet" type="text/css" href="/css/fade.css"/>
+		<script src="/js/jquery-1.11.2.js"></script>
+		<script src="/js/jquery.cookie.js"></script>
+		<script src="/js/core.js"></script>
 	</head>
 	<body>
+		<div id="top"></div>
+		<div class="container">
+			<div class="row">
+				<div id="left"></div>
+				<div class="right">
+					<div class="header">
+						<ul>
+							<li>首页</li>	
+							<li>/</li>	
+							<li>报表查询</li>	
+							<li>/</li>	
+							<li>报销费用汇总</li>	
+						</ul>
+					</div>	
+					<div class="body">
+						<div class="topBar">
+							<div class="searchLi">
+								<label for="no">
+									<font class="labelFont">报销费用类型:</font>
+								</label>
+								<input type="text" id="no" class="formInput hundFif" placeholder=""/>
+								<label for="no" style="padding-left: 50px;">
+									<font class="labelFont">时间时区:</font>
+								</label>
+								<input type="datetime-local" id="no" class="formInput" placeholder=""/>
+								<label for="no" >
+									<font class="labelFont">到</font>
+								</label>
+								<input type="datetime-local" id="no" class="formInput" placeholder=""/>
+							</div>
+							<div class="searchLi">
+								<button class="btn btn-primary ">
+									<font>重置</font>
+								</button>
+								<button class="btn btn-primary">
+									<font>确定</font>
+								</button>
+							</div>
+						</div>
+						<div class="tabContent matrixTab">
+							<table class="tabTable">
+								<tr>
+									<th>发生时间</th>
+									<th>报销费用类型</td>
+									<th>报销金额</td>
+								</tr>
+								<tr>
+									<td>2017-01-02</td>
+									<td>子女医药费报销</td>
+									<td>30000</td>
+								</tr>
+								<tr>
+									<td>2017-01-02</td>
+									<td>子女医药费报销</td>
+									<td>30000</td>
+								</tr>
+								<tr>
+									<td colspan="7">合计金额：60000</td>
+								</tr>
+							</table>
+						</div>
+					</div>	
+				</div>
+			</div>
+		</div>
 	</body>
 </html>

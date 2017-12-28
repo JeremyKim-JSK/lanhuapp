@@ -1,9 +1,123 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta charset="UTF-8">
-		<title></title>
+		<meta charset="utf-8" />
+		<title>新百报销系统</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link href="/css/style.css" rel="stylesheet"/>
+		<link rel="stylesheet" href="/css/fade.css" />
+		<script src="/js/jquery-1.11.2.js"></script>
+		<script src="/js/jquery.cookie.js"></script>
+		<script src="/js/core.js"></script>
 	</head>
 	<body>
+		<div id="top"></div>
+		<div class="container">
+			<div class="row">
+				<div id="left"></div>
+				<div class="right">
+					<div class="body">
+						<div class="topBar">
+							<div class="searchLi">
+								<label for="no">
+									<span class="icon"><img src="/img/yuangong.png"/></span>
+									<font class="labelFont">员工号:</font>
+								</label>
+								<input type="text" id="no" class="formInput" placeholder=""/>
+								<button class="btn btn-primary" style="margin-left: -5px;">
+									<span class="icon">
+										<img src="/img/sousuo.png" style="width: 15px;height: 15px;" />
+									</span>
+								</button>
+								<button class="btn btn-yellow flRight" onclick="showFaceModel();">
+									<span class="icon"><img src="/img/zengjia.png"/></span>
+									<font>新增报销单据</font>
+								</button>
+							</div>
+						</div>
+						<div class="tabContent">
+							<table class="tabTable">
+								<tr>
+									<th>员工基本信息</th>
+									<td>员工工号：20170101</td>
+									<td>员工姓名：张三</td>
+									<td>员工性别：男</td>
+								</tr>
+								<tr>
+									<th>家属情况：（选择报销家属姓名）</th>
+									<td>
+										<div>
+											<input type="radio"/>
+											<span>李华</span>
+										</div>
+										<div>
+											<input type="radio"/>
+											<span>张建国</span>
+										</div>
+									</td>
+									<th>家属证号</td>
+									<td>
+										<div>
+											<span>李华：12123123123123</span>
+										</div>
+										<div>
+											<span>张建国：12123123123122</span>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<th>报销单据信息录入</th>
+									<td>医疗费金额：<input type="text" class="formInput" style="width: 100px;"/> 元 </td>
+									<td>附件张数：<input type="text" class="formInput" style="width: 100px;"/>张 </td>
+									<td>发生日期：<input type="date"/></td>
+								</tr>
+								<tr>
+									<td>本年度累计医药费用：300元</td>
+									<td>该员工本年度所有：1000元 </td>
+									<td>本年度累计医药费用：1000元</td>
+									<td>该年度本员工所有：1000元 </td>
+								</tr>
+								<tr>
+									<td>本年度累计医药费用：300元</td>
+									<td>该子女本年度所有：1000元 </td>
+									<td>本年度累报销金额：1000元</td>
+									<td>该子女年度所有：1000元 </td>
+								</tr>
+							</table>
+							<div class="tabFooter">
+								<button class="btn btn-primary flRight">重置</button>
+								<button class="btn btn-primary flRight" onclick="makeBill();">生成单据</button>
+							</div>
+						</div>
+					</div>	
+				</div>
+			</div>
+		</div>
+		<div class="modal">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close">×</button>
+						<h4 class="modal-title">新增报销单据</h4>
+					</div>
+					<div class="modal-body">该员工的性别，不符合本年份报销条件！</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default hiddenFade">关闭</button>
+					</div>
+				</div>	
+			</div>
+		</div>
+		<div class="modal-backdrop"></div>
+		<script>
+			
+			function showFaceModel() {
+				$(".modal, .modal-backdrop").css("display", "block");
+			}
+			
+			function makeBill() {
+				location.href = "/workFamily/createBill.html";
+			}
+			
+		</script>
 	</body>
 </html>

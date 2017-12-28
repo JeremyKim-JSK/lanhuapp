@@ -1,9 +1,65 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta charset="UTF-8">
-		<title></title>
+		<meta charset="utf-8" />
+		<title>新百报销系统</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link href="/css/style.css" rel="stylesheet"/>
+		<script src="/js/jquery-1.11.2.js"></script>
+		<script src="/js/jquery.cookie.js"></script>
+		<script src="/js/core.js"></script>
 	</head>
 	<body>
+		<div id="top"></div>
+		<div class="container">
+			<div class="row">
+				<div id="left"></div>
+				<div class="right">
+					<div class="header">
+						<ul>
+							<li>首页</li>	
+							<li>/</li>	
+							<li>系统参数维护</li>	
+							<li>/</li>	
+							<li>职工子女医保费用报销比例设置</li>	
+						</ul>
+					</div>	
+					<div class="body">
+						<div class="topBar">
+							<div class="searchLi">
+								<label for="no">
+									<font class="labelFont">选择子女性质:</font>
+									<select class="formInput">
+										<option value="独生子女">独生子女</option>
+										<option value="多胞胎子女">多胞胎子女</option>
+									</select>
+								</label>
+								<div class="searchPanel">
+									<input type="text" class="formInput fiftenPx" /> 元到 
+									<input type="text" class="formInput fiftenPx" /> 元，报销比例是： 
+									<input type="text" class="formInput fiftenPx" />
+								</div>
+								<div class="searchPanel">
+									<button class="btn btn-primary">新增</button>
+									<button class="btn btn-danger">删除</button>
+								</div>
+								<div class="searchPanel">
+									<select class="formInput hundred">
+										<option value="员工">员工</option>
+										<option value="子女">子女</option>
+									</select>
+									&nbsp;&nbsp;医药费报销封顶金额：
+									<input type="text" class="formInput fiftenPx" /> 元
+								</div>
+								<div class="searchPanel">
+									<button class="btn btn-primary">确定</button>
+									<button class="btn btn-primary">重置</button>
+								</div>
+							</div>
+						</div>
+					</div>	
+				</div>
+			</div>
+		</div>
 	</body>
 </html>
