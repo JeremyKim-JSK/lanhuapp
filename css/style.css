@@ -16,6 +16,17 @@ span.icon {
 	line-height: 1;
 }
 
+.indexImg {
+	background-image: url(../img/xinbaibaoxiao@2x.png);
+	background-repeat: no-repeat;	
+	width: 50%;  
+	height: 80%;  
+	overflow: auto;  
+	margin: auto;  
+	position: absolute;  
+	top: 0; left: 0; bottom: 0; right: 0;  
+}
+
 .fiftenPx {
 	width: 50px !important;
 }
