@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <meta charset="utf-8" />
+</head>
+<body>
+    <!--图片热点，给一张图片加多个链接-->
+    <img src="img/beijing-2.png" usemap="#Map" width="500" height="500"/>
+    <map id="Map" name="Map"><!--通过id 将两者关联起来 id是唯一的 js要用的，但是name可以相同-->
+        <area href="#" shape="rect" coords="173, 106, 273, 206"/><!--【左上角距离左边num1，距离上边num2】，【右下角距离左边num3，距离上边num4】-->
+        <area href="#" shape="circle" coords="221, 358, 50"/><!--圆心坐标 num1,num2  半径num3-->
+    </map>
+</body>
+</html>
