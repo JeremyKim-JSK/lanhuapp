@@ -2,22 +2,15 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>新百报销系统</title>
+		<title></title>
 	</head>
 	<style type="text/css">
-		html, body{
-		   margin: 0px;
-		   height: 100%;
-		}
-		
-		body {
+		html, body {
+			margin: 0px;
+			height: 100%;
+			overflow: hidden;
 			min-width: 1000px;
 			min-height: 600px;
-		}
-		
-		img {
-			height:100%;
-			width:100%;
 		}
 		
 		.beijin1Div {
@@ -26,98 +19,75 @@
 			text-align: center;
 		}
 		
-		.beijing1 {
-			height:100%;
-			width:100%;
-			background-image:url(img/beijing-1.png);
-			background-repeat:no-repeat;
-			background-position:center center;
-			position:relative;
-		}
-		
 		.beijin2Div {
-			height:80%;
-			width:96%;
-			min-width: 960px;
-			position:absolute;
-			top: 10%;
-			left: 2%;
-		}
-		
-		.logoDiv {
-		    height: 10%;
-		    width: 10%;
-		    position: relative;
-		    top: -70%;
-		    left: 27%;
-		}
-		
-		.fengexianDiv {
-			position:relative;
-			top: -90%;
-			left: 38%;
-		}
-		
-		.FormDiv {
-		    /*background-color: yellow;*/
-	        width: 25%;
-    		height: 30%;
-		    position: relative;
-		    top: -87%;
-	   		left: 40%;
+			height: 700px; 
+			width: 1200px; 
+			margin: auto;  
+			position: absolute;  
+			top: 0; left: 0; bottom: 0; right: 0;  
 		}
 		
 		.firstInput {
-			position: relative;
-		    top: 8%;
+		    position: absolute;
+		    top: 221px;
+		    left: 510px;
 		}
 		
 		.secondInput {
-			position: relative;
-		    top: 15%;
+		    position: absolute;
+		    top: 283px;
+		    left: 510px;
 		}
 		
 		.thirdInput {
-			position: relative;
-		    top: 20%;
+		    position: absolute;
+		    top: 336px;
+		    left: 480px;
+		    height: 16px;
+		    width: 16px;
+		    line-height: 1.42857143;
+		    color: #555;
+		    background-color: #fff;
+		    background-image: none;
+		    border: 1px solid #ccc;
+		    border-radius: 4px;
+		    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+		    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+		    -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+		    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
 		}
 		
-		.nextLogin {
-			position: relative;
-			top: -20px;
-			left: 30px;
-			color: white;
+		.formInput {
+		    height: 25px;
+		    width: 234px;
+		    padding: 3px 6px;
+		    margin-left: 5px;
+		    font-size: 16px;
+		    line-height: 1.42857143;
+		    color: #555;
+		    background-color: #fff;
+		    background-image: none;
+		    border: 1px solid #ccc;
+		    border-left-width: 0;
+		    border-radius: 4px;
+		    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+		    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+		    -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+		    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
 		}
 	</style>
 	<body>
-		<div class="beijin1Div" style=" ">
-			<div class="beijing1"></div>
+		<div class="beijin1Div">
+			<img src="img/beijing-1.png" width="100%" height="100%">
 		</div>
 		<div class="beijin2Div">
-			<img src="img/beijing-2.png"/>
-		</div>
-		<div class="logoDiv">
-			<!--<img src="img/logo@2x.png"/>-->
-		</div>
-		<!--<div class="fengexianDiv">
-			<img src="img/fengexian.png" style="width: 5px;"/>
-		</div>-->
-		<div class="FormDiv">
-			<div style="color: #403d3d; font-weight: 1000; font-size: 14px;">
-				图片登陆测试
-			</div>
-			<div class="firstInput">
-				<img src="img/shurukuang.png" />
-			</div>
-			<div class="secondInput">
-				<img src="img/shurukuang.png" />
-			</div>
-			<div class="thirdInput">
-				<div style="height: 20px;width: 20px;">
-					<img src="img/juxing.png" />
-				</div>
-				<div class="nextLogin">下次自动登陆</div>
-			</div>
+			<img src="img/bgtest.png" width="100%" height="100%" usemap="#Map">
+			<map id="Map" name="Map"><!--通过id 将两者关联起来 id是唯一的 js要用的，但是name可以相同-->
+		        <area href="#" shape="poly" coords="543, 400, 666, 493, 723, 363"/><!--【左上角距离左边num1，距离上边num2】，【右下角距离左边num3，距离上边num4】-->
+		    </map>
+			<input type="text" class="firstInput formInput" />	
+			<input type="password" class="secondInput formInput" />	
+			<input type="checkbox" class="thirdInput"/>
 		</div>
 	</body>
 </html>
