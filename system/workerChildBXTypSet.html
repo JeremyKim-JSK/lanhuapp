@@ -9,6 +9,7 @@
 		<script src="/js/jquery-1.11.2.js"></script>
 		<script src="/js/jquery.cookie.js"></script>
 		<script src="/js/core.js"></script>
+		<script src="/js/util.js"></script>
 	</head>
 	<body>
 		<div id="top"></div>
@@ -31,18 +32,19 @@
 								<tr>
 									<th>序号</td>
 									<th>子女性质</td>
+									<th>操作</td>
 								</tr>
-								<tr onclick="modifyEmployee(this)">
-									<td>0001</td>
-									<td>独生</td>
-								</tr>
-								<tr>
-									<td>0002</td>
-									<td>多胞胎子女</td>
+								<tr name="childrenTemplate" onclick="modifyChlidYB(this)" style="display: none;">
+									<td name="rowNo"></td>
+									<td name="xb_child_yb"></td>
+									<td>
+										<button class="btn btn-danger deleteChlidYB">删除</button>
+										<input type="hidden" name="id"/>
+									</td>
 								</tr>
 							</table>
 							<div class="tabFooter">
-								<button class="btn btn-primary flRight" onclick="showModel()">新增</button>
+								<button class="btn btn-primary flRight" onclick="addChlidYB()">新增</button>
 							</div>
 						</div>
 					</div>	
@@ -55,10 +57,22 @@
 				<div class="modal-content">
 					<div class="modal-header">
 						<button type="button" class="close">×</button>
-						<h4 class="modal-title">静态模拟框</h4>
+						<h4 class="modal-title">子女性质</h4>
 					</div>
-					<div class="modal-body">加文本</div>
+					<div class="modal-body">
+						<table class="tabTable matrixTab">
+							<tr>
+								<th class="addHide">序号</td>
+								<th>子女性质</td>
+							</tr>
+							<tr>
+								<td class="addHide"><input type="text" id="rowNo" readonly="readonly" class="formInput"/> </td>
+								<td><input type="text" id="xb_child_yb" class="formInput"/> </td>
+							</tr>
+						</table>
+					</div>
 					<div class="modal-footer">
+						<button type="button" class="btn btn-primary" onclick="addOrmodifyChlidYBNature()">确定</button>
 						<button type="button" class="btn btn-default hiddenFade">关闭</button>
 					</div>
 				</div>	
@@ -68,6 +82,78 @@
 		
 		<script>
 			
+			var methodAgre
+			var id
+			function addChlidYB() {
+				methodAgre = "addChlidYB";
+				$(".addHide").hide();	
+				$("#xb_child_yb").val('')
+				id = 0;
+				showModel();
+			}
+			
+			function modifyChlidYB(el) {
+				methodAgre = "modifyChlidYB";
+				$(".addHide").show();	
+				id = $(el).find("input[name='id']").val();
+				
+				$("#rowNo").val($(el).find("td[name='rowNo']").text())
+				$("#xb_child_yb").val($(el).find("td[name='xb_child_yb']").text())
+				
+				showModel();
+			}
+			
+			function addOrmodifyChlidYBNature() {
+				$.ajax({
+					url: apphost() + methodAgre,
+					type: 'post',
+					data: JSON.stringify({
+						id: id,
+						xb_child_yb: $("#xb_child_yb").val(),
+					}),
+					contentType: 'application/json;charset=utf-8',
+					success: function(data) {
+						console.log(data)
+						if(!isRight(data)) return;
+						tip("操作成功！");
+						getAllChildrenYB();
+						hideModel();
+					}
+				})
+			}
+			
+			getAllChildrenYB()
+			function getAllChildrenYB() {
+				$.ajax({
+					url: apphost() + "getAllChildrenYB",
+					type: 'post',
+					data: JSON.stringify({
+						id: id,
+					}),
+					contentType: 'application/json;charset=utf-8',
+					success: function(data) {
+						console.log(data);
+						toView(data,true);
+					}
+				})
+			}	
+			
+			$(".deleteChlidYB").click(function(el) {
+				el.stopPropagation();
+				$.ajax({
+					url: apphost() + "deleteChlidYB",
+					type: 'post',
+					data: JSON.stringify({
+						id: $(this).next().val(),
+					}),
+					contentType: 'application/json;charset=utf-8',
+					success: function(data) {
+						console.log(data);
+						location.reload();
+					}
+				})
+			})
 		</script>
+		<div class="hint"></div>
 	</body>
 </html>

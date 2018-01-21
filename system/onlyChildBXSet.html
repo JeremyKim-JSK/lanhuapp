@@ -8,6 +8,7 @@
 		<script src="/js/jquery-1.11.2.js"></script>
 		<script src="/js/jquery.cookie.js"></script>
 		<script src="/js/core.js"></script>
+		<script src="/js/util.js"></script>
 	</head>
 	<body>
 		<div id="top"></div>
@@ -25,45 +26,215 @@
 						</ul>
 					</div>	
 					<div class="body">
-						<div class="topBar">
-							<div class="searchLi">
-								<div class="searchPanel">
-									选择报销类型：
-									<select class="formInput">
-										<option value="独生子女幼托">独生子女幼托</option>
-										<option value="独生子女私托">独生子女私托</option>
-										<option value="独生子女小学">独生子女小学</option>
-										<option value="独生子女初中">独生子女初中</option>
-										<option value="独生子女高中">独生子女高中</option>
-										<option value="多胞胎子女幼托">多胞胎子女幼托</option>
-										<option value="多胞胎子女私托">多胞胎子女私托</option>
-									</select>
-									&nbsp;&nbsp;&nbsp;&nbsp; 报销金额：
-									<input type="text" class="formInput fiftenPx"/> 元/月
-								</div>
-								<div class="searchPanel">
-									选择报销类型：
-									<select class="formInput">
-										<option value="独生子女幼托">独生子女幼托</option>
-										<option value="独生子女私托">独生子女私托</option>
-										<option value="独生子女小学">独生子女小学</option>
-										<option value="独生子女初中">独生子女初中</option>
-										<option value="独生子女高中">独生子女高中</option>
-										<option value="多胞胎子女幼托">多胞胎子女幼托</option>
-										<option value="多胞胎子女私托">多胞胎子女私托</option>
-									</select>
-									&nbsp;&nbsp;&nbsp;&nbsp; 报销金额：
-									<input type="text" class="formInput fiftenPx"/> 元/月
-								</div>
-								<div class="searchPanel">
-									<button class="btn btn-primary">增加</button>
-									<button class="btn btn-danger">删除</button>
-								</div>
+						<div class="tabContent">
+							<!--<div class="searchLi">
+								<select class="formInput children">
+								</select>
+								&nbsp;&nbsp;&nbsp;&nbsp;报销金额：
+								<input type="text" class="formInput hundred" id="money"/> 元/月
+								<button class="btn btn-primary" onclick="addOperateMaxMoney()">确定</button>
+								<button class="btn btn-danger" onclick="resetOperateMaxMoney()">重置</button>
+							</div>-->
+							<table class="tabTable matrixTab">
+								<tr>
+									<th>序号</th>
+									<th>报销类型</th>
+									<th>金额</th>
+									<th>操作</th>
+								</tr>
+								<tr name="employeesTemplate" style="display: none;">
+									<td name="rowNo"></td>
+									<td name="tf_proportion"></td>
+									<td name="money"></td>
+									<td>
+										<button class="btn btn-danger deleteChildTFPro">删除</button>
+										<input type="hidden" name="id"/>
+									</td>	
+								</tr>
+							</table>
+							<div class="tabFooter">
+								<button class="btn btn-primary flRight" onclick="showModel()">新增</button>
 							</div>
 						</div>
 					</div>	
 				</div>
 			</div>
 		</div>
+		
+		<div class="modal">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close">×</button>
+						<h4 class="modal-title">子女托费、学费报销比例设置</h4>
+					</div>
+					<div class="modal-body">
+						<div class="searchPanel">
+							<select class="formInput" id="children">
+							</select>
+							&nbsp;&nbsp;&nbsp;&nbsp; 报销金额：
+							<input type="text" class="formInput hundred" id="money"/> 元/月
+						</div>	
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary" onclick="addChildTFPro()">确定</button>
+						<button type="button" class="btn btn-default hiddenFade">关闭</button>
+					</div>
+				</div>	
+			</div>
+		</div>
+		<div class="modal-backdrop"></div>
+		
+		<script>
+			
+			function addChildTFPro() {
+				$.ajax({
+					url: apphost() + "addChildTFPro",
+					type: 'post',
+					data: JSON.stringify({
+						nature: $("#children").val(),
+						money_start: $("#money_start").val(),
+						money_end: $("#money_end").val(),
+						proportion: $("#proportion").val()
+					}),
+					contentType: 'application/json;charset=utf-8',
+					success: function(data) {
+						console.log(data)
+						if(!isRight(data)) return;
+						tip("操作成功！");
+						getAllChildTFPro();
+						hideModel();
+					}
+				})
+			}
+			
+			getAllChildTFPro()
+			function getAllChildTFPro() {
+				$.ajax({
+					url: apphost() + "getAllChildTFPro",
+					type: 'post',
+					data: JSON.stringify({
+						id: 0,
+					}),
+					contentType: 'application/json;charset=utf-8',
+					success: function(data) {
+						console.log(data);
+						toView(data,true);
+					}
+				})
+			}	
+			
+			$(".deleteChildTFPro").click(function(el) {
+				el.stopPropagation();
+				$.ajax({
+					url: apphost() + "deleteChildTFProById",
+					type: 'post',
+					data: JSON.stringify({
+						id: $(this).next().val(),
+					}),
+					contentType: 'application/json;charset=utf-8',
+					success: function(data) {
+						console.log(data);
+						location.reload();
+					}
+				})
+			})
+			
+			//子女医药费报销类型列表			
+			getAllChildrenYB()
+			function getAllChildrenYB() {
+				$.ajax({
+					url: apphost() + "getAllChildrenYB",
+					type: 'post',
+					data: JSON.stringify({
+						id: 0,
+					}),
+					contentType: 'application/json;charset=utf-8',
+					success: function(data) {
+						console.log(data);
+						for(var i = 0; i < data.result.children.length; i++) {
+							$("#children").append("<option value=" + data.result.children[i].id + ">" + data.result.children[i].xb_child_yb + "</option>")
+							/*$("#children, .children").append("<option value=" + data.result.children[i].id + ">" + data.result.children[i].xb_child_yb + "</option>")*/
+						}
+					}
+				})
+			}
+			
+			//新增报销比例
+			function addChildTFPro(money) {
+				$.ajax({
+					url: apphost() + "addChildTFPro",
+					type: 'post',
+					data: JSON.stringify({
+						tf_proportion: $("#children").val(),
+						money: $("#money").val()
+					}),
+					contentType: 'application/json;charset=utf-8',
+					success: function(data) {
+						console.log(data);
+						if(!isRight(data)) return;
+						tip("设置成功！")
+						getAllChildTFPro();
+						hideModel();
+					}
+				})
+			}
+			
+			
+			/*$(".children").change(function() {
+				getMaxMoney();
+			})*/
+			/*getMaxMoney()
+			//获取最大金额
+			function getMaxMoney() {
+				$.ajax({
+					url: apphost() + "getMaxMoney",
+					type: 'post',
+					data: JSON.stringify({
+						nature: $(".children").val(),
+						type: 'ZGQS'
+					}),
+					contentType: 'application/json;charset=utf-8',
+					success: function(data) {
+						console.log(data);
+						if(data.result == null) {
+							$("#money").val('');
+							return;
+						}
+						$("#money").val(data.result.money)
+					}
+				})
+			}*/
+			
+		/*	function addOperateMaxMoney() {
+				operateMaxMoney($("#money").val())
+			}
+			
+			function resetOperateMaxMoney() {
+				operateMaxMoney(0)
+			}*/
+			
+			/*//设置报销最大金额
+			function operateMaxMoney(money) {
+				$.ajax({
+					url: apphost() + "operateMaxMoney",
+					type: 'post',
+					data: JSON.stringify({
+						nature: $(".children").val(),
+						type: 'ZGQS',
+						money: money
+					}),
+					contentType: 'application/json;charset=utf-8',
+					success: function(data) {
+						console.log(data);
+						if(!isRight(data)) return;
+						tip("设置成功！")
+						getMaxMoney();
+					}
+				})
+			}*/
+			
+		</script>
+		<div class="hint"></div>
 	</body>
 </html>

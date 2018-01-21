@@ -34,7 +34,7 @@
 									<th>操作</td>
 								</tr>
 								<tr name="employeesTemplate" onclick="modifyEmployee(this)" style="display: none;">
-									<td name="id"></td>
+									<td name="rowNo"></td>
 									<td name="xb_employee_nature"></td>
 									<td>
 										<button class="btn btn-danger deleteEmployee">删除</button>
@@ -65,7 +65,7 @@
 								<th>员工性质</td>
 							</tr>
 							<tr>
-								<td class="addHide"><input type="text" id="id" readonly="readonly" class="formInput"/> </td>
+								<td class="addHide"><input type="text" id="rowNo" readonly="readonly" class="formInput"/> </td>
 								<td><input type="text" id="xb_employee_nature" class="formInput"/> </td>
 							</tr>
 						</table>
@@ -94,10 +94,9 @@
 			function modifyEmployee(el) {
 				methodAgre = "modifyEmployee";
 				$(".addHide").show();	
-				id = $(el).find("td[name='id']").text();
+				id = $(el).find("input[name='id']").val();
 				
-				
-				$("#id").val(id)
+				$("#rowNo").val($(el).find("td[name='rowNo']").text())
 				$("#xb_employee_nature").val($(el).find("td[name='xb_employee_nature']").text())
 				
 				showModel();

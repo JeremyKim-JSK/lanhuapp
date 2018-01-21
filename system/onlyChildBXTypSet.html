@@ -8,6 +8,7 @@
 		<script src="/js/jquery-1.11.2.js"></script>
 		<script src="/js/jquery.cookie.js"></script>
 		<script src="/js/core.js"></script>
+		<script src="/js/util.js"></script>
 	</head>
 	<body>
 		<div id="top"></div>
@@ -30,41 +31,127 @@
 								<tr>
 									<th>序号</td>
 									<th>员工性质</td>
+									<th>操作</td>
 								</tr>
-								<tr>
-									<td>0001</td>
-									<td>独生子女幼托</td>
-								</tr>
-								<tr>
-									<td>0002</td>
-									<td>独生子女私托</td>
-								</tr>
-								<tr>
-									<td>0003</td>
-									<td>独生子女幼托</td>
-								</tr>
-								<tr>
-									<td>0004</td>
-									<td>独生子女私托</td>
-								</tr>
-								<tr>
-									<td>0005</td>
-									<td>独生子女幼托</td>
-								</tr>
-								<tr>
-									<td>0006</td>
-									<td>独生子女私托</td>
+								<tr name="childrenTemplate" onclick="modifyChlidYT(this)" style="display: none;">
+									<td name="rowNo"></td>
+									<td name="xb_child_znyt"></td>
+									<td>
+										<button class="btn btn-danger deleteChlidYT">删除</button>
+										<input type="hidden" name="id"/>
+									</td>
 								</tr>
 							</table>
 							<div class="tabFooter">
-								<button class="btn btn-primary flRight">保存</button>
-								<button class="btn btn-primary flRight">修改</button>
-								<button class="btn btn-primary flRight">新增</button>
+								<button class="btn btn-primary flRight" onclick="addChlidYT()">新增</button>
 							</div>
 						</div>
 					</div>	
 				</div>
 			</div>
 		</div>
+		<div class="modal">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close">×</button>
+						<h4 class="modal-title">员工性质</h4>
+					</div>
+					<div class="modal-body">
+						<table class="tabTable matrixTab">
+							<tr>
+								<th class="addHide">序号</td>
+								<th>员工性质</td>
+							</tr>
+							<tr>
+								<td class="addHide"><input type="text" id="rowNo" readonly="readonly" class="formInput"/> </td>
+								<td><input type="text" id="xb_child_znyt" class="formInput"/> </td>
+							</tr>
+						</table>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary" onclick="addOrmodifyChlidYTNature()">确定</button>
+						<button type="button" class="btn btn-default hiddenFade">关闭</button>
+					</div>
+				</div>	
+			</div>
+		</div>
+		<div class="modal-backdrop"></div>
+		
+		<script>
+			
+			var methodAgre
+			var id
+			function addChlidYT() {
+				methodAgre = "addChlidYT";
+				$(".addHide").hide();	
+				$("#xb_child_znyt").val('')
+				id = 0;
+				showModel();
+			}
+			
+			function modifyChlidYT(el) {
+				methodAgre = "modifyChlidYT";
+				$(".addHide").show();	
+				id = $(el).find("input[name='id']").val();
+				
+				$("#rowNo").val($(el).find("td[name='rowNo']").text())
+				$("#xb_child_znyt").val($(el).find("td[name='xb_child_znyt']").text())
+				
+				showModel();
+			}
+			
+			function addOrmodifyChlidYTNature() {
+				$.ajax({
+					url: apphost() + methodAgre,
+					type: 'post',
+					data: JSON.stringify({
+						id: id,
+						xb_child_znyt: $("#xb_child_znyt").val(),
+					}),
+					contentType: 'application/json;charset=utf-8',
+					success: function(data) {
+						console.log(data)
+						if(!isRight(data)) return;
+						tip("操作成功！");
+						getAllChildrenYT();
+						hideModel();
+					}
+				})
+			}
+			
+			getAllChildrenYT()
+			function getAllChildrenYT() {
+				$.ajax({
+					url: apphost() + "getAllChildrenYT",
+					type: 'post',
+					data: JSON.stringify({
+						id: id,
+					}),
+					contentType: 'application/json;charset=utf-8',
+					success: function(data) {
+						console.log(data);
+						toView(data,true);
+					}
+				})
+			}	
+			
+			$(".deleteChlidYT").click(function(el) {
+				el.stopPropagation();
+				$.ajax({
+					url: apphost() + "deleteChlidYT",
+					type: 'post',
+					data: JSON.stringify({
+						id: $(this).next().val(),
+					}),
+					contentType: 'application/json;charset=utf-8',
+					success: function(data) {
+						console.log(data);
+						location.reload();
+					}
+				})
+			})
+		</script>
+		<div class="hint"></div>
 	</body>
 </html>

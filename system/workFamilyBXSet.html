@@ -8,6 +8,7 @@
 		<script src="/js/jquery-1.11.2.js"></script>
 		<script src="/js/jquery.cookie.js"></script>
 		<script src="/js/core.js"></script>
+		<script src="/js/util.js"></script>
 	</head>
 	<body>
 		<div id="top"></div>
@@ -25,42 +26,200 @@
 						</ul>
 					</div>	
 					<div class="body">
-						<div class="topBar">
+						<div class="tabContent">
 							<div class="searchLi">
-								<label for="no">
-									<font class="labelFont">选择员工性质:</font>
-									<select class="formInput">
-										<option value="新百">新百</option>
-										<option value="红霞">红霞</option>
-										<option value="工伤">工伤</option>
-									</select>
-								</label>
-								<div class="searchPanel">
-									<input type="text" class="formInput fiftenPx" /> 元到 
-									<input type="text" class="formInput fiftenPx" /> 元，报销比例是： 
-									<input type="text" class="formInput fiftenPx" />
-								</div>
-								<div class="searchPanel">
-									<button class="btn btn-primary">新增</button>
-									<button class="btn btn-danger">删除</button>
-								</div>
-								<div class="searchPanel">
-									<select class="formInput hundred">
-										<option value="员工">员工</option>
-										<option value="子女">子女</option>
-									</select>
-									&nbsp;&nbsp;医药费报销封顶金额：
-									<input type="text" class="formInput fiftenPx" /> 元
-								</div>
-								<div class="searchPanel">
-									<button class="btn btn-primary">确定</button>
-									<button class="btn btn-primary">重置</button>
-								</div>
+								<select class="formInput nature">
+								</select>
+								&nbsp;&nbsp;&nbsp;&nbsp;医药费报销封顶金额：
+								<input type="text" class="formInput" id="money"/> 元
+								<button class="btn btn-primary" onclick="addOperateMaxMoney()">确定</button>
+								<button class="btn btn-danger" onclick="resetOperateMaxMoney()">重置</button>
+							</div>
+							<table class="tabTable matrixTab">
+								<tr>
+									<th>子女性质</td>
+									<th>金额起</td>
+									<th>金额止</td>
+									<th>比例</td>
+									<th>操作</td>
+								</tr>
+								<tr name="childrenTemplate" style="display: none;">
+									<td name="nature"></td>
+									<td name="money_start"></td>
+									<td name="money_end"></td>
+									<td name="proportion"></td>
+									<td>
+										<button class="btn btn-danger deleteZXQS">删除</button>
+										<input type="hidden" name="id"/>
+									</td>	
+								</tr>
+							</table>
+							<div class="tabFooter">
+								<button class="btn btn-primary flRight" onclick="showModel()">新增</button>
 							</div>
 						</div>
 					</div>	
 				</div>
 			</div>
 		</div>
+		
+		<div class="modal">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close">×</button>
+						<h4 class="modal-title">职工供养关系直系亲属医疗费用报销设置</h4>
+					</div>
+					<div class="modal-body">
+						<div class="searchPanel">
+							选择子女性质: 
+							<select class="formInput" id="nature">
+							</select>
+						</div>
+						<div class="searchPanel">
+							<input type="text" class="formInput hundred" id="money_start" /> 元到 
+							<input type="text" class="formInput hundred" id="money_end"/> 元
+							报销比例是： 
+							<input type="text" class="formInput hundred" id="proportion"/>
+						</div>	
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary" onclick="addZXQS()">确定</button>
+						<button type="button" class="btn btn-default hiddenFade">关闭</button>
+					</div>
+				</div>	
+			</div>
+		</div>
+		<div class="modal-backdrop"></div>
+		
+		<script>
+			
+			function addZXQS() {
+				$.ajax({
+					url: apphost() + "addZXQS",
+					type: 'post',
+					data: JSON.stringify({
+						nature: $("#nature").val(),
+						money_start: $("#money_start").val(),
+						money_end: $("#money_end").val(),
+						proportion: $("#proportion").val()
+					}),
+					contentType: 'application/json;charset=utf-8',
+					success: function(data) {
+						console.log(data)
+						if(!isRight(data)) return;
+						tip("操作成功！");
+						getAllZXQS();
+						hideModel();
+					}
+				})
+			}
+			
+			getAllZXQS()
+			function getAllZXQS() {
+				$.ajax({
+					url: apphost() + "getAllZXQS",
+					type: 'post',
+					data: JSON.stringify({
+						id: 0,
+					}),
+					contentType: 'application/json;charset=utf-8',
+					success: function(data) {
+						console.log(data);
+						toView(data,true);
+					}
+				})
+			}	
+			
+			$(".deleteZXQS").click(function(el) {
+				el.stopPropagation();
+				$.ajax({
+					url: apphost() + "deleteZXQS",
+					type: 'post',
+					data: JSON.stringify({
+						id: $(this).next().val(),
+					}),
+					contentType: 'application/json;charset=utf-8',
+					success: function(data) {
+						console.log(data);
+						location.reload();
+					}
+				})
+			})
+			
+			//子女医药费报销类型列表			
+			getAllEmployees()
+			function getAllEmployees() {
+				$.ajax({
+					url: apphost() + "getAllEmployees",
+					type: 'post',
+					data: JSON.stringify({
+						id: 0,
+					}),
+					contentType: 'application/json;charset=utf-8',
+					success: function(data) {
+						console.log(data);
+						for(var i = 0; i < data.result.employees.length; i++) {
+							$("#nature, .nature").append("<option value=" + data.result.employees[i].id + ">" + data.result.employees[i].xb_employee_nature + "</option>")
+						}
+					}
+				})
+			}
+			
+			$(".nature").change(function() {
+				getMaxMoney();
+			})
+			getMaxMoney()
+			//获取最大金额
+			function getMaxMoney() {
+				$.ajax({
+					url: apphost() + "getMaxMoney",
+					type: 'post',
+					data: JSON.stringify({
+						nature: $(".nature").val(),
+						type: 'ZGQS'
+					}),
+					contentType: 'application/json;charset=utf-8',
+					success: function(data) {
+						console.log(data);
+						if(data.result == null) {
+							$("#money").val('');
+							return;
+						}
+						$("#money").val(data.result.money)
+					}
+				})
+			}
+			
+			function addOperateMaxMoney() {
+				operateMaxMoney($("#money").val())
+			}
+			
+			function resetOperateMaxMoney() {
+				operateMaxMoney(0)
+			}
+			
+			//设置报销最大金额
+			function operateMaxMoney(money) {
+				$.ajax({
+					url: apphost() + "operateMaxMoney",
+					type: 'post',
+					data: JSON.stringify({
+						nature: $(".nature").val(),
+						type: 'ZGQS',
+						money: money
+					}),
+					contentType: 'application/json;charset=utf-8',
+					success: function(data) {
+						console.log(data);
+						if(!isRight(data)) return;
+						tip("设置成功！")
+						getMaxMoney();
+					}
+				})
+			}
+			
+		</script>
+		<div class="hint"></div>
 	</body>
 </html>
