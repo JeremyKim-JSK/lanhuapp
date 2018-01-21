@@ -390,3 +390,159 @@ select {
 	margin: 10px;
 	min-height: 30px;
 }
+
+.modal-backdrop {
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	z-index: 1040;
+	opacity: 0.5;
+	display: none;
+	background-color: #000;
+}
+
+.modal {
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	z-index: 1050;
+	display: none;
+	opacity: 1;
+	overflow: hidden;
+	-webkit-overflow-scrolling: touch;
+	outline: 0;
+}
+
+.modal-dialog {
+	position: relative;
+	width: 600px;
+	margin: 30px auto;
+}
+
+.modal-content {
+	position: relative;
+	background-color: #fff;
+	-webkit-background-clip: padding-box;
+	background-clip: padding-box;
+	border: 1px solid #999;
+	border: 1px solid rgba(0, 0, 0, .2);
+	border-radius: 6px;
+	outline: 0;
+	-webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
+	box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
+}
+
+.modal-header {
+	padding: 15px;
+	border-bottom: 1px solid #e5e5e5;
+}
+
+.modal-header .close {
+	margin-top: -2px;
+}
+
+
+/*fade.css*/
+button.close {
+	-webkit-appearance: none;
+	padding: 0;
+	cursor: pointer;
+	background: 0 0;
+	border: 0;
+}
+
+.close {
+	float: right;
+	font-size: 21px;
+	font-weight: 700;
+	line-height: 1;
+	color: #000;
+	text-shadow: 0 1px 0 #fff;
+	filter: alpha(opacity=20);
+	opacity: .2;
+}
+
+.modal-title {
+	margin: 0;
+	line-height: 1.42857143;
+}
+
+.h4,
+h4 {
+	font-size: 18px;
+	font-family: inherit;
+	font-weight: 500;
+	line-height: 1.1;
+	color: inherit;
+}
+
+.modal-body {
+	position: relative;
+	padding: 15px;
+}
+
+.modalLabel {
+	margin: 10px;
+}
+
+.modal-footer {
+	padding: 15px;
+	text-align: right;
+	border-top: 1px solid #e5e5e5;
+}
+/*fade.css   end*/
+
+
+/*hint.css*/
+a:link {
+	text-decoration: none;
+}
+a:visited {
+	text-decoration: none;
+}
+a:hover {
+	text-decoration: none;
+}
+a:active {
+	text-decoration: none;
+}
+
+.hint {
+    opacity: 0;
+    /* width: 160px; */
+    min-width: 120px;
+    line-height: 30px;
+    padding: 0 10px;
+    background: rgba(0,0,0, .6);
+    position: fixed;
+    left: 50%;
+    top: 50%;   
+    -webkit-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+    -webkit-transition: opacity linear .6s;
+    border-radius: 5px;
+    text-align: center;
+    color: white;
+    z-index:5000;
+    /* for ie6-8 */
+    *zoom:1;
+    background:#000000 \9;
+    *padding-left:0;
+    *padding-right:0;
+    filter:Alpha(opacity=60);    
+    position:absolute \9;
+    /* for ie6-8 end */
+}
+.hintShow {
+    opacity:1;
+}
+.tip {
+    font-size: 14px;
+    color: #C1C1C1;
+}
+
+/*hint.css end*/

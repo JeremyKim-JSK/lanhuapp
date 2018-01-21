@@ -63,12 +63,19 @@ function preview() {
 	window.print(); 
 } 
 
+//ajax同步
+$.ajaxSetup({   
+    async : false  
+}); 
 
-
-
-
-
-
+//显示模态框
+function showModel() {
+	$(".modal, .modal-backdrop").css("display", "block");
+}
+//显示模态框
+function hideModel() {
+	$(".modal, .modal-backdrop").css("display", "none");
+}
 
 //上传文件
 function myAjaxFileUpload() {
@@ -83,9 +90,43 @@ function myAjaxFileUpload() {
 	});
 }
 
+//判断返回是否正确
+function isRight(data) {
+	
+	if(data.status == 'succ') {
+		return true;
+	}else if(data.result != null) {
+		if(data.result.err != null) {
+			tip(data.result.err);
+			return false;
+		}
+	}else {
+		return false;
+	}
+	
+	
+/*	if(data.result != null) {
+		if(data.result.err != null) {
+			tip("data.result.err");
+			return false;
+		}
+	}else if(data.status == 'succ') {
+		retrun true;
+	}else {
+		return true
+	}*/
+}
+
 //查看图片
 function fetchImg(fullFileName) {
 	return apphost() + "/ash/doc/fetchImg/" + fullFileName + "/sys";
+}
+
+//两秒后跳转指定页面
+function reloadSecond() {
+	setTimeout(function() {
+		location.reload()
+	}, 2000)
 }
 
 //两秒后跳转指定页面

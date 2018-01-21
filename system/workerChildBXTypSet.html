@@ -5,6 +5,7 @@
 		<title>新百报销系统</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link href="/css/style.css" rel="stylesheet"/>
+		<link href="/css/fade.css" rel="stylesheet"/>
 		<script src="/js/jquery-1.11.2.js"></script>
 		<script src="/js/jquery.cookie.js"></script>
 		<script src="/js/core.js"></script>
@@ -31,7 +32,7 @@
 									<th>序号</td>
 									<th>子女性质</td>
 								</tr>
-								<tr>
+								<tr onclick="modifyEmployee(this)">
 									<td>0001</td>
 									<td>独生</td>
 								</tr>
@@ -41,14 +42,32 @@
 								</tr>
 							</table>
 							<div class="tabFooter">
-								<button class="btn btn-primary flRight">保存</button>
-								<button class="btn btn-primary flRight">修改</button>
-								<button class="btn btn-primary flRight">新增</button>
+								<button class="btn btn-primary flRight" onclick="showModel()">新增</button>
 							</div>
 						</div>
 					</div>	
 				</div>
 			</div>
 		</div>
+		
+		<div class="modal">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close">×</button>
+						<h4 class="modal-title">静态模拟框</h4>
+					</div>
+					<div class="modal-body">加文本</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default hiddenFade">关闭</button>
+					</div>
+				</div>	
+			</div>
+		</div>
+		<div class="modal-backdrop"></div>
+		
+		<script>
+			
+		</script>
 	</body>
 </html>

@@ -8,6 +8,7 @@
 		<script src="/js/jquery-1.11.2.js"></script>
 		<script src="/js/jquery.cookie.js"></script>
 		<script src="/js/core.js"></script>
+		<script src="/js/util.js"></script>
 	</head>
 	<body>
 		<div id="top"></div>
@@ -30,29 +31,129 @@
 								<tr>
 									<th>序号</td>
 									<th>员工性质</td>
+									<th>操作</td>
 								</tr>
-								<tr>
-									<td>0001</td>
-									<td>新百</td>
-								</tr>
-								<tr>
-									<td>0002</td>
-									<td>红霞</td>
-								</tr>
-								<tr>
-									<td>0003</td>
-									<td>工伤</td>
+								<tr name="employeesTemplate" onclick="modifyEmployee(this)" style="display: none;">
+									<td name="id"></td>
+									<td name="xb_employee_nature"></td>
+									<td>
+										<button class="btn btn-danger deleteEmployee">删除</button>
+										<input type="hidden" name="id"/>
+									</td>
 								</tr>
 							</table>
 							<div class="tabFooter">
-								<button class="btn btn-primary flRight">保存</button>
-								<button class="btn btn-primary flRight">修改</button>
-								<button class="btn btn-primary flRight">新增</button>
+								<button class="btn btn-primary flRight" onclick="addEmployeeNature()">新增</button>
 							</div>
 						</div>
 					</div>	
 				</div>
 			</div>
 		</div>
+		
+		<div class="modal">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close">×</button>
+						<h4 class="modal-title">员工性质</h4>
+					</div>
+					<div class="modal-body">
+						<table class="tabTable matrixTab">
+							<tr>
+								<th class="addHide">序号</td>
+								<th>员工性质</td>
+							</tr>
+							<tr>
+								<td class="addHide"><input type="text" id="id" readonly="readonly" class="formInput"/> </td>
+								<td><input type="text" id="xb_employee_nature" class="formInput"/> </td>
+							</tr>
+						</table>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary" onclick="addOrModifyEmployeeNature()">确定</button>
+						<button type="button" class="btn btn-default hiddenFade">关闭</button>
+					</div>
+				</div>	
+			</div>
+		</div>
+		<div class="modal-backdrop"></div>
+		
+		<script>
+			
+			var methodAgre
+			var id
+			function addEmployeeNature() {
+				methodAgre = "addEmployeeNature";
+				$(".addHide").hide();	
+				$("#xb_employee_nature").val('')
+				id = 0;
+				showModel();
+			}
+			
+			function modifyEmployee(el) {
+				methodAgre = "modifyEmployee";
+				$(".addHide").show();	
+				id = $(el).find("td[name='id']").text();
+				
+				
+				$("#id").val(id)
+				$("#xb_employee_nature").val($(el).find("td[name='xb_employee_nature']").text())
+				
+				showModel();
+			}
+			
+			function addOrModifyEmployeeNature() {
+				$.ajax({
+					url: apphost() + methodAgre,
+					type: 'post',
+					data: JSON.stringify({
+						id: id,
+						xb_employee_nature: $("#xb_employee_nature").val(),
+					}),
+					contentType: 'application/json;charset=utf-8',
+					success: function(data) {
+						console.log(data)
+						if(!isRight(data)) return;
+						tip("操作成功！");
+						getAllEmployees();
+						hideModel();
+					}
+				})
+			}
+			
+			getAllEmployees()
+			function getAllEmployees() {
+				$.ajax({
+					url: apphost() + "getAllEmployees",
+					type: 'post',
+					data: JSON.stringify({
+						id: id,
+					}),
+					contentType: 'application/json;charset=utf-8',
+					success: function(data) {
+						console.log(data);
+						toView(data,true);
+					}
+				})
+			}	
+			
+			$(".deleteEmployee").click(function(el) {
+				el.stopPropagation();
+				$.ajax({
+					url: apphost() + "deleteEmployee",
+					type: 'post',
+					data: JSON.stringify({
+						id: $(this).next().val(),
+					}),
+					contentType: 'application/json;charset=utf-8',
+					success: function(data) {
+						console.log(data);
+						location.reload();
+					}
+				})
+			})
+		</script>
+		<div class="hint"></div>
 	</body>
 </html>

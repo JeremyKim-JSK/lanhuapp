@@ -61,8 +61,7 @@ isJson = function(obj) {
 
 function apphost() {
 	
-  /*return (/^t\.|test/).test(window.location.host) ? "http://121.43.172.42:8080" : "";*/
-  return (/^t\.|test/).test(window.location.host) ? "" : "";
+  return (/^t\.|test/).test(window.location.host) ? "/FinanceChain/api/employee/v1/" : "";
 	
 }
 
@@ -235,6 +234,7 @@ function right(jsonData) {
 	} else
 		return true;
 }
+
 /*****************************************************************************************
  * 页面渲染框架 end
  *****************************************************************************************/
