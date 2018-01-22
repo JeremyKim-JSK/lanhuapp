@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>新百报销系统</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link href="/css/style.css" rel="stylesheet"/>
+		<script src="/js/jquery-1.11.2.js"></script>
+		<script src="/js/jquery.cookie.js"></script>
+		<script src="/js/core.js"></script>
+		<script src="/js/util.js" ></script>
+	</head>
+	<body>
+		<div id="top"></div>
+		<div class="container">
+			<div class="row">
+				<div id="left"></div>
+				<div class="right">
+					<div class="header">
+						<ul>
+							<li>首页</li>	
+							<li>/</li>	
+							<li>子女医药费报销</li>	
+							<li>/</li>	
+							<li>子女医药费报销</li>	
+						</ul>
+					</div>	
+					<div class="body">
+						<div class="topBar">
+							<div class="searchLi">
+								<label for="no">
+									<span class="icon"><img src="/img/yuangong.png"/></span>
+									<font class="labelFont">员工号:</font>
+								</label>
+								<input type="text" id="psncode" class="formInput" placeholder=""/>
+								<button class="btn btn-yellow flRight" onclick="getInfoByXB();">
+									<span class="icon"><img src="/img/zengjia.png"/></span>
+									<font>新增报销单据</font>
+								</button>
+							</div>
+						</div>
+						<div class="tabContent">
+							<table class="tabTable matrixTab">
+								<tr>
+									<th>员工基本信息</th>
+									<td>员工工号：<span name="psnbase.account" id="employee_number"></span></td>
+									<td>员工姓名：<span name="psnbase.psnname" id="employee_name"></span></td>
+									<td>员工性别：<span name="psnbase.sex" id="employee_sex"></span></td>
+								</tr>
+								<tr>
+									<th>子女情况：（选择报销子女姓名）</th>
+									<td id="hiPsnList">
+									</td>
+									<th>报销类别：(选择报销子女类型)</td>
+									<td>
+										<select class="formInput" id="child_nature">
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<th>报销单据信息录入</th>
+									<td>医疗费金额：<input type="text" class="formInput" id="reimbursement_money_all" style="width: 100px;"/> 元 </td>
+									<td>附件张数：<input type="text" class="formInput" id="enclosure_num" style="width: 100px;"/>张 </td>
+									<td>发生日期：<input type="date" id="plcae_date"/></td>
+								</tr>
+								<tr>
+									<td>本年度累计医药费用：300元</td>
+									<td>该员工本年度所有：1000元 </td>
+									<td>本年度累计医药费用：1000元</td>
+									<td>该年度本员工所有：1000元 </td>
+								</tr>
+								<tr>
+									<td>本年度累计医药费用：300元</td>
+									<td>该子女本年度所有：1000元 </td>
+									<td>本年度累报销金额：1000元</td>
+									<td>该子女年度所有：1000元 </td>
+								</tr>
+							</table>
+							<div class="tabFooter">
+								<button class="btn btn-primary flRight">重置</button>
+								<button class="btn btn-primary flRight" onclick="makeBill();">生成单据</button>
+							</div>
+						</div>
+					</div>	
+				</div>
+			</div>
+		</div>
+<!--		<div class="modal">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close">×</button>
+						<h4 class="modal-title">新增报销单据</h4>
+					</div>
+					<div class="modal-body">该员工的性别，不符合本年份报销条件！</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default hiddenFade">关闭</button>
+					</div>
+				</div>	
+			</div>
+		</div>
+		<div class="modal-backdrop"></div>-->
+		<script>
+			var psnbaseData = {};
+			//查询员工信息
+			function getInfoByXB() {
+				if($("#psncode").val() == '' || $("#psncode").val() == null) {
+					tip("请输入员工号");
+					return;
+				};
+				
+				$.ajax({
+					url: apphost() + "getInfoByXB",
+					type: 'get',
+					data: {
+						psncode: $("#psncode").val(),
+						type: 'ZNYY'
+					},
+					contentType: 'application/json;charset=utf-8',
+					success: function(data) {
+						console.log(data);
+						if(!isRight(data)) return;
+						toView(data,true);
+						
+						for(var i = 0; i < data.result.hiPsnList.length; i++) {
+							curPsn = data.result.hiPsnList[i];
+							var hiPsnListValue = curPsn.hipsnname + "/" + curPsn.sex + "/" + curPsn.birthday
+							$("#hiPsnList").append(
+							"<div>"
+								+ "<input type='checkbox' name='hiPsnList' value='" + hiPsnListValue + "'/>"
+								+ "<span>" + hiPsnListValue + "</span>"
+							+ "</div>"
+							)
+						}
+						psnbaseData = data.result.psnbase;
+					}
+				})
+			}
+			
+			//子女医药费报销类型列表			
+			getAllChildren()
+			function getAllChildren() {
+				$.ajax({
+					url: apphost() + "getAllChildren",
+					type: 'post',
+					data: JSON.stringify({
+						id: 0,
+					}),
+					contentType: 'application/json;charset=utf-8',
+					success: function(data) {
+						console.log(data);
+						for(var i = 0; i < data.result.children.length; i++) {
+							$("#child_nature").append("<option value=" + data.result.children[i].id + ">" + data.result.children[i].xb_child_nature + "</option>")
+						}
+					}
+				})
+			}
+			
+			//新增保险单据
+			function makeBill() {
+				var employee_children = '';
+				for(var i = 0; i < $("input[name='hiPsnList']:checked").length; i++) {
+					employee_children = $("input[name='hiPsnList']:checked").eq(i).val() + "," + employee_children;
+				}
+				
+				if(employee_children != '') {
+					employee_children.substring(0, employee_children.length-1)
+				}
+				
+			/*	$.ajax({
+					url: apphost() + "addBXD",
+					type: 'post',
+					data: JSON.stringify({
+						employee_number: $("#employee_number").text(),
+						employee_name: $("#employee_name").text(),
+						employee_sex: $("#employee_sex").text(),
+						employee_children: employee_children,
+						reimbursement_type: $("#reimbursement_type").val(),
+						reimbursement_money_all: $("#reimbursement_money_all").val(),
+						enclosure_num: $("#enclosure_num").val(),
+						plcae_date: $("#plcae_date").val(),
+						month: '',
+						type: 'ZNYY',
+						YBFP_year: ''
+					}),
+					contentType: 'application/json;charset=utf-8',
+					success: function(data) {
+						console.log(data);
+						//location.href = "/children/createBill.html"
+					}
+				})*/
+				
+				var data = {
+				    "status": "succ",
+				    "result": {
+				        "employee_sex": "nan",
+				        "employee_number": "100000001",
+				        "plcae_date": "2018-01-20",
+				        "enclosure_num": "3",
+				        "employee_children": "qweqweq",
+				        "type": "ZNYY",
+				        "reimbursement_money": 0.4788,
+				        "employee_name": "zhangsna",
+				        "YBFP_year": "",
+				        "reimbursement_money_all": 9,
+				        "month": "10",
+				        "gs": "9.0*5.32%=0.4788",
+				        "page_num": "20180120006",
+				        "reimbursement_type": "1"
+				    }
+				}
+				
+				if(!isRight(data)) return;
+				var psnbaseStr = JSON.stringify(psnbaseData);
+				var dataStr = JSON.stringify(data.result);
+				employeeStr = psnbaseStr.substring(0, psnbaseStr.length-1) + "," + dataStr.substring(1, dataStr.length);
+				
+				var employee = {
+					'status': 'succ',
+					'result': {
+						'employee': JSON.parse(employeeStr)
+					}
+				}
+				$.cookie("employee", JSON.stringify(employee), {path: "/children/createBill.html"})
+				
+				location.href = "/children/createBill.html";
+			}
+		</script>
+		<div class="hint"></div>
+	</body>
+</html>

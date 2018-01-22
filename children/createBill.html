@@ -50,16 +50,16 @@
 									<td>手机号：<span name="employee.mobile"></span>（人资系统抓取）</td>
 								</tr>
 								<tr>
-									<td>事由:<input type="text" class="formInput"/></td>
+									<td>事由: &nbsp;&nbsp;&nbsp;&nbsp;<span>子女医药费</span></td>
 									<td colspan="2">
 										<div>
-											子女医药费 &nbsp;&nbsp;&nbsp;&nbsp;  实际报销金额计算公式和计算结果（显示计算公式和结果)
+											   实际报销金额计算公式和计算结果: <span name="employee.gs"></span>
 										</div>
 									</td>
 								</tr>
 								<tr>
-									<td colspan="2">金额（大写）：玖拾陆万零贰佰壹拾肆圆整 </td>
-									<td>报销金额：<input type="text" class="formInput" id="reimbursement_money"/>元</td>
+									<td colspan="2">金额（大写）：<span id="bigReimbursement_money"></span> </td>
+									<td>报销金额：<span name="employee.reimbursement_money" function="reimbursement_moneyValueTo" id="reimbursement_money"></span>元</td>
 								</tr>
 								<tr>
 									<td>报销年度：<span name="employee.year"></span></td>
@@ -80,8 +80,14 @@
 		<script>
 			toView(JSON.parse($.cookie("employee")));
 			
+			function reimbursement_moneyValueTo(el, val) {
+				$("#bigReimbursement_money").text(toChineseCurrency(val));
+				
+				valueToWithNoFunc(el, val);
+			}
+			
 			function updateBXD() {
-				var employee = JSON.parse($.cookie("employee")).result
+				var employee = JSON.parse($.cookie("employee")).result.employee
 				
 				$.ajax({
 					url: apphost() + "updateBXD",
@@ -90,7 +96,7 @@
 						employee_department: employee.deptname,
 						card_number: $("#card_number").text(),
 						employee_phone: employee.mobile,
-						reimbursement_money: $("#reimbursement_money").val(),
+						reimbursement_money: $("#reimbursement_money").text(),
 						year: '',
 						page_num: employee.enclosure_num,
 					}),

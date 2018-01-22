@@ -64,7 +64,7 @@
 									<font class="labelFont">员工姓名:</font>
 								</label>
 								<input type="text" id="empName" class="formInput" placeholder=""/>
-								<button class="btn btn-default">
+								<button class="btn btn-default" onclick="searchEmployee()">
 									<font>员工信息查询</font>
 								</button>
 								<button class="btn btn-yellow flRight" onclick="addEmployee();">
@@ -170,10 +170,10 @@
 								</tr>
 								<tr name="relativesTemplate" style="display: none;">
 									<input type="hidden" name="id" />
-									<td><input type="text" class="formInput" name="name" id="modifyName" style="width: 50px;" value=""/></td>
-									<td><input type="text" class="formInput" name="code" id="modifyCode"  style="width: 50px;" value=""/></td>
+									<td><input type="text" class="formInput" name="name" style="width: 50px;" value=""/></td>
+									<td><input type="text" class="formInput" name="code" style="width: 50px;" value=""/></td>
 									<td>
-										<select class="formInput" style="width: 70px;" name="status" id="modifyStatus" >
+										<select class="formInput" style="width: 70px;" name="status">
 											<option value="1">在世</option>
 											<option value="2">去世</option>
 										</select>
@@ -209,8 +209,6 @@
 		</div>
 		<div class="modal-backdrop"></div>
 		<script>
-			
-			
 			
 			var methodAgre
 			var id
@@ -258,14 +256,26 @@
 				})
 			}
 			
+			//根据员工姓名查询员工
+			function searchEmployee() {
+				if($("#empName").val() == '' || $("#empName").val() == null) {
+					tip("请输入员工姓名");
+					return;
+				}
+				
+				getEmployee($("#empName").val())
+			}
+			
+			
 			//职工信息获取
-			getEmployee()
-			function getEmployee() {
+			getEmployee('')
+			function getEmployee(employee_name) {
 				$.ajax({
 					url: apphost() + "getEmployee",
 					type: 'post',
 					data: JSON.stringify({
 						id: id,
+						name: employee_name
 					}),
 					contentType: 'application/json;charset=utf-8',
 					success: function(data) {
@@ -291,7 +301,7 @@
 			}
 			//员工操作end
 			
-			//亲属操作start
+			//亲属操作start--------------------------------
 			var em_id;
 			//显示增加亲属model
 			function readyShowTrFade(el) {
@@ -299,6 +309,7 @@
 				
 				$("#em_no").text($(el).parent().parent().find("td[name='no']").text())
 				$("#em_name").text($(el).parent().parent().find("td[name='name']").text())
+				getRelatives();
 				showTrFade();
 			}
 			//新增
@@ -315,18 +326,12 @@
 			
 				showEmployeeModel();
 				id = $(el).parent().parent().find("input[name='id']").val();
-			
-				$("#no").val($(el).parent().parent().find("td[name='no']").text())
-				$("#name").val($(el).parent().parent().find("td[name='name']").text())
-				$("#nature").val($(el).parent().parent().find("td[name='nature']").text())
-				$("#card").val($(el).parent().parent().find("td[name='card']").text())
 				
-				var relativesName
-				var relativesCode
-				var relativesStatus
+				var relativesName = $(el).parent().parent().find("input[name='name']").val()
+				var relativesCode = $(el).parent().parent().find("input[name='name']").val()
+				var relativesStatus = $(el).parent().parent().find("input[name='name']").val()
 				
 				addOrmodifyChlidYBNature(id, relativesName, relativesCode, relativesStatus, em_id)
-				
 			}
 			
 			//新增和修改
@@ -347,18 +352,19 @@
 						if(!isRight(data)) return;
 						tip("操作成功！");
 						getRelatives();
+						$("#addRelatives input").val('')
 					}
 				})
 			}
 			
 			//亲属信息获取
-			//getRelatives()
+			getRelatives()
 			function getRelatives() {
 				$.ajax({
 					url: apphost() + "getRelatives",
 					type: 'post',
 					data: JSON.stringify({
-						id: id,
+						em_id: em_id
 					}),
 					contentType: 'application/json;charset=utf-8',
 					success: function(data) {
