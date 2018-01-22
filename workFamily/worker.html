@@ -5,10 +5,10 @@
 		<title>新百报销系统</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link href="/css/style.css" rel="stylesheet"/>
-		<link rel="stylesheet" type="text/css" href="/css/fade.css"/>
 		<script src="/js/jquery-1.11.2.js"></script>
 		<script src="/js/jquery.cookie.js"></script>
 		<script src="/js/core.js"></script>
+		<script src="/js/util.js"></script>
 	</head>
 	<body>
 		<div id="top"></div>
@@ -27,12 +27,12 @@
 					</div>
 					<div class="body">
 						<div class="topBar">
-							<div class="searchLi">
-								<label for="no">
+							<!--<div class="searchLi">
+								<label >
 									<font class="labelFont">员工工号:</font>
 								</label>
 								<input type="text" id="no" class="formInput" placeholder=""/>
-								<label for="no" style="padding-left: 200px;">
+								<label  style="padding-left: 200px;">
 									<font class="labelFont">员工姓名:</font>
 								</label>
 								<input type="text" id="no" class="formInput" placeholder=""/>
@@ -42,7 +42,7 @@
 								</button>
 							</div>
 							<div class="searchLi">
-								<label for="no">
+								<label >
 									<font class="labelFont">员工性质:</font>
 								</label>
 								<select type="text" id="no" class="formInput"/>
@@ -50,11 +50,24 @@
 									<option value="红霞">红霞</option>
 									<option value="工伤">工伤</option>
 								</select>
-								<label for="no" style="padding-left: 200px;">
+								<label  style="padding-left: 200px;">
 									<font class="labelFont">家属证号:</font>
 								</label>
 								<input type="text" id="no" class="formInput" placeholder=""/>
-								<button class="btn btn-yellow flRight" onclick="showFaceModel();">
+								<button class="btn btn-yellow flRight" onclick="addEmployee();">
+									<span class="icon"><img src="/img/zengjia.png"/></span>
+									<font>新增员工</font>
+								</button>
+							</div>-->
+							<div class="searchLi">
+								<label >
+									<font class="labelFont">员工姓名:</font>
+								</label>
+								<input type="text" id="empName" class="formInput" placeholder=""/>
+								<button class="btn btn-default">
+									<font>员工信息查询</font>
+								</button>
+								<button class="btn btn-yellow flRight" onclick="addEmployee();">
 									<span class="icon"><img src="/img/zengjia.png"/></span>
 									<font>新增员工</font>
 								</button>
@@ -66,25 +79,26 @@
 									<th>职工工号</th>
 									<th>职工姓名</td>
 									<th>员工性质</td>
+									<th>员工卡号</td>
 									<th>操作</td>
 								</tr>
-								<tr onclick="showTrFade(this);">
-									<td>0001</td>
-									<td>张三</td>
-									<td>新百</td>
-									<td>详情</td>
-								</tr>
-								<tr>
-									<td>0002</td>
-									<td>李四</td>
-									<td>新百</td>
-									<td>详情</td>
-								</tr>
-								<tr>
-									<td>0003</td>
-									<td>王武</td>
-									<td>新百</td>
-									<td>详情</td>
+								<tr name="employeesTemplate" style="display: none;">
+									<input type="hidden" name="id"/>
+									<td name="no"></td>
+									<td name="name"></td>
+									<td name="nature"></td>
+									<td name="card"></td>
+									<td>
+										<button class="btn btn-primary" onclick="readyShowTrFade(this);">
+											<font>亲属详情</font>
+										</button>
+										<button class="btn btn-primary" onclick="modifyEmployeeInfo(this);">
+											<font>修改</font>
+										</button>
+										<button class="btn btn-danger deleteEmployeeInfo">
+											<font>删除</font>
+										</button>
+									</td>
 								</tr>
 							</table>
 						</div>
@@ -102,30 +116,33 @@
 					</div>
 					<div class="modal-body">
 						<div class="modalLabel">
-							<label for="no">
+							<label >
 								<font class="labelFont">员工工号:</font>
 							</label>
 							<input type="text" id="no" class="formInput" placeholder=""/>
 						</div>
 						<div class="modalLabel">
-							<label for="no">
+							<label >
 								<font class="labelFont">员工姓名:</font>
 							</label>
-							<input type="text" id="no" class="formInput" placeholder=""/>
+							<input type="text" id="name" class="formInput" placeholder=""/>
 						</div>
 						<div class="modalLabel">
-							<label for="no">
+							<label >
 								<font class="labelFont">员工性质:</font>
 							</label>
-							<select class="formInput">
-								<option>新百</option>
-								<option>红霞</option>
-								<option>工伤</option>
+							<select class="formInput" id="nature">
 							</select>
+						</div>
+						<div class="modalLabel">
+							<label >
+								<font class="labelFont">员工卡号:</font>
+							</label>
+							<input type="text" id="card" class="formInput" placeholder=""/>
 						</div>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-primary">保存</button>
+						<button type="button" class="btn btn-primary" onclick="addOrmodifyChlidYBNature();">保存</button>
 						<button type="button" class="btn btn-default hiddenFade">关闭</button>
 					</div>
 				</div>	
@@ -138,8 +155,8 @@
 					<div class="modal-header">
 						<button type="button" class="close">×</button>
 						<h4 class="modal-title">
-							<font>员工工号:<span>0001</span></font>
-							<font style="margin-left:20px;">员工姓名:<span>李四</span></font>
+							<font>员工工号:<span id="em_no"></span></font>
+							<font style="margin-left:20px;">员工姓名:<span id="em_name"></span></font>
 						</h4>
 					</div>
 					<div class="modal-body">
@@ -151,31 +168,37 @@
 									<th>当前状态</td>
 									<th>操作</td>
 								</tr>
-								<tr>
-									<td><input type="text" class="formInput" style="width: 50px;" value="张三"/></td>
-									<td><input type="text" class="formInput" style="width: 50px;" value="21"/></td>
-									<td><input type="text" class="formInput" style="width: 50px;" value="在世"/></td>
+								<tr name="relativesTemplate" style="display: none;">
+									<input type="hidden" name="id" />
+									<td><input type="text" class="formInput" name="name" id="modifyName" style="width: 50px;" value=""/></td>
+									<td><input type="text" class="formInput" name="code" id="modifyCode"  style="width: 50px;" value=""/></td>
 									<td>
-										<button type="button" class="btn btn-warning">修改</button>
-										<button type="button" class="btn btn-danger">删除</button>
+										<select class="formInput" style="width: 70px;" name="status" id="modifyStatus" >
+											<option value="1">在世</option>
+											<option value="2">去世</option>
+										</select>
 									</td>
-								</tr>
-								<tr>
-									<td><input type="text" class="formInput" style="width: 50px;" value="李四"/></td>
-									<td><input type="text" class="formInput" style="width: 50px;" value="71"/></td>
-									<td><input type="text" class="formInput" style="width: 50px;" value="去世"/></td>
 									<td>
-										<button type="button" class="btn btn-warning">修改</button>
-										<button type="button" class="btn btn-danger">删除</button>
+										<button type="button" class="btn btn-warning" onclick="modifyRelatives(this)">修改</button>
+										<button type="button" class="btn btn-danger" onclick="deleteRelatives(this)">删除</button>
 									</td>
-								</tr>
-								<tr>
-									<td><input type="text" id="no" class="formInput" style="width: 50px;" placeholder=""/></td>
-									<td><input type="text" id="no" class="formInput" style="width: 50px;" placeholder=""/></td>
-									<td><input type="text" id="no" class="formInput" style="width: 50px;" placeholder=""/></td>
-									<td><button type="button" class="btn btn-primary">新增家属</button></td>
 								</tr>
 							</table>
+							
+							<table class="tabTable" id="addRelatives" style="margin-top: 10px;">
+								<tr>
+									<td><input type="text" id="relativesName" class="formInput" style="width: 50px;"/></td>
+									<td><input type="text" id="relativesCode" class="formInput" style="width: 50px;"/></td>
+									<td>
+										<select id="relativesStatus" class="formInput" style="width: 70px;">
+											<option value="1">在世</option>
+											<option value="2">去世</option>
+										</select>
+									</td>
+									<td><button type="button" class="btn btn-primary" onclick="addRelatives()">新增家属</button></td>
+								</tr>
+							</table>
+							
 						</div>
 					</div>
 					<div class="modal-footer">
@@ -186,18 +209,219 @@
 		</div>
 		<div class="modal-backdrop"></div>
 		<script>
-			function showFaceModel() {
+			
+			var methodAgre
+			var id
+			//员工操作start
+			//准备新增
+			function addEmployee() {
+				methodAgre = "addEmployee";
+				showEmployeeModel();
+				$("#addWorker input").val('')
+				id = 0;
+			}
+			
+			//准备修改
+			function modifyEmployeeInfo(el) {
+				methodAgre = "modifyEmployeeInfo";
+				
+				showEmployeeModel();	
+				id = $(el).parent().parent().find("input[name='id']").val();
+				
+				$("#no").val($(el).parent().parent().find("td[name='no']").text())
+				$("#name").val($(el).parent().parent().find("td[name='name']").text())
+				$("#nature").val($(el).parent().parent().find("td[name='nature']").text())
+				$("#card").val($(el).parent().parent().find("td[name='card']").text())
+			}
+			
+			//新增和修改
+			function addOrmodifyChlidYBNature() {
+				$.ajax({
+					url: apphost() + methodAgre,
+					type: 'post',
+					data: JSON.stringify({
+						id: id,
+						no: $("#no").val(),
+						name: $("#name").val(),
+						nature: $("#nature").val(),
+						card: $("#card").val()
+					}),
+					contentType: 'application/json;charset=utf-8',
+					success: function(data) {
+						console.log(data)
+						if(!isRight(data)) return;
+						tip("操作成功！");
+						reloadSecond();
+					}
+				})
+			}
+			
+			//职工信息获取
+			getEmployee()
+			function getEmployee() {
+				$.ajax({
+					url: apphost() + "getEmployee",
+					type: 'post',
+					data: JSON.stringify({
+						id: id,
+					}),
+					contentType: 'application/json;charset=utf-8',
+					success: function(data) {
+						console.log(data);
+						toView(data,true);
+					}
+				})
+			}	
+			
+			$(".deleteEmployeeInfo").click(function(el) {
+				$.ajax({
+					url: apphost() + "deleteEmployeeInfo",
+					type: 'post',
+					data: JSON.stringify({
+						id: $(this).parent().parent().find("input[name='id']").val()
+					}),
+					contentType: 'application/json;charset=utf-8',
+					success: function(data) {
+						console.log(data);
+						location.reload();
+					}
+				})
+			})
+			//员工操作end
+			
+			//亲属操作start
+			var em_id;
+			//显示增加亲属model
+			function readyShowTrFade(el) {
+				em_id = $(el).parent().parent().find("input[name='id']").val();
+				
+				$("#em_no").text($(el).parent().parent().find("td[name='no']").text())
+				$("#em_name").text($(el).parent().parent().find("td[name='name']").text())
+				showTrFade();
+			}
+			//新增
+			function addRelatives() {
+				methodAgre = "addRelatives";
+				/*$("#addRelatives input").val('')*/
+				
+				addOrmodifyChlidYBNature(0, $("#relativesName").val(), $("#relativesCode").val(), $("#relativesStatus").val(), em_id);
+			}
+			
+			//修改
+			function modifyRelatives(el) {
+				methodAgre = "modifyRelatives";
+			
+				showEmployeeModel();
+				id = $(el).parent().parent().find("input[name='id']").val();
+			
+				$("#no").val($(el).parent().parent().find("td[name='no']").text())
+				$("#name").val($(el).parent().parent().find("td[name='name']").text())
+				$("#nature").val($(el).parent().parent().find("td[name='nature']").text())
+				$("#card").val($(el).parent().parent().find("td[name='card']").text())
+				
+				var relativesName
+				var relativesCode
+				var relativesStatus
+				
+				addOrmodifyChlidYBNature(id, relativesName, relativesCode, relativesStatus, em_id)
+				
+			}
+			
+			//新增和修改
+			function addOrmodifyChlidYBNature(id, name, code, status, em_id ) {
+				$.ajax({
+					url: apphost() + methodAgre,
+					type: 'post',
+					data: JSON.stringify({
+						id: id,
+						name: name,
+						code: code,
+						status: status,
+						em_id: em_id
+					}),
+					contentType: 'application/json;charset=utf-8',
+					success: function(data) {
+						console.log(data)
+						if(!isRight(data)) return;
+						tip("操作成功！");
+						reloadSecond();
+					}
+				})
+			}
+			
+			//亲属信息获取
+			getRelatives()
+			function getRelatives() {
+				$.ajax({
+					url: apphost() + "getRelatives",
+					type: 'post',
+					data: JSON.stringify({
+						id: id,
+					}),
+					contentType: 'application/json;charset=utf-8',
+					success: function(data) {
+						console.log(data);
+						toView(data, true);
+					}
+				})
+			}
+			
+			function deleteRelatives(el) {	
+				$.ajax({
+					url: apphost() + "deleteRelatives",
+					type: 'post',
+					data: JSON.stringify({
+						id: $(el).parent().parent().find("input[name='id']").val()
+					}),
+					contentType: 'application/json;charset=utf-8',
+					success: function(data) {
+						console.log(data);
+						getRelatives();
+					}
+				})
+			}
+			//亲属操作end
+			
+			
+			
+			
+			
+			//获取所有员工性质
+			getAllEmployees()
+			function getAllEmployees() {
+				$.ajax({
+					url: apphost() + "getAllEmployees",
+					type: 'post',
+					data: JSON.stringify({
+						id: id,
+					}),
+					contentType: 'application/json;charset=utf-8',
+					success: function(data) {
+						console.log(data);
+						for(var i = 0; i < data.result.employees.length; i++) {
+							$("#nature").append("<option value=" + data.result.employees[i].id + ">" + data.result.employees[i].xb_employee_nature + "</option>")
+						}
+					}
+				})
+			}
+			
+			function showEmployeeModel() {
 				$("#addWorker, .modal-backdrop").css("display", "block");
 			}
 			
-			function makeBill() {
-				location.href = "/onlyChild/createBill.html"
+			function hideEmployeeModel() {
+				$("#addWorker, .modal-backdrop").css("display", "none");
 			}
 			
-			function showTrFade(el) {
+			function showTrFade() {
 				$("#workerFamily, .modal-backdrop").css("display", "block");
 			}
 			
+			function hideTrFade() {
+				$("#workerFamily, .modal-backdrop").css("display", "none");
+			}
+			
 		</script>
+		<div class="hint"></div>
 	</body>
 </html>

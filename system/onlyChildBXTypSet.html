@@ -33,11 +33,12 @@
 									<th>员工性质</td>
 									<th>操作</td>
 								</tr>
-								<tr name="childrenTemplate" onclick="modifyChlidYT(this)" style="display: none;">
+								<tr name="childrenTemplate" style="display: none;">
 									<td name="rowNo"></td>
 									<td name="xb_child_znyt"></td>
 									<td>
-										<button class="btn btn-danger deleteChlidYT">删除</button>
+										<button class="btn btn-primary" onclick="modifyChlidYT(this)">详情</button>
+										<button class="btn btn-danger" onclick="deleteChlidYT(this)">删除</button>
 										<input type="hidden" name="id"/>
 									</td>
 								</tr>
@@ -93,10 +94,10 @@
 			function modifyChlidYT(el) {
 				methodAgre = "modifyChlidYT";
 				$(".addHide").show();	
-				id = $(el).find("input[name='id']").val();
+				id = $(el).parent().parent().find("input[name='id']").val();
 				
-				$("#rowNo").val($(el).find("td[name='rowNo']").text())
-				$("#xb_child_znyt").val($(el).find("td[name='xb_child_znyt']").text())
+				$("#rowNo").val($(el).parent().parent().find("td[name='rowNo']").text())
+				$("#xb_child_znyt").val($(el).parent().parent().find("td[name='xb_child_znyt']").text())
 				
 				showModel();
 			}
@@ -136,13 +137,12 @@
 				})
 			}	
 			
-			$(".deleteChlidYT").click(function(el) {
-				el.stopPropagation();
+			function deleteChlidYT(el) {
 				$.ajax({
 					url: apphost() + "deleteChlidYT",
 					type: 'post',
 					data: JSON.stringify({
-						id: $(this).next().val(),
+						id: $(el).next().val(),
 					}),
 					contentType: 'application/json;charset=utf-8',
 					success: function(data) {
@@ -150,7 +150,7 @@
 						location.reload();
 					}
 				})
-			})
+			}
 		</script>
 		<div class="hint"></div>
 	</body>

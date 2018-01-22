@@ -33,11 +33,12 @@
 									<th>员工性质</td>
 									<th>操作</td>
 								</tr>
-								<tr name="employeesTemplate" onclick="modifyEmployee(this)" style="display: none;">
+								<tr name="employeesTemplate" style="display: none;">
 									<td name="rowNo"></td>
 									<td name="xb_employee_nature"></td>
 									<td>
-										<button class="btn btn-danger deleteEmployee">删除</button>
+										<button class="btn btn-primary" onclick="modifyEmployee(this)">详情</button>
+										<button class="btn btn-danger" onclick="deleteEmployee(this)">删除</button>
 										<input type="hidden" name="id"/>
 									</td>
 								</tr>
@@ -94,10 +95,10 @@
 			function modifyEmployee(el) {
 				methodAgre = "modifyEmployee";
 				$(".addHide").show();	
-				id = $(el).find("input[name='id']").val();
+				id = $(el).parent().parent().find("input[name='id']").val();
 				
-				$("#rowNo").val($(el).find("td[name='rowNo']").text())
-				$("#xb_employee_nature").val($(el).find("td[name='xb_employee_nature']").text())
+				$("#rowNo").val($(el).parent().parent().find("td[name='rowNo']").text())
+				$("#xb_employee_nature").val($(el).parent().parent().find("td[name='xb_employee_nature']").text())
 				
 				showModel();
 			}
@@ -137,13 +138,12 @@
 				})
 			}	
 			
-			$(".deleteEmployee").click(function(el) {
-				el.stopPropagation();
+			function deleteEmployee(el) {	
 				$.ajax({
 					url: apphost() + "deleteEmployee",
 					type: 'post',
 					data: JSON.stringify({
-						id: $(this).next().val(),
+						id: $(el).next().val(),
 					}),
 					contentType: 'application/json;charset=utf-8',
 					success: function(data) {
@@ -151,7 +151,7 @@
 						location.reload();
 					}
 				})
-			})
+			}
 		</script>
 		<div class="hint"></div>
 	</body>

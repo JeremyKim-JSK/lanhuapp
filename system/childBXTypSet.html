@@ -33,11 +33,12 @@
 									<th>子女性质</td>
 									<th>操作</td>
 								</tr>
-								<tr name="childrenTemplate" onclick="modifyChlid(this)" style="display: none;">
+								<tr name="childrenTemplate" style="display: none;">
 									<td name="rowNo"></td>
 									<td name="xb_child_nature"></td>
 									<td>
-										<button class="btn btn-danger deleteChlid">删除</button>
+										<button class="btn btn-primary" onclick="modifyChlid(this)">详情</button>
+										<button class="btn btn-danger" onclick="deleteChlid(this)">删除</button>
 										<input type="hidden" name="id"/>
 									</td>
 								</tr>
@@ -94,10 +95,10 @@
 			function modifyChlid(el) {
 				methodAgre = "modifyChlid";
 				$(".addHide").show();	
-				id = $(el).find("input[name='id']").val();
+				id = $(el).parent().parent().find("input[name='id']").val();
 				
-				$("#rowNo").val($(el).find("td[name='rowNo']").text())
-				$("#xb_child_nature").val($(el).find("td[name='xb_child_nature']").text())
+				$("#rowNo").val($(el).parent().parent().find("td[name='rowNo']").text())
+				$("#xb_child_nature").val($(el).parent().parent().find("td[name='xb_child_nature']").text())
 				
 				showModel();
 			}
@@ -137,13 +138,12 @@
 				})
 			}	
 			
-			$(".deleteChlid").click(function(el) {
-				el.stopPropagation();
+			function deleteChlid(el) {	
 				$.ajax({
 					url: apphost() + "deleteChlid",
 					type: 'post',
 					data: JSON.stringify({
-						id: $(this).next().val(),
+						id: $(el).next().val(),
 					}),
 					contentType: 'application/json;charset=utf-8',
 					success: function(data) {
@@ -151,7 +151,7 @@
 						location.reload();
 					}
 				})
-			})
+			}
 		</script>
 		<div class="hint"></div>
 	</body>
