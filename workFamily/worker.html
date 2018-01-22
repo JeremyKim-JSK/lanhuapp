@@ -95,7 +95,7 @@
 										<button class="btn btn-primary" onclick="modifyEmployeeInfo(this);">
 											<font>修改</font>
 										</button>
-										<button class="btn btn-danger deleteEmployeeInfo">
+										<button class="btn btn-danger" onclick="deleteEmployeeInfo(this);">
 											<font>删除</font>
 										</button>
 									</td>
@@ -142,7 +142,7 @@
 						</div>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-primary" onclick="addOrmodifyChlidYBNature();">保存</button>
+						<button type="button" class="btn btn-primary" onclick="addOrmodifyEmployeeInfo();">保存</button>
 						<button type="button" class="btn btn-default hiddenFade">关闭</button>
 					</div>
 				</div>	
@@ -210,6 +210,8 @@
 		<div class="modal-backdrop"></div>
 		<script>
 			
+			
+			
 			var methodAgre
 			var id
 			//员工操作start
@@ -235,7 +237,7 @@
 			}
 			
 			//新增和修改
-			function addOrmodifyChlidYBNature() {
+			function addOrmodifyEmployeeInfo() {
 				$.ajax({
 					url: apphost() + methodAgre,
 					type: 'post',
@@ -273,12 +275,12 @@
 				})
 			}	
 			
-			$(".deleteEmployeeInfo").click(function(el) {
+			function deleteEmployeeInfo(el){	
 				$.ajax({
 					url: apphost() + "deleteEmployeeInfo",
 					type: 'post',
 					data: JSON.stringify({
-						id: $(this).parent().parent().find("input[name='id']").val()
+						id: $(el).parent().parent().find("input[name='id']").val()
 					}),
 					contentType: 'application/json;charset=utf-8',
 					success: function(data) {
@@ -286,7 +288,7 @@
 						location.reload();
 					}
 				})
-			})
+			}
 			//员工操作end
 			
 			//亲属操作start
@@ -344,13 +346,13 @@
 						console.log(data)
 						if(!isRight(data)) return;
 						tip("操作成功！");
-						reloadSecond();
+						getRelatives();
 					}
 				})
 			}
 			
 			//亲属信息获取
-			getRelatives()
+			//getRelatives()
 			function getRelatives() {
 				$.ajax({
 					url: apphost() + "getRelatives",
