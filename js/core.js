@@ -111,9 +111,9 @@ function isRight(data) {
 			return false;
 		}
 	}else if(data.status == 'succ') {
-		retrun true;
+		return true;
 	}else {
-		return true
+		return false;
 	}*/
 }
 

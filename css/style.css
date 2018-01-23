@@ -446,6 +446,8 @@ select {
 }
 
 
+
+
 /*fade.css*/
 button.close {
 	-webkit-appearance: none;
@@ -546,3 +548,11 @@ a:active {
 }
 
 /*hint.css end*/
+
+
+
+
+/*for js*/
+.ZNYY, .ZNYB, .ZGQS, .DSZN{
+	display: none;
+}

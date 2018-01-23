@@ -39,14 +39,44 @@
 								</button>
 							</div>
 						</div>
-						<div id="baoxiao"></div>
+						<!--公共部分-->
+						<div class="allBaoxiao" style="display: none;">
+							<div id="baoxiao"></div>
+							<div class="tabFooter">
+								<button class="btn btn-primary flRight" onclick="reloadPage()">重置</button>
+								<button class="btn btn-primary flRight" onclick="makeBill();">生成单据</button>
+							</div>
+						</div>	
+						<div id="modalFade"></div>
+						<div class="hint"></div>
 					</div>	
 				</div>
 			</div>
 		</div>
 		<script>
 			var getInfoByXBType = 'ZNYY'
-			$("#baoxiao").load("/baoxiaoFrame.html")
+			$("#baoxiao").load("/public/baoxiaoFrame.html")
+			$("#modalFade").load("/public/modalFade.html")
+				//子女医药费报销类型列表			
+				
+			getAllChildren()
+			function getAllChildren() {
+				$.ajax({
+					url: apphost() + "getAllChildren",
+					type: 'post',
+					data: JSON.stringify({
+						id: 0,
+					}),
+					contentType: 'application/json;charset=utf-8',
+					success: function(data) {
+						console.log(data);
+						for(var i = 0; i < data.result.children.length; i++) {
+							$("#child_nature").append("<option value=" + data.result.children[i].id + ">" + data.result.children[i].xb_child_nature + "</option>")
+						}
+					}
+				})
+			}
+			
 		</script>
 	</body>
 </html>

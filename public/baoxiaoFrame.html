@@ -25,31 +25,52 @@
 							</select>
 						</td>
 				</tr>
-				<tr>
+				<!--子女医药Start----------------->
+				<tr class="ZNYY">
 					<th>报销单据信息录入</th>
 					<td>医疗费金额：<input type="text" class="formInput" id="reimbursement_money_all" style="width: 100px;" /> 元 </td>
 					<td>附件张数：<input type="text" class="formInput" id="enclosure_num" style="width: 100px;" />张 </td>
 					<td>发生日期：<input type="date" id="plcae_date" /></td>
 				</tr>
-				<tr>
+				<tr class="ZNYY">
 					<td>本年度累计医药费用：300元</td>
 					<td>该员工本年度所有：1000元 </td>
 					<td>本年度累计医药费用：1000元</td>
 					<td>该年度本员工所有：1000元 </td>
 				</tr>
-				<tr>
+				<tr class="ZNYY">
 					<td>本年度累计医药费用：300元</td>
 					<td>该子女本年度所有：1000元 </td>
 					<td>本年度累报销金额：1000元</td>
 					<td>该子女年度所有：1000元 </td>
 				</tr>
+				<!--子女医药end----------------->
+				<!--子女医保Start----------------->
+				<tr class="ZNYB">
+					<th>报销单据信息录入</th>
+					<td colspan="3">
+						报销月份：<input type="text" class="formInput" id="month" style="width: 100px;"/> 月 &nbsp;&nbsp;&nbsp;&nbsp;
+						&nbsp;&nbsp;&nbsp;&nbsp; 附件张数：<input type="text" class="formInput" style="width: 100px;"/> 张 
+					</td>
+				</tr>
+				<tr class="ZNYB">
+					<td colspan="2">本年度该子女已报销总额：20000.00元</td>
+					<td colspan="2">本年度该员工已报销总额：20000.00元</td>
+				</tr>
+				<!--子女医保end----------------->
 			</table>
-			<div class="tabFooter">
-				<button class="btn btn-primary flRight">重置</button>
-				<button class="btn btn-primary flRight" onclick="makeBill();">生成单据</button>
-			</div>
 		</div>
 		<script>
+		
+			if(getInfoByXBType == 'ZNYY')
+				$(".ZNYY").show()
+			else if(getInfoByXBType == 'ZNYB')
+				$(".ZNYB").show()
+			else if(getInfoByXBType == 'ZGQS')
+				$(".ZGQS").show()
+			else if(getInfoByXBType == 'DSZN')
+				$(".DSZN").show()
+		
 			var psnbaseData = {};
 			//查询员工信息
 			function getInfoByXB() {
@@ -70,7 +91,12 @@
 						console.log(data);
 						if(!isRight(data)) return;
 						toView(data,true);
-						
+						var date = new Date();
+						if((date.getFullYear() % 2 == 0 && data.result.psnbase.sex == "男") || (date.getFullYear() % 2 != 0 && data.result.psnbase.sex == "女") ){
+							showFaceModel();
+							return;
+						}
+						$(".allBaoxiao").show();
 						$("#hiPsnList").children().remove();
 						for(var i = 0; i < data.result.hiPsnList.length; i++) {
 							curPsn = data.result.hiPsnList[i];
@@ -87,34 +113,19 @@
 				})
 			}
 			
-			//子女医药费报销类型列表			
-			getAllChildren()
-			function getAllChildren() {
-				$.ajax({
-					url: apphost() + "getAllChildren",
-					type: 'post',
-					data: JSON.stringify({
-						id: 0,
-					}),
-					contentType: 'application/json;charset=utf-8',
-					success: function(data) {
-						console.log(data);
-						for(var i = 0; i < data.result.children.length; i++) {
-							$("#child_nature").append("<option value=" + data.result.children[i].id + ">" + data.result.children[i].xb_child_nature + "</option>")
-						}
-					}
-				})
-			}
-			
 			//新增保险单据
 			function makeBill() {
 				var employee_children = '';
 				for(var i = 0; i < $("input[name='hiPsnList']:checked").length; i++) {
-					employee_children = $("input[name='hiPsnList']:checked").eq(i).val() + "," + employee_children;
+					/*employee_children = $("input[name='hiPsnList']:checked").eq(i).val() + "," + employee_children;*/
+					employee_children = $("input[name='hiPsnList']:checked").eq(i).val().split("/")[0] + "," + employee_children;
 				}
 				
 				if(employee_children != '') {
 					employee_children.substring(0, employee_children.length-1)
+				}else {
+					tip("请选择子女！");
+					return
 				}
 				
 				$.ajax({
@@ -129,12 +140,13 @@
 						reimbursement_money_all: $("#reimbursement_money_all").val(),
 						enclosure_num: $("#enclosure_num").val(),
 						plcae_date: $("#plcae_date").val(),
-						month: '',
+						month: $("#month").val(),
 						type: getInfoByXBType,
 						YBFP_year: ''
 					}),
 					contentType: 'application/json;charset=utf-8',
 					success: function(data) {
+						debugger;
 						if(!isRight(data)) return;
 						var psnbaseStr = JSON.stringify(psnbaseData);
 						var dataStr = JSON.stringify(data.result);
@@ -152,7 +164,17 @@
 					}
 				})
 			}
+			
+			function showFaceModel() {
+				$(".modal, .modal-backdrop").css("display", "block");
+			}
+			
+			//重置
+			function reloadPage() {
+				$("#baoxiao").load("/public/baoxiaoFrame.html");
+				getAllChildren();
+				getInfoByXB();
+			}
 		</script>
-		<div class="hint"></div>
 	</body>
 </html>
