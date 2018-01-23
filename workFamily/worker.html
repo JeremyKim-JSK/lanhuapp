@@ -328,8 +328,8 @@
 				id = $(el).parent().parent().find("input[name='id']").val();
 				
 				var relativesName = $(el).parent().parent().find("input[name='name']").val()
-				var relativesCode = $(el).parent().parent().find("input[name='name']").val()
-				var relativesStatus = $(el).parent().parent().find("input[name='name']").val()
+				var relativesCode = $(el).parent().parent().find("input[name='code']").val()
+				var relativesStatus = $(el).parent().parent().find("select[name='status']").val()
 				
 				addOrmodifyChlidYBNature(id, relativesName, relativesCode, relativesStatus, em_id)
 			}

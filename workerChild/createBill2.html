@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>新百报销系统</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link href="/css/style.css" rel="stylesheet"/>
+		<script src="/js/jquery-1.11.2.js"></script>
+		<script src="/js/jquery.cookie.js"></script>
+		<script src="/js/core.js"></script>
+	</head>
+	<body>
+		<div id="top"></div>
+		<div class="container">
+			<div class="row">
+				<div id="left"></div>
+				<div class="right">
+					<div class="header">
+						<ul>
+							<li>首页</li>	
+							<li>/</li>	
+							<li>职工子女医保费用报销</li>	
+							<li>/</li>	
+							<li>单据生成</li>	
+						</ul>
+					</div>
+					<!--startprint-->
+					<div class="body">
+						<div class="topBar">
+							<h2 class="searchLi" style="text-align: center;">
+								南京新街口百货商店股份有限公司
+								<p>现金报销单</p>
+							</h2>
+						</div>
+						<div class="tabContent">
+							<table class="tabTable">
+								<tr>
+									<td>单号：20171024001</th>
+									<td>2017年10月12号 （填表日期）</td>
+									<td>附件3张</td>
+								</tr>
+								<tr>
+									<td>报销部门：财务部</th>
+									<td>部门：技术部</td>
+									<td>姓名： 张三</td>
+								</tr>
+								<tr>
+									<td colspan="2">工资卡号：1231231231231231</th>
+									<td>手机号：123123123123（人资系统抓取）</td>
+								</tr>
+								<tr>
+									<td>事由:</td>
+									<td colspan="2">
+										<div>
+											子女医保费用  &nbsp;&nbsp;&nbsp;&nbsp; 实际报销金额计算公式和计算结果（显示计算公式和结果）
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td colspan="2">金额（大写）：玖拾陆万零贰佰壹拾肆圆整 </td>
+									<td>报销金额：960214.00元</td>
+								</tr>
+								<tr>
+									<td>报销年度：2017年10月12号</td>
+									<td colspan="2">发生日期：2017年10月12号</td>
+								</tr>
+							</table>
+							<!--endprint-->
+						</div>
+						<div class="tabContent">
+							<table class="tabTable matrixTab">
+								<tr>
+									<th>子女姓名</td>
+									<th>报销日期</td>
+									<th>医保年</td>
+									<th>报销费用</td>
+								</tr>
+								<tr>
+									<td>张宝宝</td>
+									<td>2017-3</td>
+									<td>2017</td>
+									<td>1000</td>
+								</tr>
+							</table>
+							<table class="tabTable">
+								<tr>
+									<td>该员工本年度总计报销金额：<span>10000</span></td>
+								</tr>
+							</table>
+							<div class="tabFooter">
+								<button class="btn btn-primary flRight">返回</button>
+								<button class="btn btn-primary flRight" onclick="preview()">套打报销单据</button>
+							</div>
+						</div>
+					</div>	
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

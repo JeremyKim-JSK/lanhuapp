@@ -16,21 +16,32 @@
 					<td>员工性别：<span name="psnbase.sex" id="employee_sex"></span></td>
 				</tr>
 				<tr>
-					<th>子女情况：（选择报销子女姓名）</th>
+					<th class="ZNYY ZNYB DSZN">子女情况：（选择报销子女姓名）</th>
+					<th class="ZGQS">家属情况：（选择报销家属姓名）</th>
 					<td id="hiPsnList">
 					</td>
-					<th>报销类别：(选择报销子女类型)</td>
-						<td>
-							<select class="formInput" id="child_nature">
-							</select>
-						</td>
+					<th class="ZNYY ZNYB DSZN">报销类别：(选择报销子女类型)</td>
+					<th class="ZGQS">家属证号</td>
+					<td class="ZNYY ZNYB DSZN">
+						<select class="formInput" id="child_nature">
+						</select>
+					</td>
+					<td class="ZGQS">
+						<div>
+							李华：12123123123123
+						</div>
+						<div>
+							张建国：12123123123122
+						</div>
+					</td>
 				</tr>
 				<!--子女医药Start----------------->
-				<tr class="ZNYY">
+				<tr class="ZNYY ZNYB">
 					<th>报销单据信息录入</th>
 					<td>医疗费金额：<input type="text" class="formInput" id="reimbursement_money_all" style="width: 100px;" /> 元 </td>
 					<td>附件张数：<input type="text" class="formInput" id="enclosure_num" style="width: 100px;" />张 </td>
-					<td>发生日期：<input type="date" id="plcae_date" /></td>
+					<td class="ZNYY ZGQS">发生日期：<input type="date" id="plcae_date" /></td>
+					<td class="ZNYB">医保发票年：<input type="text" class="formInput" id="YBFP_year" style="width: 100px;"> 年 </td>
 				</tr>
 				<tr class="ZNYY">
 					<td>本年度累计医药费用：300元</td>
@@ -45,31 +56,46 @@
 					<td>该子女年度所有：1000元 </td>
 				</tr>
 				<!--子女医药end----------------->
-				<!--子女医保Start----------------->
-				<tr class="ZNYB">
+				<!--独生子女Start----------------->
+				<tr class="DSZN">
 					<th>报销单据信息录入</th>
 					<td colspan="3">
 						报销月份：<input type="text" class="formInput" id="month" style="width: 100px;"/> 月 &nbsp;&nbsp;&nbsp;&nbsp;
-						&nbsp;&nbsp;&nbsp;&nbsp; 附件张数：<input type="text" id="ZNYB_enclosure_num" class="formInput" style="width: 100px;"/> 张 
+						&nbsp;&nbsp;&nbsp;&nbsp; 附件张数：<input type="text" id="DSZN_enclosure_num" class="formInput" style="width: 100px;"/> 张 
 					</td>
 				</tr>
-				<tr class="ZNYB">
+				<tr class="DSZN">
 					<td colspan="2">本年度该子女已报销总额：20000.00元</td>
 					<td colspan="2">本年度该员工已报销总额：20000.00元</td>
 				</tr>
-				<!--子女医保end----------------->
+				<!--独生子女End----------------->
+				
+				<!--职工亲属Start----------------->
+				<tr class="ZGQS">
+					<td>本年度累计医药费用：300元</td>
+					<td>该员工本年度所有：1000元 </td>
+					<td>本年度累计医药费用：1000元</td>
+					<td>该年度本员工所有：1000元 </td>
+				</tr>
+				<tr class="ZGQS">
+					<td>本年度累计医药费用：300元</td>
+					<td>该子女本年度所有：1000元 </td>
+					<td>本年度累报销金额：1000元</td>
+					<td>该子女年度所有：1000元 </td>
+				</tr>
+				<!--职工亲属End----------------->
 			</table>
 		</div>
 		<script>
 		
 			if(getInfoByXBType == 'ZNYY')
 				$(".ZNYY").show()
+			else if(getInfoByXBType == 'DSZN')
+				$(".DSZN").show()
 			else if(getInfoByXBType == 'ZNYB')
 				$(".ZNYB").show()
 			else if(getInfoByXBType == 'ZGQS')
 				$(".ZGQS").show()
-			else if(getInfoByXBType == 'DSZN')
-				$(".DSZN").show()
 		
 			var psnbaseData = {};
 			//查询员工信息
@@ -124,8 +150,13 @@
 				if(employee_children != '') {
 					employee_children.substring(0, employee_children.length-1)
 				}else {
-					tip("请选择子女！");
-					return
+					if(getInfoByXBType != 'ZGQS') {
+						tip("请选择子女！");
+						return;
+					}else {
+						tip("请选择亲属！");
+						return;
+					}
 				}
 				
 				$.ajax({
@@ -142,7 +173,7 @@
 						plcae_date: $("#plcae_date").val(),
 						month: $("#month").val(),
 						type: getInfoByXBType,
-						YBFP_year: ''
+						YBFP_year: $("#YBFP_year").val()
 					}),
 					contentType: 'application/json;charset=utf-8',
 					success: function(data) {

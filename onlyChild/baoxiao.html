@@ -59,7 +59,7 @@
 									</tr>
 								</table>
 								<div class="tabFooter">
-									<button class="btn btn-primary flRight" onclick="reloadPage()">重置</button>
+									<button class="btn btn-primary flRight" onclick="deleteTFTempByEN()">重置</button>
 									<button class="btn btn-primary flRight" onclick="makeBill()">生成单据</button>
 									<button class="btn btn-primary flRight" onclick="addTFTemp()">继续填写单据</button>
 								</div>
@@ -72,7 +72,7 @@
 			</div>
 		</div>
 		<script>
-			var getInfoByXBType = 'ZNYB'
+			var getInfoByXBType = 'DSZN'
 			$("#baoxiao").load("/public/baoxiaoFrame.html")
 			$("#modalFade").load("/public/modalFade.html")
 				//子女医药费报销类型列表			
@@ -106,13 +106,30 @@
 						employee_department: psnbaseData.deptname,
 						year_month_BX: $("#month").val(),
 						reimbursement_type: $("#child_nature").val(),
-						enclosure_num: $("#ZNYB_enclosure_num").val()
+						enclosure_num: $("#DSZN_enclosure_num").val()
 					}),
 					contentType: 'application/json;charset=utf-8',
 					success: function(data) {
 						if(!isRight(data)) return;
 						console.log(data)
 						toView(data)
+					}
+				})
+			}
+			
+			//重置员工医托明细
+			function deleteTFTempByEN() {
+				$.ajax({
+					url: apphost() + "deleteTFTempByEN",
+					type: 'post',
+					data: JSON.stringify({
+						employee_number: psnbaseData.psncode
+					}),
+					contentType: 'application/json;charset=utf-8',
+					success: function(data) {
+						if(!isRight(data)) return;
+						$("tr[name='recordTemplate']:visible").remove();
+						reloadPage();
 					}
 				})
 			}
