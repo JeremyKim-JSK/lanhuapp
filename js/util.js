@@ -61,8 +61,8 @@ isJson = function(obj) {
 
 function apphost() {
 	
-  return (/^t\.|test/).test(window.location.host) ? "/FinanceChain/api/employee/v1/" : "";
-	
+ /* return (/^t\.|test/).test(window.location.host) ? "/FinanceChain/api/employee/v1/" : "";*/
+	return "/FinanceChain/api/employee/v1/";
 }
 
 function filehost() {

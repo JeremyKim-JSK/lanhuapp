@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>新百报销系统</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link href="/css/style.css" rel="stylesheet"/>
+		<script src="/js/jquery-1.11.2.js"></script>
+		<script src="/js/jquery.cookie.js"></script>
+		<script src="/js/core.js"></script>
+		<script src="/js/util.js"></script>
+	</head>
+	<body>
+		<div id="top"></div>
+		<div class="container">
+			<div class="row">
+				<div id="left"></div>
+				<div class="right">
+					<div class="header">
+						<ul>
+							<li>首页</li>	
+							<li>/</li>	
+							<li>子女医药费报销</li>	
+							<li>/</li>	
+							<li>单据生成</li>	
+						</ul>
+					</div>
+					<!--startprint-->
+					<div class="body">
+						<div class="topBar">
+							<h2 class="searchLi" style="text-align: center;">
+								南京新街口百货商店股份有限公司
+								<p>现金报销单</p>
+							</h2>
+						</div>
+						<div class="tabContent">
+							<table class="tabTable">
+								<tr>
+									<td>单号：<span name="employee.page_num"></span></th>
+									<td>填表日期 : <span id="systemDate"></span></td>
+									<td>附件<span name="employee.enclosure_num"></span> 张</td>
+								</tr>
+								<tr>
+									<td>报销部门：财务部</th>
+									<td>部门：<span name="employee.deptname"></span></td>
+									<td>姓名： <span name="employee.psnname"></span></td>
+								</tr>
+								<tr>
+									<td colspan="2">工资卡号：
+									<span name="employee.account"></span>	
+									</th>
+									<td>手机号：<span name="employee.mobile"></span>（人资系统抓取）</td>
+								</tr>
+								<tr>
+									<td>事由: &nbsp;&nbsp;&nbsp;&nbsp;<span>子女医药费</span></td>
+									<td colspan="2">
+										<div>
+											   实际报销金额计算公式和计算结果: <span name="employee.gs"></span>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td colspan="2">金额（大写）：<span id="bigReimbursement_money"></span> </td>
+									<td>报销金额：<span name="employee.reimbursement_money" function="reimbursement_moneyValueTo" id="reimbursement_money"></span>元</td>
+								</tr>
+								<tr>
+									<td>报销年度：<span name="employee.year" id="employee_year"></span></td>
+									<td colspan="2">发生日期：<span name="employee.plcae_date"></span></td>
+								</tr>
+							</table>
+							<!--endprint-->
+							<div class="tabFooter">
+								<button class="btn btn-primary flRight">返回</button>
+								<button class="btn btn-primary flRight" onclick="updateBXD()">套打报销单据</button>
+							</div>
+						</div>
+					</div>	
+				</div>
+			</div>
+		</div>
+		
+		<script>
+			toView(JSON.parse($.cookie("employee")));
+			
+ 			var date=new Date;	
+ 			$("#systemDate").text(date.toDay())
+ 			
+ 			if(date.getMonth() < 4)
+ 				$("#employee_year").text(date.getFullYear() - 1)
+ 			else
+ 				$("#employee_year").text(date.getFullYear())
+ 			
+ 			
+			function reimbursement_moneyValueTo(el, val) {
+				$("#bigReimbursement_money").text(toChineseCurrency(val));
+				
+				valueToWithNoFunc(el, val);
+			}
+			
+			function updateBXD() {
+				
+				var employee = JSON.parse($.cookie("employee")).result.employee
+				
+				$.ajax({
+					url: apphost() + "updateBXD",
+					type: 'post',
+					data: JSON.stringify({
+						employee_number: employee.psncode,
+						employee_department: employee.deptname,
+						card_number: employee.account,
+						employee_phone: employee.mobile,
+						reimbursement_money: $("#reimbursement_money").text(),
+						year: $("#employee_year").text(),
+						page_num: employee.enclosure_num,
+					}),
+					contentType: 'application/json;charset=utf-8',
+					success: function(data) {
+						if(!isRight(data)) return;
+						console.log(data);
+						preview()
+					}
+				})
+			}
+
+	/*		$(".showCardNum").hover(function() {
+				$("#cardNum").hide()
+				$("#card_number").show()
+			},function(){
+				$("#card_number").hide()
+				$("#cardNum").show()
+				$("#cardNum").text($("#card_number").val())
+			})*/
+		</script>
+		<div class="hint"></div>
+	</body>
+</html>

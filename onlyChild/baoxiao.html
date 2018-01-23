@@ -51,17 +51,17 @@
 										<th>报销年月</td>
 										<th>报销类型</td>
 									</tr>
-									<tr name="hiPsnListTemplate" style="display: none;">
-										<td>0001</td>
-										<td>张三</td>
-										<td>新百</td>
-										<td>详情</td>
+									<tr name="recordTemplate" style="display: none;">
+										<td name="employee_name"></td>
+										<td name="employee_department"></td>
+										<td name="year_month_BX"></td>
+										<td name="reimbursement_type"></td>
 									</tr>
 								</table>
 								<div class="tabFooter">
 									<button class="btn btn-primary flRight" onclick="reloadPage()">重置</button>
 									<button class="btn btn-primary flRight" onclick="makeBill()">生成单据</button>
-									<button class="btn btn-primary flRight">继续填写单据</button>
+									<button class="btn btn-primary flRight" onclick="addTFTemp()">继续填写单据</button>
 								</div>
 							</div>
 						</div>	
@@ -91,6 +91,28 @@
 						for(var i = 0; i < data.result.children.length; i++) {
 							$("#child_nature").append("<option value=" + data.result.children[i].id + ">" + data.result.children[i].xb_child_znyt + "</option>")
 						}
+					}
+				})
+			}
+			
+			//新增医托明细
+			function addTFTemp() {
+				$.ajax({
+					url: apphost() + "addTFTemp",
+					type: 'post',
+					data: JSON.stringify({
+						employee_number: psnbaseData.psncode,
+						employee_name: psnbaseData.psnname,
+						employee_department: psnbaseData.deptname,
+						year_month_BX: $("#month").val(),
+						reimbursement_type: $("#child_nature").val(),
+						enclosure_num: $("#ZNYB_enclosure_num").val()
+					}),
+					contentType: 'application/json;charset=utf-8',
+					success: function(data) {
+						if(!isRight(data)) return;
+						console.log(data)
+						toView(data)
 					}
 				})
 			}

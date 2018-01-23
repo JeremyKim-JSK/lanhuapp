@@ -11,7 +11,7 @@
 			<table class="tabTable matrixTab">
 				<tr>
 					<th>员工基本信息</th>
-					<td>员工工号：<span name="psnbase.account" id="employee_number"></span></td>
+					<td>员工工号：<span name="psnbase.psncode" id="employee_number"></span></td>
 					<td>员工姓名：<span name="psnbase.psnname" id="employee_name"></span></td>
 					<td>员工性别：<span name="psnbase.sex" id="employee_sex"></span></td>
 				</tr>
@@ -50,7 +50,7 @@
 					<th>报销单据信息录入</th>
 					<td colspan="3">
 						报销月份：<input type="text" class="formInput" id="month" style="width: 100px;"/> 月 &nbsp;&nbsp;&nbsp;&nbsp;
-						&nbsp;&nbsp;&nbsp;&nbsp; 附件张数：<input type="text" class="formInput" style="width: 100px;"/> 张 
+						&nbsp;&nbsp;&nbsp;&nbsp; 附件张数：<input type="text" id="ZNYB_enclosure_num" class="formInput" style="width: 100px;"/> 张 
 					</td>
 				</tr>
 				<tr class="ZNYB">
@@ -146,7 +146,6 @@
 					}),
 					contentType: 'application/json;charset=utf-8',
 					success: function(data) {
-						debugger;
 						if(!isRight(data)) return;
 						var psnbaseStr = JSON.stringify(psnbaseData);
 						var dataStr = JSON.stringify(data.result);
@@ -160,7 +159,7 @@
 						}
 						$.cookie("employee", JSON.stringify(employee), {path: "createBill.html"})
 						
-						//location.href = "/children/createBill.html";
+						location.href = "/children/createBill.html";
 					}
 				})
 			}
