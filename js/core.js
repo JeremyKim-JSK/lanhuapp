@@ -136,6 +136,10 @@ function twoSecondTurn(href) {
 	}, 2000)
 }
 
+function toBack() {
+	window.history.back()
+}
+
 function imageValueTo(el, val) {
 	$(el).attr("src", fetchImg(val));
 }
@@ -152,5 +156,10 @@ function radioValueTo(el, val) {
 		if($(this).val() == val) 
 			$(this).attr("checked","checked");
 	})
+}
+
+function logout() {
+	
+	location.href = "/login.html";
 }
 

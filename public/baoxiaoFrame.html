@@ -44,16 +44,14 @@
 					<td class="ZNYB">医保发票年：<input type="text" class="formInput" id="YBFP_year" style="width: 100px;"> 年 </td>
 				</tr>
 				<tr class="ZNYY">
-					<td>本年度累计医药费用：300元</td>
-					<td>该员工本年度所有：1000元 </td>
-					<td>本年度累计医药费用：1000元</td>
-					<td>该年度本员工所有：1000元 </td>
+					<th>该员工本年度所有 </th>
+					<td>本年度累计医药费用：<span name="total.count(reimbursement_money)"></span> 元</td>
+					<td>本年度累报销金额：<span name="total.count(reimbursement_money_all)"></span>元</td>
 				</tr>
 				<tr class="ZNYY">
-					<td>本年度累计医药费用：300元</td>
-					<td>该子女本年度所有：1000元 </td>
-					<td>本年度累报销金额：1000元</td>
-					<td>该子女年度所有：1000元 </td>
+					<th>该子女本年度所有 </th>
+					<td>本年度累计医药费用：<span name="total.count(reimbursement_money)"></span>元</td>
+					<td>本年度累报销金额：<span name="total.count(reimbursement_money_all)"></span>元</td>
 				</tr>
 				<!--子女医药end----------------->
 				<!--独生子女Start----------------->
@@ -65,8 +63,8 @@
 					</td>
 				</tr>
 				<tr class="DSZN">
-					<td colspan="2">本年度该子女已报销总额：20000.00元</td>
-					<td colspan="2">本年度该员工已报销总额：20000.00元</td>
+					<td colspan="2">本年度该子女已报销总额：<span name="total.count(reimbursement_money)"></span> 元</td>
+					<td colspan="2">本年度该员工已报销总额：<span name="total.count(reimbursement_money_all)"></span> 元</td>
 				</tr>
 				<!--独生子女End----------------->
 				
@@ -135,6 +133,28 @@
 							)
 						}
 						psnbaseData = data.result.psnbase;
+						//子女医药费的显示
+						if(getInfoByXBType == 'ZNYY') {
+							var DSZNData = {
+								status: 'succ',
+								result: {
+									total: data.result.money.total
+								}
+							}
+							toView(DSZNData)
+						}
+						//独生子女时的显示
+						if(getInfoByXBType == 'DSZN') {
+							var DSZNData = {
+								status: 'succ',
+								result: {
+									record: data.result.money.tf_temp,
+									total: data.result.money.total
+								}
+							}
+							toView(DSZNData)
+						}
+						
 					}
 				})
 			}
@@ -159,6 +179,13 @@
 					}
 				}
 				
+				var enclosure_num
+				if(getInfoByXBType == "DSZN") 
+					enclosure_num = $("#DSZN_enclosure_num").val();
+				else 
+					enclosure_num = $("#enclosure_num").val();
+				
+				enclosure_num
 				$.ajax({
 					url: apphost() + "addBXD",
 					type: 'post',
@@ -169,7 +196,7 @@
 						employee_children: employee_children,
 						reimbursement_type: $("#child_nature").val(),
 						reimbursement_money_all: $("#reimbursement_money_all").val(),
-						enclosure_num: $("#enclosure_num").val(),
+						enclosure_num: enclosure_num,
 						plcae_date: $("#plcae_date").val(),
 						month: $("#month").val(),
 						type: getInfoByXBType,
@@ -190,7 +217,7 @@
 						}
 						$.cookie("employee", JSON.stringify(employee), {path: "createBill.html"})
 						
-						location.href = "/children/createBill.html";
+						location.href = "createBill.html";
 					}
 				})
 			}

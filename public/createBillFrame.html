@@ -23,10 +23,16 @@
 					<td>手机号：<span name="employee.mobile"></span>（人资系统抓取）</td>
 				</tr>
 				<tr>
-					<td>事由: &nbsp;&nbsp;&nbsp;&nbsp;<span>子女医药费</span></td>
+					<td class="ZNYY">事由: &nbsp;&nbsp;&nbsp;&nbsp;<span>子女医药费</span></td>
+					<td class="DSZN">事由: &nbsp;&nbsp;&nbsp;&nbsp;<span>托费、学费报销</span></td>
+					<td class="ZNYB">事由: &nbsp;&nbsp;&nbsp;&nbsp;<span>子女医保费用</span></td>
+					<!--<td class="ZGQS">事由: &nbsp;&nbsp;&nbsp;&nbsp;<span>家属姓名医药费报销</span></td>-->
 					<td colspan="2">
-						<div>
+						<div class="ZNYY ZNYB">
 							   实际报销金额计算公式和计算结果: <span name="employee.gs"></span>
+						</div>
+						<div class="DSZN">
+							   报销记录条数*报销金额参数=报销金额: <span name="employee.gs"></span>
 						</div>
 					</td>
 				</tr>
@@ -34,14 +40,20 @@
 					<td colspan="2">金额（大写）：<span id="bigReimbursement_money"></span> </td>
 					<td>报销金额：<span name="employee.reimbursement_money" function="reimbursement_moneyValueTo" id="reimbursement_money"></span>元</td>
 				</tr>
-				<tr class="ZNYYAndZGQS" style="display: none;">
+				<tr class="ZNYY ZNYB" style="display: none;">
 					<td>报销年度：<span name="employee.year" id="employee_year"></span></td>
 					<td colspan="2">发生日期：<span name="employee.plcae_date"></span></td>
 				</tr>
 			</table>
 		<script>
-			if(getInfoByXBType == 'ZNYY' || getInfoByXBType == 'ZGQS') 
-				$(".ZNYYAndZGQS").show();
+			if(getInfoByXBType == 'ZNYY')
+				$(".ZNYY").show()
+			else if(getInfoByXBType == 'DSZN')
+				$(".DSZN").show()
+			else if(getInfoByXBType == 'ZNYB')
+				$(".ZNYB").show()
+			else if(getInfoByXBType == 'ZGQS')
+				$(".ZGQS").show()
 		
 			toView(JSON.parse($.cookie("employee")));
 			
