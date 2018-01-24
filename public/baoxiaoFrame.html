@@ -36,19 +36,19 @@
 					</td>
 				</tr>
 				<!--子女医药Start----------------->
-				<tr class="ZNYY ZNYB">
+				<tr class="ZNYY ZNYB ZGQS">
 					<th>报销单据信息录入</th>
-					<td>医疗费金额：<input type="text" class="formInput" id="reimbursement_money_all" style="width: 100px;" /> 元 </td>
-					<td>附件张数：<input type="text" class="formInput" id="enclosure_num" style="width: 100px;" />张 </td>
+					<td><span class="ZNYY ZGQS">医疗费金额：</span> <span class="ZNYB">医保金额：</span><input type="number" class="formInput" id="reimbursement_money_all" style="width: 100px;" /> 元 </td>
+					<td>附件张数：<input type="number" class="formInput" id="enclosure_num" style="width: 100px;" />张 </td>
 					<td class="ZNYY ZGQS">发生日期：<input type="date" id="plcae_date" /></td>
-					<td class="ZNYB">医保发票年：<input type="text" class="formInput" id="YBFP_year" style="width: 100px;"> 年 </td>
+					<td class="ZNYB">医保发票年：<input type="number" class="formInput" id="YBFP_year" style="width: 100px;"> 年 </td>
 				</tr>
-				<tr class="ZNYY">
+				<tr class="ZNYY ZGQS">
 					<th>该员工本年度所有 </th>
 					<td>本年度累计医药费用：<span name="total.count(reimbursement_money)"></span> 元</td>
 					<td>本年度累报销金额：<span name="total.count(reimbursement_money_all)"></span>元</td>
 				</tr>
-				<tr class="ZNYY">
+				<tr class="ZNYY ZGQS">
 					<th>该子女本年度所有 </th>
 					<td>本年度累计医药费用：<span name="total.count(reimbursement_money)"></span>元</td>
 					<td>本年度累报销金额：<span name="total.count(reimbursement_money_all)"></span>元</td>
@@ -59,7 +59,7 @@
 					<th>报销单据信息录入</th>
 					<td colspan="3">
 						报销月份：<input type="text" class="formInput" id="month" style="width: 100px;"/> 月 &nbsp;&nbsp;&nbsp;&nbsp;
-						&nbsp;&nbsp;&nbsp;&nbsp; 附件张数：<input type="text" id="DSZN_enclosure_num" class="formInput" style="width: 100px;"/> 张 
+						&nbsp;&nbsp;&nbsp;&nbsp; 附件张数：<input type="number" id="DSZN_enclosure_num" class="formInput" style="width: 100px;"/> 张 
 					</td>
 				</tr>
 				<tr class="DSZN">
@@ -67,21 +67,6 @@
 					<td colspan="2">本年度该员工已报销总额：<span name="total.count(reimbursement_money_all)"></span> 元</td>
 				</tr>
 				<!--独生子女End----------------->
-				
-				<!--职工亲属Start----------------->
-				<tr class="ZGQS">
-					<td>本年度累计医药费用：300元</td>
-					<td>该员工本年度所有：1000元 </td>
-					<td>本年度累计医药费用：1000元</td>
-					<td>该年度本员工所有：1000元 </td>
-				</tr>
-				<tr class="ZGQS">
-					<td>本年度累计医药费用：300元</td>
-					<td>该子女本年度所有：1000元 </td>
-					<td>本年度累报销金额：1000元</td>
-					<td>该子女年度所有：1000元 </td>
-				</tr>
-				<!--职工亲属End----------------->
 			</table>
 		</div>
 		<script>
@@ -161,6 +146,15 @@
 			
 			//新增保险单据
 			function makeBill() {
+				if(getInfoByXBType == 'ZNYY')
+					if(!isEmptyWithIds("reimbursement_money_all,enclosure_num,plcae_date")) return
+				else if(getInfoByXBType == 'DSZN')
+					if(!isEmptyWithIds("month,DSZN_enclosure_num")) return
+				else if(getInfoByXBType == 'ZNYB')
+					if(!isEmptyWithIds("reimbursement_money_all,enclosure_num,YBFP_year")) return
+				else if(getInfoByXBType == 'ZGQS')
+					if(!isEmptyWithIds()) return
+				
 				var employee_children = '';
 				for(var i = 0; i < $("input[name='hiPsnList']:checked").length; i++) {
 					/*employee_children = $("input[name='hiPsnList']:checked").eq(i).val() + "," + employee_children;*/
@@ -185,7 +179,6 @@
 				else 
 					enclosure_num = $("#enclosure_num").val();
 				
-				enclosure_num
 				$.ajax({
 					url: apphost() + "addBXD",
 					type: 'post',

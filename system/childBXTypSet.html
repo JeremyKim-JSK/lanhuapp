@@ -104,6 +104,7 @@
 			}
 			
 			function addOrmodifyChlidNature() {
+				if(!isEmptyWithIds("xb_child_nature")) return;
 				$.ajax({
 					url: apphost() + methodAgre,
 					type: 'post',

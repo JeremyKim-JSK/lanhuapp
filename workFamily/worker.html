@@ -78,16 +78,20 @@
 								<tr>
 									<th>职工工号</th>
 									<th>职工姓名</td>
+									<th>员工性别</td>
 									<th>员工性质</td>
+									<th>手机号</td>
 									<th>员工卡号</td>
 									<th>操作</td>
 								</tr>
 								<tr name="employeesTemplate" style="display: none;">
 									<input type="hidden" name="id"/>
-									<td name="no"></td>
-									<td name="name"></td>
-									<td name="nature"></td>
-									<td name="card"></td>
+									<td name="psncode"></td>
+									<td name="psnname"></td>
+									<td name="sex"></td>
+									<td name="deptname"></td>
+									<td name="mobile"></td>
+									<td name="account"></td>
 									<td>
 										<button class="btn btn-primary" onclick="readyShowTrFade(this);">
 											<font>亲属详情</font>
@@ -108,45 +112,62 @@
 		</div>
 		<!--新增-->
 		<div class="modal" id="addWorker">
-			<div class="modal-dialog">
-				<div class="modal-content" style="width: 800px;">
-					<div class="modal-header">
-						<button type="button" class="close">×</button>
-						<h4 class="modal-title">新增员工</h4>
-					</div>
-					<div class="modal-body">
-						<div class="modalLabel">
-							<label >
-								<font class="labelFont">员工工号:</font>
-							</label>
-							<input type="text" id="no" class="formInput" placeholder=""/>
+			<form>
+				<div class="modal-dialog">
+					<div class="modal-content" style="width: 800px;">
+						<div class="modal-header">
+							<button type="button" class="close">×</button>
+							<h4 class="modal-title">新增员工</h4>
 						</div>
-						<div class="modalLabel">
-							<label >
-								<font class="labelFont">员工姓名:</font>
-							</label>
-							<input type="text" id="name" class="formInput" placeholder=""/>
+						<div class="modal-body">
+							<div class="modalLabel">
+								<label >
+									<font class="labelFont">员工工号:</font>
+								</label>
+								<input required="" type="text" id="no" class="formInput" placeholder=""/>
+							</div>
+							<div class="modalLabel">
+								<label >
+									<font class="labelFont">员工姓名:</font>
+								</label>
+								<input type="text" id="name" class="formInput" placeholder=""/>
+							</div>
+							<div class="modalLabel">
+								<label >
+									<font class="labelFont">手 &nbsp;机&nbsp;号:</font>
+								</label>
+								<input type="text" id="mobile" class="formInput" placeholder=""/>
+							</div>
+							<div class="modalLabel">
+								<label >
+									<font class="labelFont">员工性别:</font>
+								</label>
+								<select class="formInput" id="sex">
+									<option value="男">男</option>
+									<option value="女">女</option>
+								</select>
+							</div>
+							<div class="modalLabel">
+								<label >
+									<font class="labelFont">员工性质:</font>
+								</label>
+								<select class="formInput" id="nature">
+								</select>
+							</div>
+							<div class="modalLabel">
+								<label >
+									<font class="labelFont">员工卡号:</font>
+								</label>
+								<input type="text" id="card" class="formInput" placeholder=""/>
+							</div>
 						</div>
-						<div class="modalLabel">
-							<label >
-								<font class="labelFont">员工性质:</font>
-							</label>
-							<select class="formInput" id="nature">
-							</select>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-primary" onclick="addOrmodifyEmployeeInfo();">保存</button>
+							<button type="button" class="btn btn-default hiddenFade">关闭</button>
 						</div>
-						<div class="modalLabel">
-							<label >
-								<font class="labelFont">员工卡号:</font>
-							</label>
-							<input type="text" id="card" class="formInput" placeholder=""/>
-						</div>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-primary" onclick="addOrmodifyEmployeeInfo();">保存</button>
-						<button type="button" class="btn btn-default hiddenFade">关闭</button>
-					</div>
-				</div>	
-			</div>
+					</div>	
+				</div>
+			</form>	
 		</div>
 		<!--家属-->
 		<div class="modal" id="workerFamily">
@@ -228,10 +249,12 @@
 				showEmployeeModel();	
 				id = $(el).parent().parent().find("input[name='id']").val();
 				
-				$("#no").val($(el).parent().parent().find("td[name='no']").text())
-				$("#name").val($(el).parent().parent().find("td[name='name']").text())
-				$("#nature").val($(el).parent().parent().find("td[name='nature']").text())
-				$("#card").val($(el).parent().parent().find("td[name='card']").text())
+				$("#no").val($(el).parent().parent().find("td[name='psncode']").text())
+				$("#name").val($(el).parent().parent().find("td[name='psnname']").text())
+				$("#sex").val($(el).parent().parent().find("td[name='sex']").text())
+				$("#card").val($(el).parent().parent().find("td[name='account']").text())
+				$("#mobile").val($(el).parent().parent().find("td[name='mobile']").text())
+				$("#nature").val($(el).parent().parent().find("td[name='deptname']").text())
 			}
 			
 			//新增和修改
@@ -241,10 +264,12 @@
 					type: 'post',
 					data: JSON.stringify({
 						id: id,
-						no: $("#no").val(),
-						name: $("#name").val(),
-						nature: $("#nature").val(),
-						card: $("#card").val()
+						psncode: $("#no").val(),
+						psnname: $("#name").val(),
+						sex: $("#sex").val(),
+						account: $("#card").val(),
+						mobile: $("#mobile").val(),
+						deptname: $("#nature").val()
 					}),
 					contentType: 'application/json;charset=utf-8',
 					success: function(data) {
@@ -275,7 +300,7 @@
 					type: 'post',
 					data: JSON.stringify({
 						id: id,
-						name: employee_name
+						psnname: employee_name
 					}),
 					contentType: 'application/json;charset=utf-8',
 					success: function(data) {
@@ -324,7 +349,6 @@
 			function modifyRelatives(el) {
 				methodAgre = "modifyRelatives";
 			
-				showEmployeeModel();
 				id = $(el).parent().parent().find("input[name='id']").val();
 				
 				var relativesName = $(el).parent().parent().find("input[name='name']").val()

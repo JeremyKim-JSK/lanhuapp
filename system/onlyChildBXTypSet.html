@@ -103,6 +103,7 @@
 			}
 			
 			function addOrmodifyChlidYTNature() {
+				if(!isEmptyWithIds("xb_child_znyt")) return;
 				$.ajax({
 					url: apphost() + methodAgre,
 					type: 'post',

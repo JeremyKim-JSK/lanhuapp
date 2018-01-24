@@ -49,7 +49,7 @@
 									<td name="money_end"></td>
 									<td name="proportion"></td>
 									<td>
-										<button class="btn btn-danger deleteZGYB">删除</button>
+										<button class="btn btn-danger" onclick="deleteZGYB(this)">删除</button>
 										<input type="hidden" name="id"/>
 									</td>	
 								</tr>
@@ -95,6 +95,7 @@
 		<script>
 			
 			function addZGYB() {
+				if(!isEmptyWithIds("money_start,money_end,proportion")) return;
 				$.ajax({
 					url: apphost() + "addZGYB",
 					type: 'post',
@@ -111,6 +112,7 @@
 						tip("操作成功！");
 						getAllZGYB();
 						hideModel();
+						$(".modal-content input").val('');
 					}
 				})
 			}
@@ -131,13 +133,12 @@
 				})
 			}	
 			
-			$(".deleteZGYB").click(function(el) {
-				el.stopPropagation();
+			function deleteZGYB(el) {	
 				$.ajax({
 					url: apphost() + "deleteZGYB",
 					type: 'post',
 					data: JSON.stringify({
-						id: $(this).next().val(),
+						id: $(el).next().val(),
 					}),
 					contentType: 'application/json;charset=utf-8',
 					success: function(data) {
@@ -145,7 +146,7 @@
 						location.reload();
 					}
 				})
-			})
+			}
 			
 			//子女医药费报销类型列表			
 			getAllChildren()
@@ -192,6 +193,7 @@
 			}
 			
 			function addOperateMaxMoney() {
+				if(!isEmptyWithIds("money_start,money_end,proportion")) return;
 				operateMaxMoney($("#money").val())
 			}
 			

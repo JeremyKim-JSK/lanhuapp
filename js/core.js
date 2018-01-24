@@ -163,3 +163,16 @@ function logout() {
 	location.href = "/login.html";
 }
 
+//withIdIsEmpty("name", "age", "month")
+function isEmptyWithIds(ids) {
+	var arr = ids.split(",");
+	for(var i = 0; i < arr.length; i++) {
+		var curInputVal = $("#" + arr[i]).val();
+		if(curInputVal == '' || curInputVal == null) {
+			//tip(arr[i] + "不能为空!");
+			tip("请完善表单信息！");
+			return false;
+		}
+	};
+	return true;
+}

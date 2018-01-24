@@ -104,6 +104,7 @@
 			}
 			
 			function addOrModifyEmployeeNature() {
+				if(!isEmptyWithIds("xb_employee_nature")) return;
 				$.ajax({
 					url: apphost() + methodAgre,
 					type: 'post',

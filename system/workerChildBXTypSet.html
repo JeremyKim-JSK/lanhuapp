@@ -105,6 +105,7 @@
 			}
 			
 			function addOrmodifyChlidYBNature() {
+				if(!isEmptyWithIds("xb_child_yb")) return;
 				$.ajax({
 					url: apphost() + methodAgre,
 					type: 'post',

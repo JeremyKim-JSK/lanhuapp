@@ -4,46 +4,91 @@
 		<meta charset="UTF-8">
 		<title></title>
 	</head>
-	<style>
-		div {
-			width: 100px;
-			height: 100px;
-			margin: 4px;
-		}
-		
-		.frist {
-			position: absolute;
-			background-color: red;
-			top: 100px;
-			z-index: 2000;
-		}
-		
-		.second {
-			position: absolute;
-			/*top: 20px;*/
-			background-color: blue;
-			z-index: 1;
-		}
-		
-		.third {
-			position: absolute;
-			top:30px;
-			background-color: yellow;
-			z-index: 0;
-		}
-	</style>
-	<body>
-		<div class="frist">
-			<div class="second"></div>
-			<div class="third"></div>
-		</div>
-		
-		<form method="post" action="/top.html">
-			<input type="text" id="name"/>
-			<input type="text" id="password"/>
-			<input type="text" id="age"/>
-			<input type="submit" value="提交" />
-		</form>
-		
-	</body>
+	<script src="js/jquery-1.11.2.js"></script>
+	<script src="js/jquery.validate/jquery.validate.js"></script>
+	<script src="js/jquery.validate/localization/messages_zh.js"></script>
+<style>
+.error{
+	color:red;
+}
+</style>
+</head>
+<body>
+<form class="cmxform" id="commentForm" method="get" action="123123">
+  <fieldset>
+    <legend>输入您的名字，邮箱，URL，备注。</legend>
+    <p>
+      <label for="cname">Name (必需, 最小两个字母)</label>
+      <input id="cname" name="name" minlength="2" type="text" required>
+    </p>
+    <p>
+      <label for="cemail">E-Mail (必需)</label>
+      <input id="cemail" type="text" name="email" required>
+    </p>
+    <p>
+      <label for="curl">URL (可选)</label>
+      <input id="curl" type="text" name="url">
+    </p>
+    <p>
+      <label for="ccomment">备注 (必需)</label>
+      <textarea id="ccomment" name="comment" required></textarea>
+    </p>
+    <p>
+      <input class="submit" type="submit" id="submit">
+    </p>
+  </fieldset>
+</form>
+
+<form class="cmxform" id="commentForm2" method="get" action="123123">
+  <fieldset>
+    <legend>输入您的名字2，邮箱，URL，备注。</legend>
+    <p>
+      <label for="cname">Name (必需, 最小两个字母)</label>
+      <input id="cname" name="name" minlength="2" type="text" required>
+    </p>
+    <p>
+      <label for="cemail">E-Mail (必需)</label>
+      <input id="cemail" type="text" name="email" required>
+    </p>
+    <p>
+      <label for="curl">URL (可选)</label>
+      <input id="curl" type="text" name="url">
+    </p>
+    <p>
+      <label for="ccomment">备注 (必需)</label>
+      <textarea id="ccomment" name="comment" required></textarea>
+    </p>
+    <p>
+      <button   id="submit">
+      	queding
+      	</button>
+    </p>
+  </fieldset>
+</form>
+	<script>
+	$().ready(function() {
+	     $("#commentForm").validate({
+	        submitHandler:function(form){
+	        	commentForm()
+	        }    
+	    });
+	    
+	     $("#commentForm2").validate({
+	        submitHandler:function(form){
+	        	commentForm2()
+	        }    
+	    });
+	});
+	
+	function commentForm() {
+		alert(1111)
+	}
+	
+	function commentForm2() {
+		alert(222)
+	}
+	
+	
+	</script>
+</body>
 </html>

@@ -11,12 +11,17 @@
 					<td>填表日期 : <span id="systemDate"></span></td>
 					<td>附件<span name="employee.enclosure_num"></span> 张</td>
 				</tr>
-				<tr>
+				<tr class="ZGQS">
+					<td>报销部门：财务部</th>
+					<td>员工工号：<span name="employee.psncode"></span></td>
+					<td>员工姓名： <span name="employee.psnname"></span></td>
+				</tr>
+				<tr class="ZNYY ZNYB DSZN">
 					<td>报销部门：财务部</th>
 					<td>部门：<span name="employee.deptname"></span></td>
 					<td>姓名： <span name="employee.psnname"></span></td>
 				</tr>
-				<tr>
+				<trclass="ZNYY ZNYB DSZN">
 					<td colspan="2">工资卡号：
 					<span name="employee.account"></span>	
 					</th>
@@ -40,7 +45,7 @@
 					<td colspan="2">金额（大写）：<span id="bigReimbursement_money"></span> </td>
 					<td>报销金额：<span name="employee.reimbursement_money" function="reimbursement_moneyValueTo" id="reimbursement_money"></span>元</td>
 				</tr>
-				<tr class="ZNYY ZNYB" style="display: none;">
+				<tr class="ZNYY ZGQS" style="display: none;">
 					<td>报销年度：<span name="employee.year" id="employee_year"></span></td>
 					<td colspan="2">发生日期：<span name="employee.plcae_date"></span></td>
 				</tr>

@@ -47,7 +47,7 @@
 									<td name="tf_proportion"></td>
 									<td name="money"></td>
 									<td>
-										<button class="btn btn-danger deleteChildTFPro">删除</button>
+										<button class="btn btn-danger" onclick="deleteChildTFPro(this)">删除</button>
 										<input type="hidden" name="id"/>
 									</td>	
 								</tr>
@@ -88,20 +88,21 @@
 		<script>
 			
 			function addChildTFPro() {
+				
+				if(!isEmptyWithIds("money")) return;
+				
 				$.ajax({
 					url: apphost() + "addChildTFPro",
 					type: 'post',
 					data: JSON.stringify({
-						nature: $("#children").val(),
-						money_start: $("#money_start").val(),
-						money_end: $("#money_end").val(),
-						proportion: $("#proportion").val()
+						tf_proportion: $("#children").val(),
+						money: $("#money").val()
 					}),
 					contentType: 'application/json;charset=utf-8',
 					success: function(data) {
-						console.log(data)
+						console.log(data);
 						if(!isRight(data)) return;
-						tip("操作成功！");
+						tip("设置成功！")
 						getAllChildTFPro();
 						hideModel();
 					}
@@ -124,13 +125,12 @@
 				})
 			}	
 			
-			$(".deleteChildTFPro").click(function(el) {
-				el.stopPropagation();
+			function deleteChildTFPro(el) {	
 				$.ajax({
 					url: apphost() + "deleteChildTFProById",
 					type: 'post',
 					data: JSON.stringify({
-						id: $(this).next().val(),
+						id: $(el).next().val(),
 					}),
 					contentType: 'application/json;charset=utf-8',
 					success: function(data) {
@@ -138,7 +138,7 @@
 						location.reload();
 					}
 				})
-			})
+			}
 			
 			//子女医药费报销类型列表			
 			getAllChildrenYT()
@@ -179,60 +179,6 @@
 					}
 				})
 			}
-			
-			
-			/*$(".children").change(function() {
-				getMaxMoney();
-			})*/
-			/*getMaxMoney()
-			//获取最大金额
-			function getMaxMoney() {
-				$.ajax({
-					url: apphost() + "getMaxMoney",
-					type: 'post',
-					data: JSON.stringify({
-						nature: $(".children").val(),
-						type: 'ZGQS'
-					}),
-					contentType: 'application/json;charset=utf-8',
-					success: function(data) {
-						console.log(data);
-						if(data.result == null) {
-							$("#money").val('');
-							return;
-						}
-						$("#money").val(data.result.money)
-					}
-				})
-			}*/
-			
-		/*	function addOperateMaxMoney() {
-				operateMaxMoney($("#money").val())
-			}
-			
-			function resetOperateMaxMoney() {
-				operateMaxMoney(0)
-			}*/
-			
-			/*//设置报销最大金额
-			function operateMaxMoney(money) {
-				$.ajax({
-					url: apphost() + "operateMaxMoney",
-					type: 'post',
-					data: JSON.stringify({
-						nature: $(".children").val(),
-						type: 'ZGQS',
-						money: money
-					}),
-					contentType: 'application/json;charset=utf-8',
-					success: function(data) {
-						console.log(data);
-						if(!isRight(data)) return;
-						tip("设置成功！")
-						getMaxMoney();
-					}
-				})
-			}*/
 			
 		</script>
 		<div class="hint"></div>
