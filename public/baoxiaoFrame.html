@@ -20,19 +20,15 @@
 					<th class="ZGQS">家属情况：（选择报销家属姓名）</th>
 					<td id="hiPsnList" class="ZNYY ZNYB DSZN">
 					</td>
+					<td id="relatives" class="ZGQS">
+					</td>
 					<th class="ZNYY ZNYB DSZN">报销类别：(选择报销子女类型)</td>
 					<th class="ZGQS">家属证号</td>
 					<td class="ZNYY ZNYB DSZN">
 						<select class="formInput" id="child_nature">
 						</select>
 					</td>
-					<td class="ZGQS">
-						<div>
-							李华：12123123123123
-						</div>
-						<div>
-							张建国：12123123123122
-						</div>
+					<td class="ZGQS" id="relativesDiv">
 					</td>
 				</tr>
 				<!--子女医药Start----------------->
@@ -129,18 +125,38 @@
 							toView(templateData,true)
 						}
 						
-						
-						
-						$("#hiPsnList").children().remove();
-						for(var i = 0; i < data.result.hiPsnList.length; i++) {
-							curPsn = data.result.hiPsnList[i];
-							var hiPsnListValue = curPsn.hipsnname + "/" + curPsn.sex + "/" + curPsn.birthday
-							$("#hiPsnList").append(
-							"<div>"
-								+ "<input type='checkbox' name='hiPsnList' value='" + hiPsnListValue + "'/>"
-								+ "<span>" + hiPsnListValue + "</span>"
-							+ "</div>"
-							)
+						if(getInfoByXBType != "ZGQS") {
+							$("#hiPsnList").children().remove();
+							for(var i = 0; i < data.result.hiPsnList.length; i++) {
+								var curPsn = data.result.hiPsnList[i];
+								var hiPsnListValue = curPsn.hipsnname + "/" + curPsn.sex + "/" + curPsn.birthday
+								$("#hiPsnList").append(
+								"<div>"
+									+ "<input type='checkbox' name='hiPsnList' value='" + hiPsnListValue + "'/>"
+									+ "<span>" + hiPsnListValue + "</span>"
+								+ "</div>"
+								)
+							}
+						}else {
+							$("#relatives").children().remove();
+							$("#relativesDiv").children().remove();
+							for(var i = 0; i < data.result.relatives.length; i++) {
+								var curPsn = data.result.relatives[i];
+								$("#relatives").append(
+								"<div>"
+									+ "<input type='checkbox' name='relatives' value='" + curPsn.name + "'/>"
+									+ "<span>" + curPsn.name + "</span>"
+								+ "</div>"
+								);
+								
+								$("#relativesDiv").append(
+								"<div>"
+									+ curPsn.name + " : " + curPsn.code
+								+ "</div>"
+								);
+								
+							}
+							
 						}
 						psnbaseData = data.result.psnbase;
 						//子女医药费的显示
@@ -181,10 +197,17 @@
 					if(!isEmptyWithIds()) return
 				
 				var employee_children = '';
-				for(var i = 0; i < $("input[name='hiPsnList']:checked").length; i++) {
-					/*employee_children = $("input[name='hiPsnList']:checked").eq(i).val() + "," + employee_children;*/
-					employee_children = $("input[name='hiPsnList']:checked").eq(i).val().split("/")[0] + "," + employee_children;
+				if(getInfoByXBType != 'ZGQS') {
+					for(var i = 0; i < $("input[name='hiPsnList']:checked").length; i++) {
+						/*employee_children = $("input[name='hiPsnList']:checked").eq(i).val() + "," + employee_children;*/
+						employee_children = $("input[name='hiPsnList']:checked").eq(i).val().split("/")[0] + "," + employee_children;
+					}
+				}else {
+					for(var i = 0; i < $("input[name='relatives']:checked").length; i++) {
+						employee_children = $("input[name='relatives']:checked").eq(i).val() + "," + employee_children;
+					}
 				}
+					
 				if(employee_children != '') {
 					employee_children = employee_children.substring(0, employee_children.length-1)
 				}else {

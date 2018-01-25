@@ -33,12 +33,41 @@
 							</h2>
 						</div>
 						<div class="tabContent">
-							<div id="createBill"></div>
-							
-								
+							<table class="tabTable">
+								<tr>
+									<td>单号：20171024001</th>
+									<td>2017年10月12号 （填表日期）</td>
+									<td>附件3张</td>
+								</tr>
+								<tr>
+									<td>报销部门：财务部</th>
+									<td>部门：技术部</td>
+									<td>姓名： 张三</td>
+								</tr>
+								<tr>
+									<td colspan="2">工资卡号：1231231231231231</th>
+									<td>手机号：123123123123（人资系统抓取）</td>
+								</tr>
+								<tr>
+									<td>事由:</td>
+									<td colspan="2">
+										<div>
+											家属姓名医药费报销 &nbsp;&nbsp;&nbsp;&nbsp;  实际报销金额计算公式和计算结果（显示计算公式和结果)
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td colspan="2">金额（大写）：玖拾陆万零贰佰壹拾肆圆整 </td>
+									<td>报销金额：960214.00元</td>
+								</tr>
+								<tr>
+									<td>报销年度：2017年10月12号</td>
+									<td colspan="2">发生日期：2017年10月12号</td>
+								</tr>
+							</table>
 							<!--endprint-->
 							<div class="tabFooter">
-								<button class="btn btn-primary flRight" onclick="toBack()">返回</button>
+								<button class="btn btn-primary flRight" onclick="window.history.go(-1)">返回</button>
 								<button class="btn btn-primary flRight" onclick="updateBXD()">套打报销单据</button>
 							</div>
 						</div>
@@ -46,9 +75,5 @@
 				</div>
 			</div>
 		</div>
-		<script>
-			var getInfoByXBType = 'ZGQS'
-			$("#createBill").load("/public/createBillFrame.html")
-		</script>
 	</body>
 </html>
