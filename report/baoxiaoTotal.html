@@ -9,6 +9,7 @@
 		<script src="/js/jquery-1.11.2.js"></script>
 		<script src="/js/jquery.cookie.js"></script>
 		<script src="/js/core.js"></script>
+		<script src="/js/util.js"></script>
 	</head>
 	<body>
 		<div id="top"></div>
@@ -31,22 +32,25 @@
 								<label for="no">
 									<font class="labelFont">报销费用类型:</font>
 								</label>
-								<input type="text" id="no" class="formInput hundFif" placeholder=""/>
+								<select type="text" id="type" class="formInput"/>
+									<option value="ZNYY">子女医药费报销</option>
+									<option value="DSZN">独生子女托费、学费报销</option>
+									<option value="ZNYB">职工子女医保费用报销</option>
+									<option value="ZGQS">职工供养直系亲属医疗费用报销</option>
+								</select>
 								<label for="no" style="padding-left: 50px;">
 									<font class="labelFont">时间时区:</font>
 								</label>
-								<input type="datetime-local" id="no" class="formInput" placeholder=""/>
+								<input type="date" id="sdate" class="formInput" placeholder=""/>
 								<label for="no" >
 									<font class="labelFont">到</font>
 								</label>
-								<input type="datetime-local" id="no" class="formInput" placeholder=""/>
-							</div>
-							<div class="searchLi">
-								<button class="btn btn-primary ">
-									<font>重置</font>
-								</button>
+								<input type="date" id="edate" class="formInput" placeholder=""/>
 								<button class="btn btn-primary">
 									<font>确定</font>
+								</button>
+								<button class="btn btn-primary" onclick="reset()">
+									<font>重置</font>
 								</button>
 							</div>
 						</div>
@@ -57,18 +61,15 @@
 									<th>报销费用类型</td>
 									<th>报销金额</td>
 								</tr>
-								<tr>
-									<td>2017-01-02</td>
-									<td>子女医药费报销</td>
-									<td>30000</td>
+								<tr name="BXDhzTemplate" style="display: none;">
+									<td name="plcae_date"></td>
+									<td name="type"></td>
+									<td name="sum(reimbursement_money)"></td>
 								</tr>
+							</table>
+							<table class="tabTable">
 								<tr>
-									<td>2017-01-02</td>
-									<td>子女医药费报销</td>
-									<td>30000</td>
-								</tr>
-								<tr>
-									<td colspan="7">合计金额：60000</td>
+									<td>合计金额：60000</td>
 								</tr>
 							</table>
 						</div>
@@ -76,5 +77,34 @@
 				</div>
 			</div>
 		</div>
+		<script>
+			BXDhz();
+			function BXDhz() {
+				$.ajax({
+					url: apphost() + "BXDhz",
+					type: 'post',
+					data: JSON.stringify({
+						type: $("#type").val(),
+						sdate: $("#sdate").val(),
+						edate: $("#edate").val()
+					}),
+					contentType: 'application/json;charset=utf-8',
+					success: function(data) {
+						if(!isRight(data)) return;
+						console.log(data);
+						toView(data, true)
+					}
+				})
+			}	
+			
+			$("#type").change(function () {
+				BXDhz();
+			})
+			
+			function reset() {
+				$(".topBar input").val('')
+			}
+		</script>
+		<div class="hint"></div>
 	</body>
 </html>

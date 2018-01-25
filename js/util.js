@@ -312,11 +312,19 @@ String.prototype.newlineWithSlashN = function() { // 解决在textarea元素中�
 	return this.replace(/\\n/g, "\n");
 }
 Date.prototype.toDay = function() {
-  return this.getFullYear() + "-" + (this.getMonth() + 1) + "-" + this.getDate();
+  var thisMonth = this.getMonth() + 1
+  if(thisMonth < 10)
+  	thisMonth = "0" + thisMonth;
+	
+  return this.getFullYear() + "-" + thisMonth + "-" + this.getDate();
 }
 
 Date.prototype.toFullDay = function() {
-  return this.getFullYear() + "-" + (this.getMonth() + 1) + "-" + this.getDate() + " " + this.getHours() + ":" + this.getMinutes() + ":" + this.getSeconds();
+  var thisMonth = this.getMonth() + 1
+  if(thisMonth < 10)
+  thisMonth = "0" + thisMonth;
+	
+  return this.getFullYear() + "-" + thisMonth + "-" + this.getDate() + " " + this.getHours() + ":" + this.getMinutes() + ":" + this.getSeconds();
 }
 Array.prototype.include = function(input) {
 	for(var i = 0; i < this.length; i++) {

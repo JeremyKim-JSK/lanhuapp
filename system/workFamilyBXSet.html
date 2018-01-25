@@ -29,6 +29,8 @@
 						<div class="tabContent">
 							<div class="searchLi">
 								<select class="formInput nature">
+									<option value="1">员工</option>
+									<option value="2">子女</option>
 								</select>
 								&nbsp;&nbsp;&nbsp;&nbsp;医药费报销封顶金额：
 								<input type="text" class="formInput" id="money"/> 元
@@ -161,7 +163,7 @@
 					success: function(data) {
 						console.log(data);
 						for(var i = 0; i < data.result.employees.length; i++) {
-							$("#nature, .nature").append("<option value=" + data.result.employees[i].id + ">" + data.result.employees[i].xb_employee_nature + "</option>")
+							$("#nature").append("<option value=" + data.result.employees[i].id + ">" + data.result.employees[i].xb_employee_nature + "</option>")
 						}
 					}
 				})

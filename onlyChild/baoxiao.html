@@ -97,6 +97,7 @@
 			
 			//新增医托明细
 			function addTFTemp() {
+				if(!isEmptyWithIds("month,DSZN_enclosure_num")) return;
 				$.ajax({
 					url: apphost() + "addTFTemp",
 					type: 'post',

@@ -9,6 +9,7 @@
 		<script src="/js/jquery-1.11.2.js"></script>
 		<script src="/js/jquery.cookie.js"></script>
 		<script src="/js/core.js"></script>
+		<script src="/js/util.js"></script>
 	</head>
 	<body>
 		<div id="top"></div>
@@ -29,32 +30,32 @@
 						<div class="topBar">
 							<div class="searchLi">
 								<label for="no">
-									<font class="labelFont">员工工号+姓名:</font>
+									<font class="labelFont">员工工号或姓名:</font>
 								</label>
-								<input type="text" id="no" class="formInput hundFif" placeholder=""/>
+								<input type="text" id="employee_name" class="formInput hundFif" placeholder=""/>
 								<label for="no" style="padding-left: 50px;">
 									<font class="labelFont">时间时区:</font>
 								</label>
-								<input type="datetime-local" id="no" class="formInput" placeholder=""/>
+								<input type="date" id="sdate" class="formInput" placeholder=""/>
 								<label for="no" >
 									<font class="labelFont">到</font>
 								</label>
-								<input type="datetime-local" id="no" class="formInput" placeholder=""/>
+								<input type="date" id="edate" class="formInput" placeholder=""/>
 							</div>
 							<div class="searchLi">
 								<label for="no">
 									<font class="labelFont">报销费用类型:</font>
 								</label>
-								<select type="text" id="no" class="formInput"/>
-									<option value="子女医药费报销">子女医药费报销</option>
-									<option value="独生子女托费、学费报销">独生子女托费、学费报销</option>
-									<option value="职工子女医保费用报销">职工子女医保费用报销</option>
-									<option value="职工供养直系亲属医疗费用报销">职工供养直系亲属医疗费用报销</option>
+								<select type="text" id="type" class="formInput"/>
+									<option value="ZNYY">子女医药费报销</option>
+									<option value="DSZN">独生子女托费、学费报销</option>
+									<option value="ZNYB">职工子女医保费用报销</option>
+									<option value="ZGQS">职工供养直系亲属医疗费用报销</option>
 								</select>
-								<button class="btn btn-primary flRight">
+								<button class="btn btn-primary flRight" onclick="reset()">
 									<font>重置</font>
 								</button>
-								<button class="btn btn-primary flRight">
+								<button class="btn btn-primary flRight" onclick="BXDmx()">
 									<font>确定</font>
 								</button>
 							</div>
@@ -70,32 +71,56 @@
 									<th>报销费用类型</td>
 									<th>报销金额</td>
 								</tr>
-								<tr>
-									<td>2017-01-02</td>
-									<td>党宣	</td>
-									<td>20116645</td>
-									<td>李华</td>
-									<td>663467646776876</td>
-									<td>子女医药费报销</td>
-									<td>30000</td>
-								</tr>
-								<tr>
-									<td>2017-01-02</td>
-									<td>党宣	</td>
-									<td>20116645</td>
-									<td>李华</td>
-									<td>663467646776876</td>
-									<td>子女医药费报销</td>
-									<td>30000</td>
-								</tr>
-								<tr>
-									<td colspan="7">合计金额：60000</td>
+								<tr name="BXDmxTemplate" style="display: none;">
+									<td name=""></td>
+									<td name="employee_department"></td>
+									<td name="employee_number"></td>
+									<td name="employee_name"></td>
+									<td name="card_number"></td>
+									<td name=""></td>
+									<td name="sum(reimbursement_money)"></td>
 								</tr>
 							</table>
+							<table class="tabTable">
+								<tr>
+									<td>合计金额：60000</td>
+								</tr>
+							</table>
+							
 						</div>
 					</div>	
 				</div>
 			</div>
 		</div>
+		<script>
+			BXDmx();
+			function BXDmx() {
+				$.ajax({
+					url: apphost() + "BXDmx",
+					type: 'post',
+					data: JSON.stringify({
+						employee_name: $("#employee_name").val(),
+						type: $("#type").val(),
+						sdate: $("#sdate").val(),
+						edate: $("#edate").val()
+					}),
+					contentType: 'application/json;charset=utf-8',
+					success: function(data) {
+						if(!isRight(data)) return;
+						console.log(data);
+						toView(data, true)
+					}
+				})
+			}	
+			
+			$("#type").change(function () {
+				BXDmx();
+			})
+			
+			function reset() {
+				$(".topBar input").val('')
+			}
+		</script>
+		<div class="hint"></div>
 	</body>
 </html>

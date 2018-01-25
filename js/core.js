@@ -176,3 +176,10 @@ function isEmptyWithIds(ids) {
 	};
 	return true;
 }
+
+
+function plcae_dateValueTo(el, val) {
+	var date = new Date(val)
+	
+	valueToWithNoFunc(el, date.toDay())
+}

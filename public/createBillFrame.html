@@ -51,12 +51,24 @@
 				</tr>
 			</table>
 		<script>
+			var employee = JSON.parse($.cookie("employee")).result.employee;
+			
 			if(getInfoByXBType == 'ZNYY')
 				$(".ZNYY").show()
 			else if(getInfoByXBType == 'DSZN')
 				$(".DSZN").show()
-			else if(getInfoByXBType == 'ZNYB')
+			else if(getInfoByXBType == 'ZNYB') {
+				var arrChildren = employee.employee_children.split(",");
+				for(var i = 0; i < arrChildren.length; i++) {
+					getBXDChildren(arrChildren[i]);					
+				}
+				var totalReimbursement_money_all = 0;
+				for(var i = 0; i < $("td[name='reimbursement_money']:visible").length; i++) {
+					totalReimbursement_money_all = parseInt(totalReimbursement_money_all) + parseInt($($("td[name='reimbursement_money']:visible")[i]).text())
+				}
+				$("#totalReimbursement_money_all").text(totalReimbursement_money_all)
 				$(".ZNYB").show()
+			}
 			else if(getInfoByXBType == 'ZGQS')
 				$(".ZGQS").show()
 		
@@ -79,8 +91,6 @@
 			
 			function updateBXD() {
 				
-				var employee = JSON.parse($.cookie("employee")).result.employee
-				
 				$.ajax({
 					url: apphost() + "updateBXD",
 					type: 'post',
@@ -101,6 +111,25 @@
 					}
 				})
 			}
+			
+			function getBXDChildren(curEmployee_children) {
+				$.ajax({
+					url: apphost() + "getBXDChildren",
+					type: 'post',
+					data: JSON.stringify({
+						employee_number: employee.psncode,
+						employee_children: curEmployee_children,
+						type: getInfoByXBType
+					}),
+					contentType: 'application/json;charset=utf-8',
+					success: function(data) {
+						if(!isRight(data)) return;
+						console.log(data)
+						toView(data)
+					}
+				})
+			}
+			
 		</script>
 		<div class="hint"></div>
 	</body>

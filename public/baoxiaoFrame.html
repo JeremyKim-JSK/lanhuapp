@@ -75,8 +75,11 @@
 				$(".ZNYY").show()
 			else if(getInfoByXBType == 'DSZN')
 				$(".DSZN").show()
-			else if(getInfoByXBType == 'ZNYB')
+			else if(getInfoByXBType == 'ZNYB') {
+				var date = new Date();
+				$("#plcae_date").val(date.toDay())
 				$(".ZNYB").show()
+			}
 			else if(getInfoByXBType == 'ZGQS')
 				$(".ZGQS").show()
 		
@@ -99,13 +102,35 @@
 					success: function(data) {
 						console.log(data);
 						if(!isRight(data)) return;
-						toView(data,true);
+						//根据年份和性别判断
 						var date = new Date();
-						if((date.getFullYear() % 2 == 0 && data.result.psnbase.sex == "男") || (date.getFullYear() % 2 != 0 && data.result.psnbase.sex == "女") ){
-							showFaceModel();
-							return;
+						if(getInfoByXBType == 'ZGQS') {
+							if((date.getFullYear() % 2 == 0 && data.result.sex == "男") || (date.getFullYear() % 2 != 0 && data.result.sex == "女") ){
+								showFaceModel();
+								return;
+							}
+							
+						}else {
+							if((date.getFullYear() % 2 == 0 && data.result.psnbase.sex == "男") || (date.getFullYear() % 2 != 0 && data.result.psnbase.sex == "女") ){
+								showFaceModel();
+								return;
+							}
 						}
 						$(".allBaoxiao").show();
+						//渲染
+						toView(data,true);
+						if(data.result.money.children != null) {
+							templateData = {
+								'status': 'succ',
+								'result': {
+									'children': data.result.money.children	
+								}
+							}
+							toView(templateData,true)
+						}
+						
+						
+						
 						$("#hiPsnList").children().remove();
 						for(var i = 0; i < data.result.hiPsnList.length; i++) {
 							curPsn = data.result.hiPsnList[i];
@@ -160,9 +185,8 @@
 					/*employee_children = $("input[name='hiPsnList']:checked").eq(i).val() + "," + employee_children;*/
 					employee_children = $("input[name='hiPsnList']:checked").eq(i).val().split("/")[0] + "," + employee_children;
 				}
-				
 				if(employee_children != '') {
-					employee_children.substring(0, employee_children.length-1)
+					employee_children = employee_children.substring(0, employee_children.length-1)
 				}else {
 					if(getInfoByXBType != 'ZGQS') {
 						tip("请选择子女！");
@@ -210,7 +234,7 @@
 						}
 						$.cookie("employee", JSON.stringify(employee), {path: "createBill.html"})
 						
-						location.href = "createBill.html";
+						//location.href = "createBill.html";
 					}
 				})
 			}
