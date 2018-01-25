@@ -40,34 +40,28 @@
 						</div>
 						<div class="tabContent">
 							<table class="tabTable matrixTab">
-								<tr>
+							<!--	<tr>
 									<th>发生年月</th>
 									<th>子女姓名</td>
 									<th>报销费用</td>
 									<th>附件张数</td>
 									<th>报销类型</td>
 									<th>备注</td>
-								</tr>
+								</tr>-->
 								<tr>
-									<td>2017-10-05</td>
-									<td>张三</td>
-									<td>3000</td>
-									<td>4</td>
-									<td>私托</td>
-									<td>备注</td>
+									<th>发生年月</th>
+									<th>子女姓名</td>
+									<th>报销费用</td>
 								</tr>
-								<tr>
-									<td>2017-10-05</td>
-									<td>李四</td>
-									<td>2999</td>
-									<td>1</td>
-									<td>私托</td>
-									<td>备注</td>
+								<tr name="bxd_childTemplate" style="display: none;">
+									<td name="year"></td>
+									<td name="employee_children"></td>
+									<td name="reimbursement_money"></td>
 								</tr>
 							</table>
 							<div class="tabFooter">
 								<button class="btn btn-primary flRight" onclick="toBack()">返回</button>
-								<button class="btn btn-primary flRight" onclick="preview()">套打报销单据</button>
+								<button class="btn btn-primary flRight" onclick="updateBXD()">套打报销单据</button>
 							</div>
 						</div>
 					</div>	

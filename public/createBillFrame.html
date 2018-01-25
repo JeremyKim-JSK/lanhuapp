@@ -55,8 +55,13 @@
 			
 			if(getInfoByXBType == 'ZNYY')
 				$(".ZNYY").show()
-			else if(getInfoByXBType == 'DSZN')
+			else if(getInfoByXBType == 'DSZN') {
+				var arrChildren = employee.employee_children.split(",");
+				for(var i = 0; i < arrChildren.length; i++) {
+					getBXDChildren(arrChildren[i]);					
+				}
 				$(".DSZN").show()
+			}
 			else if(getInfoByXBType == 'ZNYB') {
 				var arrChildren = employee.employee_children.split(",");
 				for(var i = 0; i < arrChildren.length; i++) {
