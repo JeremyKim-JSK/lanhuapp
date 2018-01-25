@@ -68,22 +68,22 @@
 									<th>人员工号</td>
 									<th>人员姓名</td>
 									<th>卡号</td>
-									<th>报销费用类型</td>
+									<!--<th>报销费用类型</td>-->
 									<th>报销金额</td>
 								</tr>
 								<tr name="BXDmxTemplate" style="display: none;">
-									<td name=""></td>
+									<td name="plcae_date" function="plcae_dateValueTo"></td>
 									<td name="employee_department"></td>
 									<td name="employee_number"></td>
 									<td name="employee_name"></td>
 									<td name="card_number"></td>
-									<td name=""></td>
-									<td name="sum(reimbursement_money)"></td>
+									<!--<td name=""></td>-->
+									<td class="sumMoney" name="sum(reimbursement_money)"></td>
 								</tr>
 							</table>
 							<table class="tabTable">
 								<tr>
-									<td>合计金额：60000</td>
+									<td>合计金额：<span id="sumMoney"></span></td>
 								</tr>
 							</table>
 							
@@ -109,6 +109,11 @@
 						if(!isRight(data)) return;
 						console.log(data);
 						toView(data, true)
+						var sum = 0;
+						for(var i = 0; i < $(".sumMoney:visible").length; i++) {
+							sum = parseFloat($($(".sumMoney:visible")[i]).text()) +  parseFloat(sum);
+						}
+						$("#sumMoney").text(sum)
 					}
 				})
 			}	

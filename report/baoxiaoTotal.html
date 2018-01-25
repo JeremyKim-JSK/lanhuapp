@@ -46,7 +46,7 @@
 									<font class="labelFont">到</font>
 								</label>
 								<input type="date" id="edate" class="formInput" placeholder=""/>
-								<button class="btn btn-primary">
+								<button class="btn btn-primary" onclick="BXDhz();">
 									<font>确定</font>
 								</button>
 								<button class="btn btn-primary" onclick="reset()">
@@ -62,14 +62,14 @@
 									<th>报销金额</td>
 								</tr>
 								<tr name="BXDhzTemplate" style="display: none;">
-									<td name="plcae_date"></td>
+									<td name="plcae_date" function="plcae_dateValueTo"></td>
 									<td name="type"></td>
-									<td name="sum(reimbursement_money)"></td>
+									<td class="sumMoney" name="sum(reimbursement_money)"></td>
 								</tr>
 							</table>
 							<table class="tabTable">
 								<tr>
-									<td>合计金额：60000</td>
+									<td>合计金额：<span id="sumMoney"></span></td>
 								</tr>
 							</table>
 						</div>
@@ -93,6 +93,11 @@
 						if(!isRight(data)) return;
 						console.log(data);
 						toView(data, true)
+						var sum = 0;
+						for(var i = 0; i < $(".sumMoney:visible").length; i++) {
+							sum = parseFloat($($(".sumMoney:visible")[i]).text()) +  parseFloat(sum);
+						}
+						$("#sumMoney").text(sum)
 					}
 				})
 			}	
