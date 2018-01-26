@@ -14,15 +14,16 @@
 		</div>
 		<div class="rigthTop">
 			<div>
-				<div class="logout flRight">退出</div>
+				<div class="logout flRight" onclick="logoutName()">退出</div>
 				<div class="flRight">
-					<div class="loginName">王小二</div>
+					<div class="loginName" onclick="showChangePassModal()"><span id="loginName"></span></div>
 				</div>
-				<div class="flRight">
+				<div class="flRight" onclick="showChangePassModal()">
 					<div class="loginImg">
 						<img src="/img/touxiang.png"/>
 					</div>
 				</div>
+				<div id="changePass"></div>
 			</div>
 		</div>
 	</div>	

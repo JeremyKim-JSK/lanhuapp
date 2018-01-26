@@ -41,13 +41,13 @@
 				</tr>
 				<tr class="ZNYY ZGQS">
 					<th>该员工本年度所有 </th>
-					<td>本年度累计医药费用：<span name="total.count(reimbursement_money)"></span> 元</td>
-					<td>本年度累报销金额：<span name="total.count(reimbursement_money_all)"></span>元</td>
+					<td>本年度累计医药费用：<span class="workerYY" name="total.count(reimbursement_money)"></span> 元</td>
+					<td>本年度累报销金额：<span class="workerBX" name="total.count(reimbursement_money_all)"></span>元</td>
 				</tr>
 				<tr class="ZNYY ZGQS">
 					<th>该子女本年度所有 </th>
-					<td>本年度累计医药费用：<span name="total.count(reimbursement_money)"></span>元</td>
-					<td>本年度累报销金额：<span name="total.count(reimbursement_money_all)"></span>元</td>
+					<td>本年度累计医药费用：<span class="childYY" name="total.count(reimbursement_money)"></span>元</td>
+					<td>本年度累报销金额：<span class="childBX" name="total.count(reimbursement_money_all)"></span>元</td>
 				</tr>
 				<!--子女医药end----------------->
 				<!--独生子女Start----------------->
@@ -59,7 +59,7 @@
 					</td>
 				</tr>
 				<tr class="DSZN">
-					<td colspan="2">本年度该子女已报销总额：<span name="total.count(reimbursement_money)"></span> 元</td>
+					<td colspan="2">本年度该子女已报销总额：<span id="DSZNChild" name="total.count(reimbursement_money)"></span> 元</td>
 					<td colspan="2">本年度该员工已报销总额：<span name="total.count(reimbursement_money_all)"></span> 元</td>
 				</tr>
 				<!--独生子女End----------------->
@@ -75,8 +75,7 @@
 				var date = new Date();
 				$("#plcae_date").val(date.toDay())
 				$(".ZNYB").show()
-			}
-			else if(getInfoByXBType == 'ZGQS')
+			}else if(getInfoByXBType == 'ZGQS')
 				$(".ZGQS").show()
 		
 			var psnbaseData = {};
@@ -132,7 +131,7 @@
 								var hiPsnListValue = curPsn.hipsnname + "/" + curPsn.sex + "/" + curPsn.birthday
 								$("#hiPsnList").append(
 								"<div>"
-									+ "<input type='checkbox' name='hiPsnList' value='" + hiPsnListValue + "'/>"
+									+ "<input type='radio' name='hiPsnList' value='" + hiPsnListValue + "' onclick='getLittleMoney(this)'/>"
 									+ "<span>" + hiPsnListValue + "</span>"
 								+ "</div>"
 								)
@@ -144,7 +143,7 @@
 								var curPsn = data.result.relatives[i];
 								$("#relatives").append(
 								"<div>"
-									+ "<input type='checkbox' name='relatives' value='" + curPsn.name + "'/>"
+									+ "<input type='radio' name='relatives' value='" + curPsn.name + "' onclick='getLittleMoney(this)'/>"
 									+ "<span>" + curPsn.name + "</span>"
 								+ "</div>"
 								);
@@ -180,6 +179,20 @@
 							}
 							toView(DSZNData)
 						}
+						
+						//价格渲染
+		/*				if(getInfoByXBType == 'ZNYY') {
+							$(".workerYY").text(data.money.total.sum(reimbursement_money_all))
+)
+						}
+						else if(getInfoByXBType == 'DSZN')
+							$(".DSZN").show()
+						else if(getInfoByXBType == 'ZNYB') {
+							var date = new Date();
+							$("#plcae_date").val(date.toDay())
+							$(".ZNYB").show()
+						}else if(getInfoByXBType == 'ZGQS')
+							$(".ZGQS").show()*/
 						
 					}
 				})
@@ -272,6 +285,47 @@
 				getAllChildren();
 				getInfoByXB();
 			}
+			
+			//点击子女 出现相关金额
+			 hiPsnList
+			 relatives
+			
+			function getLittleMoney(el) {
+				var employee_childrenName;
+				if(getInfoByXBType == 'ZNYY') {
+					employee_childrenName = $("input[name='hiPsnList']:checked").val().split("/")[0];
+					
+					getLittleMoneyInter(employee_childrenName)
+				}
+				else if(getInfoByXBType == 'DSZN') {
+					
+				}
+				else if(getInfoByXBType == 'ZNYB') {
+				
+				}
+				else if(getInfoByXBType == 'ZGQS') {
+				}	
+			}
+			
+			function getLittleMoneyInter(employee_childrenName) {
+				$.ajax({
+					url: apphost() + "getLittleMoney",
+					type: 'post',
+					data: JSON.stringify({
+						employee_number: $("#employee_number").text(),
+						employee_children: employee_childrenName,
+						type: getInfoByXBType,
+					}),
+					contentType: 'application/json;charset=utf-8',
+					success: function(data) {
+						if(!isRight(data)) return;
+						
+						
+					}	
+				})
+			}
+			
+			
 		</script>
 	</body>
 </html>

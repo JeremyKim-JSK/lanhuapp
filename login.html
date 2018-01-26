@@ -3,6 +3,11 @@
 	<head>
 		<meta charset="UTF-8">
 		<title></title>
+		<link href="/css/hint.css" rel="stylesheet" />
+		<script src="/js/jquery-1.11.2.js"></script>
+		<script src="/js/jquery.cookie.js"></script>
+		<script src="/js/util.js"></script>
+		<script src="/js/core.js"></script>
 	</head>
 	<style type="text/css">
 		html, body {
@@ -85,9 +90,31 @@
 			<map id="Map" name="Map"><!--通过id 将两者关联起来 id是唯一的 js要用的，但是name可以相同-->
 		        <area href="#" shape="poly" coords="543, 400, 666, 493, 723, 363"/><!--【左上角距离左边num1，距离上边num2】，【右下角距离左边num3，距离上边num4】-->
 		    </map>
-			<input type="text" class="firstInput formInput" />	
-			<input type="password" class="secondInput formInput" />	
+			<input type="text" class="firstInput formInput" id="user_phone"/>	
+			<input type="password" class="secondInput formInput" id="user_pass"/>	
 			<input type="checkbox" class="thirdInput"/>
 		</div>
+		<script>
+			$.cookie("loginName", '', {expires: -1, path: "/"});
+		
+			$("#Map").click(function() {
+				$.ajax({
+					url: "/FinanceChain/api/system/v1/login",
+					type: 'post',
+					data: JSON.stringify({
+						user_phone: $("#user_phone").val(),
+						user_pass: $("#user_pass").val(),
+						version_type: 1
+					}),
+					contentType: 'application/json;charset=utf-8',
+					success: function(data) {
+						console.log(data);
+						
+						$.cookie("loginName", data.name, {path: '/'})
+					}
+				})
+			})	
+			
+		</script>
 	</body>
 </html>

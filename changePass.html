@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<div class="modal" id="changePassModal">
+			<form>
+				<div class="modal-dialog">
+					<div class="modal-content" style="width: 500px;">
+						<div class="modal-header">
+							<button type="button" class="close">×</button>
+							<h4 class="modal-title">修改密码</h4>
+						</div>
+						<div class="modal-body">
+							<div class="modalLabel">
+								<label >
+									<font class="labelFont">旧&nbsp;&nbsp;密 码:</font>
+								</label>
+								<input required="" type="text" id="old_pass" class="formInput" placeholder=""/>
+							</div>
+							<div class="modalLabel">
+								<label >
+									<font class="labelFont">新&nbsp;&nbsp;密 码:</font>
+								</label>
+								<input type="text" id="new_pass" class="formInput" placeholder=""/>
+							</div>
+							<div class="modalLabel">
+								<label >
+									<font class="labelFont"> 确认密码:</font>
+								</label>
+								<input type="text" id="confirm_pass" class="formInput" placeholder=""/>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-primary" onclick="changePasswordFront();">保存</button>
+							<button type="button" class="btn btn-default hiddenFade">关闭</button>
+						</div>
+					</div>	
+				</div>
+			</form>	
+		</div>
+		<div class="modal-backdrop"></div>
+		<script>
+			function changePasswordFront() {
+				if(!isEmptyWithIds("old_pass,new_pass,confirm_pass")) 
+					return;
+				
+				if($("#new_pass").val() != $("#confirm_pass").val()) {
+					tip("两次密码不一致！")
+					return;
+				}
+				
+				$.ajax({
+					url: '/FinanceChain/api/system/v1/changePasswordFront',
+					type: 'post',
+					data: JSON.stringify({
+						id: id,
+						new_pass: $("#new_pass").val(),
+						old_pass: $("#old_pass").val()
+					}),
+					contentType: 'application/json;charset=utf-8',
+					success: function(data) {
+						console.log(data)
+						if(!isRight(data)) return;
+					}
+				})	
+			}	
+		</script>
+	</body>
+</html>
