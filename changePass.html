@@ -14,23 +14,18 @@
 							<h4 class="modal-title">修改密码</h4>
 						</div>
 						<div class="modal-body">
-							<div class="modalLabel">
-								<label >
-									<font class="labelFont">旧&nbsp;&nbsp;密 码:</font>
-								</label>
-								<input required="" type="text" id="old_pass" class="formInput" placeholder=""/>
-							</div>
+							
 							<div class="modalLabel">
 								<label >
 									<font class="labelFont">新&nbsp;&nbsp;密 码:</font>
 								</label>
-								<input type="text" id="new_pass" class="formInput" placeholder=""/>
+								<input type="password" id="new_pass" class="formInput" placeholder=""/>
 							</div>
 							<div class="modalLabel">
 								<label >
 									<font class="labelFont"> 确认密码:</font>
 								</label>
-								<input type="text" id="confirm_pass" class="formInput" placeholder=""/>
+								<input type="password" id="confirm_pass" class="formInput" placeholder=""/>
 							</div>
 						</div>
 						<div class="modal-footer">
@@ -44,7 +39,7 @@
 		<div class="modal-backdrop"></div>
 		<script>
 			function changePasswordFront() {
-				if(!isEmptyWithIds("old_pass,new_pass,confirm_pass")) 
+				if(!isEmptyWithIds("new_pass,confirm_pass")) 
 					return;
 				
 				if($("#new_pass").val() != $("#confirm_pass").val()) {
@@ -53,20 +48,22 @@
 				}
 				
 				$.ajax({
-					url: '/FinanceChain/api/system/v1/changePasswordFront',
+					url: '/FinanceChain/api/system/v1/changePassword',
 					type: 'post',
 					data: JSON.stringify({
-						id: id,
-						new_pass: $("#new_pass").val(),
-						old_pass: $("#old_pass").val()
+						id: $.cookie("loginId"),
+						newpass: $("#new_pass").val()
 					}),
 					contentType: 'application/json;charset=utf-8',
 					success: function(data) {
 						console.log(data)
 						if(!isRight(data)) return;
+						tip("密码修改成功");
+
 					}
 				})	
 			}	
 		</script>
+		<div class="hint"></div>
 	</body>
 </html>

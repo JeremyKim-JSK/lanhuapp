@@ -109,12 +109,15 @@
 					contentType: 'application/json;charset=utf-8',
 					success: function(data) {
 						console.log(data);
-						
-						$.cookie("loginName", data.name, {path: '/'})
+						if(!isRight(data)) return;
+						$.cookie("loginName", data.result.authInfo.user_login_name, {path: '/'})
+						$.cookie("loginId", data.result.authInfo.id, {path: '/'})
+						location.href = "/index.html";
 					}
 				})
 			})	
 			
 		</script>
+		<div class="hint"></div>
 	</body>
 </html>

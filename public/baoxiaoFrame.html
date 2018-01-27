@@ -41,13 +41,13 @@
 				</tr>
 				<tr class="ZNYY ZGQS">
 					<th>该员工本年度所有 </th>
-					<td>本年度累计医药费用：<span class="workerYY" name="total.count(reimbursement_money)"></span> 元</td>
-					<td>本年度累报销金额：<span class="workerBX" name="total.count(reimbursement_money_all)"></span>元</td>
+					<td>本年度累计医药费用：<span class="workerYY" >0</span>元</td>
+					<td>本年度累报销金额：<span class="workerBX" >0</span>元</td>
 				</tr>
 				<tr class="ZNYY ZGQS">
 					<th>该子女本年度所有 </th>
-					<td>本年度累计医药费用：<span class="childYY" name="total.count(reimbursement_money)"></span>元</td>
-					<td>本年度累报销金额：<span class="childBX" name="total.count(reimbursement_money_all)"></span>元</td>
+					<td>本年度累计医药费用：<span class="childYY" >0</span>元</td>
+					<td>本年度累报销金额：<span class="childBX" >0</span>元</td>
 				</tr>
 				<!--子女医药end----------------->
 				<!--独生子女Start----------------->
@@ -59,8 +59,8 @@
 					</td>
 				</tr>
 				<tr class="DSZN">
-					<td colspan="2">本年度该子女已报销总额：<span id="DSZNChild" name="total.count(reimbursement_money)"></span> 元</td>
-					<td colspan="2">本年度该员工已报销总额：<span name="total.count(reimbursement_money_all)"></span> 元</td>
+					<td colspan="2">本年度该子女已报销总额：<span class="childBX" >0</span> 元</td>
+					<td colspan="2">本年度该员工已报销总额：<span class="workerBX">0</span> 元</td>
 				</tr>
 				<!--独生子女End----------------->
 			</table>
@@ -287,8 +287,14 @@
 			}
 			
 			//点击子女 出现相关金额
-			 hiPsnList
+/*			 hiPsnList
 			 relatives
+			 
+			 $("input[name='hiPsnList']").click(function() {
+			 	
+			 })*/
+			 
+			 
 			
 			function getLittleMoney(el) {
 				var employee_childrenName;
@@ -298,12 +304,14 @@
 					getLittleMoneyInter(employee_childrenName)
 				}
 				else if(getInfoByXBType == 'DSZN') {
+					employee_childrenName = $("input[name='hiPsnList']:checked").val().split("/")[0];
 					
-				}
-				else if(getInfoByXBType == 'ZNYB') {
-				
+					getLittleMoneyInter(employee_childrenName)
 				}
 				else if(getInfoByXBType == 'ZGQS') {
+					employee_childrenName = $("input[name='relatives']:checked").val();
+					
+					getLittleMoneyInter(employee_childrenName)
 				}	
 			}
 			
@@ -319,7 +327,11 @@
 					contentType: 'application/json;charset=utf-8',
 					success: function(data) {
 						if(!isRight(data)) return;
+						$(".workerYY").text(data.result.all.reimbursement_money_all);
+						$(".workerBX").text(data.result.all.reimbursement_money);
 						
+						$(".childYY").text(data.result.child.reimbursement_money_all);
+						$(".childBX").text(data.result.child.reimbursement_money);
 						
 					}	
 				})
