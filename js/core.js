@@ -1,10 +1,10 @@
 //加载左部，顶部 遮罩层
 $(document).ready(function(){
 	$('#left').load('/left.html', function() {
-		/*if($.cookie("loginName") == null) {
+		if($.cookie("loginName") == null) {
 			location.href = "/login.html";
 			return;
-		}*/
+		}
 		$(".menu > li.level1 > a").click(function() {
 			$(this).addClass('active').next().show()// 下一个元素显示
 			.parent().siblings().children("a").removeClass('active')//父元素的兄弟元素的子元素<a>移除'active'
