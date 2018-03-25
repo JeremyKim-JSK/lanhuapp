@@ -108,13 +108,17 @@
 					}),
 					contentType: 'application/json;charset=utf-8',
 					success: function(data) {
+						if(!right(data)) return;
 						console.log(data);
 						
-						$.cookie("loginName", data.name, {path: '/'})
+						$.cookie("loginName", data.name, {path: '/'});
+						
+						location.href = "/children/baoxiao.html";
 					}
 				})
 			})	
 			
 		</script>
+		<div class="hint"></div>
 	</body>
 </html>

@@ -101,13 +101,13 @@
 						var date = new Date();
 						if(getInfoByXBType == 'ZGQS') {
 							if((date.getFullYear() % 2 == 0 && data.result.sex == "男") || (date.getFullYear() % 2 != 0 && data.result.sex == "女") ){
-								showFaceModel();
+								showFaceModel("addBaoxiao");
 								return;
 							}
 							
 						}else {
 							if((date.getFullYear() % 2 == 0 && data.result.psnbase.sex == "男") || (date.getFullYear() % 2 != 0 && data.result.psnbase.sex == "女") ){
-								showFaceModel();
+								showFaceModel("addBaoxiao");
 								return;
 							}
 						}
@@ -275,8 +275,8 @@
 				})
 			}
 			
-			function showFaceModel() {
-				$(".modal, .modal-backdrop").css("display", "block");
+			function showFaceModel(el) {
+				$("#" + el + "," + '.modal-backdrop').css("display", "block");
 			}
 			
 			//重置

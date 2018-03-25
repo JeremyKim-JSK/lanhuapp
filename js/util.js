@@ -214,21 +214,7 @@ function valueToWithNoFunc(el, value) {
 }
 
 function right(jsonData) {
-	if (typeof(jsonData.result.code) != 'undefined' && jsonData.result.code == 11) {
-		tip(jsonData.result.err + ", 三秒后跳转到登录。");
-		setTimeout("function() {}", 3);
-		if ( /^\/admin\//.test(window.location.pathname) ) {
-			$.removeCookie("userId", {"path": "/"});
-			$.removeCookie("sid", {"path": "/"});
-			setTimeout("window.location = '/admin/login.html'", 3000);
-		}
-		else if ( /^\/back\//.test(window.location.pathname) ) {
-			$.removeCookie("userId", {"path": "/"});
-			$.removeCookie("sid", {"path": "/"});
-			setTimeout("window.location = '/back/login.html'", 3000);
-		}
-		return false;
-	} else if (typeof(jsonData.result.code) != 'undefined') {
+	if (typeof(jsonData.result.err) != 'undefined') {
 		tip(jsonData.result.err);
 		return false;
 	} else
