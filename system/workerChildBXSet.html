@@ -83,10 +83,6 @@
 							<input type="text" class="formInput hundred" id="money_end"/> 元
 						</div>	
 						<div class="searchPanel">
-							报销年龄：<input type="text" class="formInput hundred"  id="age_star"/>
-							到 <input type="text" class="formInput hundred"  id="age_end"/> 岁
-						</div>	
-						<div class="searchPanel">
 							报销比例： 
 							<input type="text" class="formInput hundred" id="proportion"/>
 						</div>	
@@ -103,7 +99,7 @@
 		<script>
 			
 			function addZGYB() {
-				if(!isEmptyWithIds("money_start,money_end,proportion,age_star,age_end")) return;
+				if(!isEmptyWithIds("money_start,money_end,proportion")) return;
 				$.ajax({
 					url: apphost() + "addZGYB",
 					type: 'post',
@@ -111,8 +107,6 @@
 						child_nature: $("#child_nature").val(),
 						money_start: $("#money_start").val(),
 						money_end: $("#money_end").val(),
-						age_start: $("#age_start").val(),
-						age_end: $("#age_end").val(),
 						proportion: $("#proportion").val()
 					}),
 					contentType: 'application/json;charset=utf-8',

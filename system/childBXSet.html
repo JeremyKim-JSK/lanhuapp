@@ -42,6 +42,8 @@
 									<th>子女性质</td>
 									<th>金额起</td>
 									<th>金额止</td>
+									<th>年龄起</td>
+									<th>年龄止</td>
 									<th>比例</td>
 									<th>操作</td>
 								</tr>
@@ -49,6 +51,8 @@
 									<td name="child_nature"></td>
 									<td name="money_start"></td>
 									<td name="money_end"></td>
+									<td name="age_start"></td>
+									<td name="age_end"></td>
 									<td name="proportion"></td>
 									<td>
 										<button class="btn btn-danger" onclick="deleteYYPP(this)">删除</button>
@@ -79,11 +83,17 @@
 							</select>
 						</div>
 						<div class="searchPanel">
-							<input type="text" class="formInput hundred" id="money_start" /> 元到 
+							报销金额：<input type="text" class="formInput hundred" id="money_start" /> 到 
 							<input type="text" class="formInput hundred" id="money_end"/> 元
-							报销比例是： 
-							<input type="text" class="formInput hundred" id="proportion"/>
 						</div>	
+						<div class="searchPanel">
+							报销年龄：<input type="text" class="formInput hundred"  id="age_star"/>
+							到 <input type="text" class="formInput hundred"  id="age_end"/> 岁
+						</div>	
+						<div class="searchPanel">
+							报销比例： 
+							<input type="text" class="formInput hundred" id="proportion"/>
+						</div>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-primary" onclick="addYYPP()">确定</button>
@@ -97,7 +107,7 @@
 		<script>
 			
 			function addYYPP() {
-				if(!isEmptyWithIds("money_start,money_end,proportion")) return;
+				if(!isEmptyWithIds("money_start,money_end,proportion,age_star,age_end")) return;
 				
 				$.ajax({
 					url: apphost() + "addYYPP",
@@ -106,6 +116,8 @@
 						child_nature: $("#child_nature").val(),
 						money_start: $("#money_start").val(),
 						money_end: $("#money_end").val(),
+						age_start: $("#age_start").val(),
+						age_end: $("#age_end").val(),
 						proportion: $("#proportion").val()
 					}),
 					contentType: 'application/json;charset=utf-8',
