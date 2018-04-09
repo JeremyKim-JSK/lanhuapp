@@ -59,8 +59,8 @@
 			$("#modalFade").load("/public/modalFade.html")
 				//子女医药费报销类型列表			
 				
-			getAllChildren()
 			function getAllChildren() {
+				var child_nature = {};
 				$.ajax({
 					url: apphost() + "getAllChildren",
 					type: 'post',
@@ -71,10 +71,13 @@
 					success: function(data) {
 						console.log(data);
 						for(var i = 0; i < data.result.children.length; i++) {
-							$("#child_nature").append("<option value=" + data.result.children[i].id + ">" + data.result.children[i].xb_child_nature + "</option>")
+							/*$("#child_nature").append("<option value=" + data.result.children[i].id + ">" + data.result.children[i].xb_child_nature + "</option>")*/
+							child_nature[data.result.children[i].xb_child_nature] = data.result.children[i].id;
 						}
 					}
 				})
+				
+				return child_nature;
 			}
 			
 		</script>

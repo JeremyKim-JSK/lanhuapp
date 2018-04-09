@@ -111,6 +111,26 @@
 								return;
 							}
 						}
+						
+						// 判断根据子女个数显示子女独生和多胞胎性质
+						if(getInfoByXBType != 'ZGQS') {
+							$("#child_nature").children().remove();
+							var child_nature = getAllChildren();
+							if(data.result.hiPsnList.length == 1) {
+								for(var key in child_nature) {
+									if(key.indexOf("独生") != -1) {
+										$("#child_nature").append("<option value=" + child_nature[key] + ">" + key + "</option>")
+									}
+								}
+							}else if(data.result.hiPsnList.length == 2) {
+								for(var key in child_nature) {
+									if(key.indexOf("多胞胎") != -1) {
+										$("#child_nature").append("<option value=" + child_nature[key] + ">" + key + "</option>")
+									}
+								}
+							}
+						}
+						
 						$(".allBaoxiao").show();
 						//渲染
 						toView(data,true);
