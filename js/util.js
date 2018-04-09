@@ -301,8 +301,12 @@ Date.prototype.toDay = function() {
   var thisMonth = this.getMonth() + 1
   if(thisMonth < 10)
   	thisMonth = "0" + thisMonth;
+  	
+  var thisDay = this.getDate();
+  if(thisDay < 10)
+  	thisDay = "0" + thisDay;
 	
-  return this.getFullYear() + "-" + thisMonth + "-" + this.getDate();
+  return this.getFullYear() + "-" + thisMonth + "-" + thisDay;
 }
 
 Date.prototype.toFullDay = function() {

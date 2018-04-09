@@ -7,26 +7,39 @@
 	<body>
 		<div>
 			<label>
-				<span>单号：：</span>
-				<span>   年    月    日 </span>
+				<span>单号： <span name="employee.page_num"></span></span>
 			</label>
-			<label>
-				<span>现金出纳签字：</span>
-				<span></span>
+			<label style="margin-left: 30%;">
+				<!--<span>年</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<span>月</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<span>日</span>-->
+				<span name="employee.plcae_date" function="plcae_dateValueTo"></span>
 			</label>
 		</div>
-		<table class="tabTable">
+		<table class="tabTable" style="margin-top: 15px;">
 			<tr>
 				<!--部门  姓名  工资卡号   手机号-->
-				<td colspan="4">报销部门：  </td>
-				<td rowspan="5" style="width: 30px;">附件 张</td>
+				<td colspan="4">
+					报销部门： &nbsp;<span name="employee.deptname"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					姓名： &nbsp;<span name="employee.employee_name"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					工资卡号： &nbsp;<span name="employee.account"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					手机号： &nbsp;<span name="employee.mobile"></span>
+				</td>
+				<td rowspan="5" style="width: 30px;">附件
+					<span name="employee.enclosure_num"></span>
+					张</td>
 			</tr>
 			<tr>
-				<td colspan="3">事由</td>
+				<td colspan="3">事由：
+					<span name="employee.reason"></span>
+				</td>
 				<td></td>
 			</tr>
 			<tr>
-				<td colspan="4"> 金额(大写)   实际报销金额计算公式和计算结果</td>
+				<td colspan="4"> 金额(大写)： 
+					<span name="employee.reimbursement_money" function="reimbursement_money_allValueTo"></span>&nbsp;&nbsp;&nbsp;&nbsp;
+					<span name="employee.gs"></span>
+				</td>
 			</tr>
 			<tr>
 				<td>报销人员      </td>
@@ -40,28 +53,38 @@
 				<td>财务总监      </td>
 			</tr>
 		</table>
-		<div>
+		<div style="margin-top: 15px;">
 			<label>
 				<span>领款人签字：</span>
 				<span></span>
 			</label>
-			<label>
+			<label style="margin-left: 30%;">
 				<span>现金出纳签字：</span>
 				<span></span>
 			</label>
 		</div>
 		
 		<script>
-			var employee = JSON.parse($.cookie("employee")).result.employee;
+		    var toViewEmployee = JSON.parse($.cookie("employee"));
 			
-			if(getInfoByXBType == 'ZNYY')
-				$(".ZNYY").show()
+			var employee = toViewEmployee.result.employee;
+			
+			if(getInfoByXBType == 'ZNYY') {
+				employee["reason"] = "子女医药费";
+			}
 			else if(getInfoByXBType == 'DSZN') {
 				var arrChildren = employee.employee_children.split(",");
 				for(var i = 0; i < arrChildren.length; i++) {
 					getBXDChildren(arrChildren[i]);					
 				}
-				$(".DSZN").show()
+				$(".DSZN").show();
+				
+				employee["reason"] = "独生子女托费、学费";
+				
+				var date = new Date();
+				
+				employee["plcae_date"] = date.toDay();
+				
 			}
 			else if(getInfoByXBType == 'ZNYB') {
 				var arrChildren = employee.employee_children.split(",");
@@ -73,12 +96,21 @@
 					totalReimbursement_money_all = parseInt(totalReimbursement_money_all) + parseInt($($("td[name='reimbursement_money']:visible")[i]).text())
 				}
 				$("#totalReimbursement_money_all").text(totalReimbursement_money_all)
-				$(".ZNYB").show()
+				$(".ZNYB").show();
+				
+				employee["reason"] = "职工子女医保费用";
+				
+				var date = new Date();
+				
+				employee["plcae_date"] = date.toDay();
 			}
-			else if(getInfoByXBType == 'ZGQS')
+			else if(getInfoByXBType == 'ZGQS') {
 				$(".ZGQS").show()
+				
+				employee["reason"] = "供养直系关系医药费用";
+			}
 		
-			toView(JSON.parse($.cookie("employee")));
+			toView(toViewEmployee);
 			
  			var date=new Date;	
  			$("#systemDate").text(date.toDay())
@@ -105,8 +137,8 @@
 						employee_department: employee.deptname,
 						card_number: employee.account,
 						employee_phone: employee.mobile,
-						reimbursement_money: $("#reimbursement_money").text(),
-						year: $("#employee_year").text(),
+						reimbursement_money: employee.reimbursement_money,
+						year: employee.plcae_date,
 						page_num: employee.page_num,
 					}),
 					contentType: 'application/json;charset=utf-8',
@@ -134,6 +166,16 @@
 						toView(data)
 					}
 				})
+			}
+			
+			function reimbursement_money_allValueTo(el, val) {
+				valueToWithNoFunc(el, toChineseCurrency(val));
+			}
+			
+			function plcae_dateValueTo(el, val) {
+				var date = val.split("-");	
+				val = date[0] + " 年 " + date[1] + " 月 " + date[2] + " 日"
+				valueToWithNoFunc(el, val);
 			}
 			
 		</script>
