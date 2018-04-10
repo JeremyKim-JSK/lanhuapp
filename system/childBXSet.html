@@ -87,7 +87,7 @@
 							<input type="text" class="formInput hundred" id="money_end"/> 元
 						</div>	
 						<div class="searchPanel">
-							报销年龄：<input type="text" class="formInput hundred"  id="age_star"/>
+							报销年龄：<input type="text" class="formInput hundred"  id="age_start"/>
 							到 <input type="text" class="formInput hundred"  id="age_end"/> 岁
 						</div>	
 						<div class="searchPanel">
@@ -107,7 +107,7 @@
 		<script>
 			
 			function addYYPP() {
-				if(!isEmptyWithIds("money_start,money_end,proportion,age_star,age_end")) return;
+				if(!isEmptyWithIds("money_start,money_end,proportion,age_start,age_end")) return;
 				
 				$.ajax({
 					url: apphost() + "addYYPP",
