@@ -28,11 +28,13 @@ $(document).ready(function(){
 			$.cookie("pathname", this.href.replace("http://" + location.host, ""), {'path': '/'});
 		})
 		
+		var curMenu = "";
+		
 		if($.cookie("pathname")) {
 			if(navigator.userAgent.indexOf("MSIE 6.0") > 0)
-				var curMenu = $(".menu").find("a[href='http://'" + location.host + $.cookie("pathname") + "']");
+				curMenu = $(".menu").find("a[href='http://'" + location.host + $.cookie("pathname") + "']");
 			else 
-				var curMenu = $(".menu").find("a[href='" + $.cookie("pathname") + "']");
+				curMenu = $(".menu").find("a[href='" + $.cookie("pathname") + "']");
 		}
 		
 		if(curMenu.length > 0) {
