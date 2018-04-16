@@ -153,19 +153,19 @@
 			}
 			
 			//子女医药费报销类型列表			
-			getAllChildren()
-			function getAllChildren() {
+			getAllChildrenYB()
+			function getAllChildrenYB() {
 				$.ajax({
-					url: apphost() + "getAllChildren",
+					url: apphost() + "getAllChildrenYB",
 					type: 'post',
 					data: JSON.stringify({
-						id: 0,
+						id: "",
 					}),
 					contentType: 'application/json;charset=utf-8',
 					success: function(data) {
 						console.log(data);
 						for(var i = 0; i < data.result.children.length; i++) {
-							$("#child_nature").append("<option value=" + data.result.children[i].id + ">" + data.result.children[i].xb_child_nature + "</option>")
+							$("#child_nature").append("<option value=" + data.result.children[i].id + ">" + data.result.children[i].xb_child_yb + "</option>")
 						}
 					}
 				})

@@ -104,15 +104,19 @@
 						if(getInfoByXBType == 'ZGQS') {
 							if((date.getFullYear() % 2 == 0 && data.result.sex == "男") || (date.getFullYear() % 2 != 0 && data.result.sex == "女") ){
 								showFaceModel("addBaoxiao");
-								return;
+								//return;
 							}
 							
 						}else {
 							if((date.getFullYear() % 2 == 0 && data.result.psnbase.sex == "男") || (date.getFullYear() % 2 != 0 && data.result.psnbase.sex == "女") ){
 								showFaceModel("addBaoxiao");
-								return;
+								//return;
 							}
 						}
+						
+						$("#child_nature").children().remove();
+						$(".tabFooter").show()
+						$("#hiPsnList").text("");
 						
 						// 判断根据子女个数显示子女独生和多胞胎性质
 						if(getInfoByXBType != 'ZGQS') {
@@ -202,20 +206,13 @@
 							toView(DSZNData,true)
 						}
 						
-						//价格渲染
-		/*				if(getInfoByXBType == 'ZNYY') {
-							$(".workerYY").text(data.money.total.sum(reimbursement_money_all))
-)
+						if(data.result.hiPsnList.length == 0) {
+							$("#hiPsnList").text("该员工无子女");
+							$("#child_nature").append("<option>该员工无子女报销类型</option>");
+							$(".tabFooter").hide()
+							$(".allBaoxiao").show();
+							return;
 						}
-						else if(getInfoByXBType == 'DSZN')
-							$(".DSZN").show()
-						else if(getInfoByXBType == 'ZNYB') {
-							var date = new Date();
-							$("#plcae_date").val(date.toDay())
-							$(".ZNYB").show()
-						}else if(getInfoByXBType == 'ZGQS')
-							$(".ZGQS").show()*/
-						
 					}
 				})
 			}

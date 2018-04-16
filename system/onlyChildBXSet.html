@@ -53,7 +53,7 @@
 								</tr>
 							</table>
 							<div class="tabFooter">
-								<button class="btn btn-primary flRight" onclick="showModel()">新增</button>
+								<button class="btn btn-primary flRight" onclick="readToAdd()">新增</button>
 							</div>
 						</div>
 					</div>	
@@ -61,7 +61,7 @@
 			</div>
 		</div>
 		
-		<div class="modal">
+		<div class="modal otherModal">
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
@@ -86,6 +86,10 @@
 		<div class="modal-backdrop"></div>
 		
 		<script>
+			
+			function readToAdd() {
+				$(".otherModal, .modal-backdrop").css("display", "block");
+			}
 			
 			function addChildTFPro() {
 				

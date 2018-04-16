@@ -111,7 +111,7 @@
 						if(!right(data)) return;
 						console.log(data);
 						
-						$.cookie("loginName", data.name, {path: '/'});
+						$.cookie("loginName", data.result.authInfo.user_login_name, {path: '/'});
 						
 						location.href = "/children/baoxiao.html";
 					}
