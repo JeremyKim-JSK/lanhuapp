@@ -87,7 +87,6 @@
 				};
 				
 				$(".allBaoxiao").hide();
-				
 				$.ajax({
 					url: apphost() + "getInfoByXB",
 					type: 'get',
@@ -151,6 +150,7 @@
 						}
 						
 						if(getInfoByXBType != "ZGQS") {
+															
 							$("#hiPsnList").children().remove();
 							for(var i = 0; i < data.result.hiPsnList.length; i++) {
 								var curPsn = data.result.hiPsnList[i];
@@ -163,6 +163,7 @@
 								)
 							}
 						}else {
+							ZGQSchild_nature = data.result.psnbase.child_nature;
 							$("#relatives").children().remove();
 							$("#relativesDiv").children().remove();
 							for(var i = 0; i < data.result.relatives.length; i++) {
@@ -194,6 +195,7 @@
 							}
 							toView(DSZNData,true)
 						}
+						
 						//独生子女时的显示
 						if(getInfoByXBType == 'DSZN') {
 							var DSZNData = {
@@ -206,13 +208,15 @@
 							toView(DSZNData,true)
 						}
 						
-						if(data.result.hiPsnList.length == 0) {
-							$("#hiPsnList").text("该员工无子女");
-							$("#child_nature").append("<option>该员工无子女报销类型</option>");
-							$(".tabFooter").hide()
-							$(".allBaoxiao").show();
-							return;
-						}
+						if(getInfoByXBType != 'ZGQS') {
+							if(data.result.hiPsnList.length == 0) {
+								$("#hiPsnList").text("该员工无子女");
+								$("#child_nature").append("<option>该员工无子女报销类型</option>");
+								$(".tabFooter").hide()
+								$(".allBaoxiao").show();
+								return;
+							}
+						}	
 					}
 				})
 			}
@@ -230,6 +234,7 @@
 				
 				var employee_children = '';
 				if(getInfoByXBType != 'ZGQS') {
+					ZGQSchild_nature = $("#child_nature").val();
 					for(var i = 0; i < $("input[name='hiPsnList']:checked").length; i++) {
 						/*employee_children = $("input[name='hiPsnList']:checked").eq(i).val() + "," + employee_children;*/
 						employee_children = $("input[name='hiPsnList']:checked").eq(i).val().split("/")[0] + "," + employee_children;
@@ -266,7 +271,7 @@
 						employee_name: $("#employee_name").text(),
 						employee_sex: $("#employee_sex").text(),
 						employee_children: employee_children,
-						reimbursement_type: $("#child_nature").val(),
+						reimbursement_type: ZGQSchild_nature,
 						reimbursement_money_all: $("#reimbursement_money_all").val(),
 						enclosure_num: enclosure_num,
 						plcae_date: $("#plcae_date").val(),
