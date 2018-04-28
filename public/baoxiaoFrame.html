@@ -43,6 +43,7 @@
 					<th>该员工本年度所有 </th>
 					<td>本年度累计医药费用：<span class="workerYY" >0</span>元</td>
 					<td>本年度累报销金额：<span class="workerBX" >0</span>元</td>
+					<td style="display: none;" id="baoxiaoInput">报销金额：<input type="number" class="formInput" id="reimbursement_money" style="width: 100px;" /> 元 </td>
 				</tr>
 				<tr class="ZNYY ZGQS">
 					<th>该子女本年度所有 </th>
@@ -54,7 +55,7 @@
 				<tr class="DSZN">
 					<th>报销单据信息录入</th>
 					<td colspan="3">
-						报销月份：<input type="text" class="formInput" id="month" style="width: 100px;"/> 月 &nbsp;&nbsp;&nbsp;&nbsp;
+						报销年月：<input type="text" class="formInput" id="month" placeholder="2018-01" style="width: 100px;"/>  &nbsp;&nbsp;&nbsp;&nbsp;
 						&nbsp;&nbsp;&nbsp;&nbsp; 附件张数：<input type="number" id="DSZN_enclosure_num" class="formInput" style="width: 100px;"/> 张 
 					</td>
 				</tr>
@@ -121,12 +122,18 @@
 						if(getInfoByXBType != 'ZGQS') {
 							$("#child_nature").children().remove();
 							var child_nature = getAllChildren();
+							var flag = 0;
 							if(data.result.hiPsnList.length == 1) {
 								for(var key in child_nature) {
 									if(key.indexOf("独生") != -1) {
+										flag = flag + 1;
 										$("#child_nature").append("<option value=" + child_nature[key] + ">" + key + "</option>")
 									}
 								}
+								
+								if(flag == 0)
+									$("#child_nature").append("<option>暂无该报销类型，请添加！</option>");
+							   	
 							}else if(data.result.hiPsnList.length == 2) {
 								for(var key in child_nature) {
 									if(key.indexOf("多胞胎") != -1) {
@@ -163,6 +170,10 @@
 								)
 							}
 						}else {
+							// 显示报销金额
+							if(data.result.psnbase.xb_employee_nature == "工伤")
+								$("#baoxiaoInput").show();
+							
 							ZGQSchild_nature = data.result.psnbase.child_nature;
 							$("#relatives").children().remove();
 							$("#relativesDiv").children().remove();
@@ -273,6 +284,7 @@
 						employee_children: employee_children,
 						reimbursement_type: ZGQSchild_nature,
 						reimbursement_money_all: $("#reimbursement_money_all").val(),
+						reimbursement_money: $("#reimbursement_money").val(),
 						enclosure_num: enclosure_num,
 						plcae_date: $("#plcae_date").val(),
 						month: $("#month").val(),
